@@ -1,26 +1,39 @@
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { RouterProvider } from "@tanstack/react-router";
-import type { FunctionComponent } from "./common/types";
-import type { TanstackRouter } from "./main";
-import { TanStackRouterDevelopmentTools } from "./components/utils/development-tools/TanStackRouterDevelopmentTools";
+import { routeTree } from "./routeTree.gen";
+import { Dashboard } from "./pages/Dashboard";
 
-const queryClient = new QueryClient();
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-type AppProps = { router: TanstackRouter };
+// Create a new router instance
+const router = createRouter({ 
+  routeTree,
+  defaultPreload: 'intent',
+});
 
-const App = ({ router }: AppProps): FunctionComponent => {
-	return (
-		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
-			<TanStackRouterDevelopmentTools
-				initialIsOpen={false}
-				position="bottom-left"
-				router={router}
-			/>
-			<ReactQueryDevtools initialIsOpen={false} position="bottom" />
-		</QueryClientProvider>
-	);
-};
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
-export default App;
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className="min-h-screen">
+        <Dashboard />
+      </div>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
+}
