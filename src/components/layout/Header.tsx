@@ -21,16 +21,16 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700">
+              <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700" href="#">
                 Dashboard
               </a>
-              <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700">
+              <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700" href="#">
                 Bushfire
               </a>
-              <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700">
+              <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700" href="#">
                 Flood
               </a>
-              <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700">
+              <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-red-700" href="#">
                 Preparedness
               </a>
             </div>
@@ -42,18 +42,18 @@ export const Header = () => {
             <div className="relative hidden sm:block">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <Input
-                type="text"
-                placeholder="Search regions..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 w-64 bg-white text-gray-900"
+                placeholder="Search regions..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); }}
               />
             </div>
 
             {/* Emergency Contact */}
             <Button 
-              variant="outline" 
-              className="bg-yellow-500 text-black border-yellow-500 hover:bg-yellow-600 font-bold"
+              className="bg-yellow-500 text-black border-yellow-500 hover:bg-yellow-600 font-bold" 
+              variant="outline"
             >
               <Phone className="mr-2 h-4 w-4" />
               Call 000
@@ -62,22 +62,22 @@ export const Header = () => {
             {/* Mobile menu button */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden text-white hover:bg-red-700">
+                <Button className="md:hidden text-white hover:bg-red-700" size="icon" variant="ghost">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent className="w-[300px] sm:w-[400px]" side="right">
                 <nav className="flex flex-col space-y-4 mt-4">
-                  <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
+                  <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100" href="#">
                     Dashboard
                   </a>
-                  <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
+                  <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100" href="#">
                     Bushfire
                   </a>
-                  <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
+                  <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100" href="#">
                     Flood
                   </a>
-                  <a href="#" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100">
+                  <a className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100" href="#">
                     Preparedness
                   </a>
                 </nav>

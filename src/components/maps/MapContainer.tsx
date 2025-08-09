@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -89,22 +89,22 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
         {/* Western Australia Outline Placeholder */}
         <div className="absolute inset-0 flex items-center justify-center">
           <svg 
-            width="600" 
+            className="opacity-20" 
             height="400" 
             viewBox="0 0 600 400" 
-            className="opacity-20"
+            width="600"
           >
             <path 
               d="M50 50 L550 50 L550 350 L200 350 L50 200 Z" 
               fill="none" 
               stroke="#374151" 
-              strokeWidth="2"
               strokeDasharray="5,5"
+              strokeWidth="2"
             />
-            <text x="300" y="200" textAnchor="middle" className="fill-gray-600 text-lg font-medium">
+            <text className="fill-gray-600 text-lg font-medium" textAnchor="middle" x="300" y="200">
               Western Australia Map
             </text>
-            <text x="300" y="220" textAnchor="middle" className="fill-gray-500 text-sm">
+            <text className="fill-gray-500 text-sm" textAnchor="middle" x="300" y="220">
               (Mapbox integration placeholder)
             </text>
           </svg>
@@ -128,11 +128,11 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
             return (
               <div
                 key={region.id}
+                style={{ left: position.x, top: position.y }}
                 className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-200 ${
                   isSelected ? 'scale-125 z-20' : 'hover:scale-110 z-10'
                 }`}
-                style={{ left: position.x, top: position.y }}
-                onClick={(e) => handleRegionClick(region, e)}
+                onClick={(e) => { handleRegionClick(region, e); }}
               >
                 <div 
                   className={`w-8 h-8 rounded-full border-2 border-white shadow-lg flex items-center justify-center ${
@@ -178,10 +178,10 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
                     <h3 className="font-semibold text-lg">{selectedRegion.name}</h3>
                   </div>
                   <Button 
-                    variant="ghost" 
+                    className="h-6 w-6" 
                     size="icon" 
+                    variant="ghost"
                     onClick={closePopup}
-                    className="h-6 w-6"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -199,8 +199,8 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
                           <span className="text-sm">Bushfire</span>
                         </div>
                         <Badge 
-                          style={{ backgroundColor: getBushfireColor(selectedRegion.emergencyData.bushfire.level) }}
                           className="text-white"
+                          style={{ backgroundColor: getBushfireColor(selectedRegion.emergencyData.bushfire.level) }}
                         >
                           {formatRatingLabel(selectedRegion.emergencyData.bushfire.level)}
                         </Badge>
@@ -212,8 +212,8 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
                           <span className="text-sm">Flood</span>
                         </div>
                         <Badge 
-                          style={{ backgroundColor: getFloodColor(selectedRegion.emergencyData.flood.level) }}
                           className="text-white"
+                          style={{ backgroundColor: getFloodColor(selectedRegion.emergencyData.flood.level) }}
                         >
                           {formatRatingLabel(selectedRegion.emergencyData.flood.level)}
                         </Badge>
@@ -237,10 +237,10 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
                   </div>
 
                   <div className="flex justify-between items-center pt-2">
-                    <Button variant="ghost" size="sm" className="text-blue-600">
+                    <Button className="text-blue-600" size="sm" variant="ghost">
                       Zoom map
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-blue-600">
+                    <Button className="text-blue-600" size="sm" variant="ghost">
                       View more
                       <ChevronRight className="ml-1 h-3 w-3" />
                     </Button>
@@ -254,19 +254,19 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
 
       {/* Map Controls */}
       <div className="absolute top-4 right-4 flex flex-col space-y-2">
-        <Button variant="outline" size="icon" className="bg-white">
+        <Button className="bg-white" size="icon" variant="outline">
           <ZoomIn className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="bg-white">
+        <Button className="bg-white" size="icon" variant="outline">
           <ZoomOut className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="bg-white">
+        <Button className="bg-white" size="icon" variant="outline">
           <Maximize className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="bg-white">
+        <Button className="bg-white" size="icon" variant="outline">
           <Navigation className="h-4 w-4" />
         </Button>
-        <Button variant="outline" size="icon" className="bg-white">
+        <Button className="bg-white" size="icon" variant="outline">
           <Layers className="h-4 w-4" />
         </Button>
       </div>
@@ -277,10 +277,10 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
           {(['streets', 'satellite', 'terrain'] as const).map((style) => (
             <Button
               key={style}
-              variant={mapStyle === style ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setMapStyle(style)}
               className="capitalize"
+              size="sm"
+              variant={mapStyle === style ? 'default' : 'ghost'}
+              onClick={() => { setMapStyle(style); }}
             >
               {style}
             </Button>

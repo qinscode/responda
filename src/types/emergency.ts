@@ -22,7 +22,7 @@ export interface EmergencyRating {
   description: string;
   color: string;
   severity: number; // 0-6 for sorting
-  recommendations: string[];
+  recommendations: Array<string>;
   lastUpdated: string;
 }
 
@@ -44,14 +44,14 @@ export interface Region {
   geometry: any; // GeoJSON Polygon or MultiPolygon
   center: [number, number]; // [longitude, latitude]
   bounds: [[number, number], [number, number]]; // [[sw], [ne]]
-  localGovernmentAreas: string[];
+  localGovernmentAreas: Array<string>;
   population?: number;
   area?: number; // square kilometers
 }
 
 export interface RegionWithEmergency extends Region {
   emergencyData: EmergencyData;
-  forecasts: EmergencyForecast[];
+  forecasts: Array<EmergencyForecast>;
   lastUpdated: string;
 }
 

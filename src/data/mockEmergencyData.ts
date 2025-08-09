@@ -4,6 +4,9 @@
 import type { RegionWithEmergency, EmergencyRating, BushfireRating, FloodRating } from '../types/emergency';
 import { BUSHFIRE_RATINGS, FLOOD_RATINGS } from '../types/emergency';
 
+// Re-export the rating constants for use in components
+export { BUSHFIRE_RATINGS, FLOOD_RATINGS };
+
 // Western Australia region boundaries (simplified coordinates)
 const WA_REGIONS_GEOMETRY = {
   'perth-metro': {
@@ -50,7 +53,7 @@ const WA_REGIONS_GEOMETRY = {
 
 // Helper function to generate random emergency rating
 const getRandomBushfireRating = (): EmergencyRating => {
-  const ratings: BushfireRating[] = ['no-rating', 'low-moderate', 'high', 'very-high', 'severe', 'extreme'];
+  const ratings: Array<BushfireRating> = ['no-rating', 'low-moderate', 'high', 'very-high', 'severe', 'extreme'];
   const randomIndex = Math.floor(Math.random() * ratings.length);
   const randomRating = ratings[randomIndex]!;
   const ratingInfo = BUSHFIRE_RATINGS[randomRating];
@@ -66,7 +69,7 @@ const getRandomBushfireRating = (): EmergencyRating => {
 };
 
 const getRandomFloodRating = (): EmergencyRating => {
-  const ratings: FloodRating[] = ['no-warning', 'minor', 'moderate', 'major'];
+  const ratings: Array<FloodRating> = ['no-warning', 'minor', 'moderate', 'major'];
   const randomIndex = Math.floor(Math.random() * ratings.length);
   const randomRating = ratings[randomIndex]!;
   const ratingInfo = FLOOD_RATINGS[randomRating];
@@ -82,8 +85,8 @@ const getRandomFloodRating = (): EmergencyRating => {
 };
 
 // Recommendations based on rating levels
-const getBushfireRecommendations = (rating: BushfireRating): string[] => {
-  const recommendations: Record<BushfireRating, string[]> = {
+const getBushfireRecommendations = (rating: BushfireRating): Array<string> => {
+  const recommendations: Record<BushfireRating, Array<string>> = {
     'no-rating': ['Stay informed about weather conditions', 'Maintain defensible space around property'],
     'low-moderate': ['Plan and prepare', 'Stay informed', 'Maintain your bushfire survival plan'],
     'high': ['Be alert for fires in your area', 'Decide what you will do if a fire starts', 'Prepare your property'],
@@ -95,8 +98,8 @@ const getBushfireRecommendations = (rating: BushfireRating): string[] => {
   return recommendations[rating];
 };
 
-const getFloodRecommendations = (rating: FloodRating): string[] => {
-  const recommendations: Record<FloodRating, string[]> = {
+const getFloodRecommendations = (rating: FloodRating): Array<string> => {
+  const recommendations: Record<FloodRating, Array<string>> = {
     'no-warning': ['Stay informed about weather conditions', 'Know your flood risk'],
     'minor': ['Be aware of potential flooding', 'Avoid unnecessary travel in affected areas', 'Monitor conditions'],
     'moderate': ['Prepare for isolation', 'Move to higher ground if necessary', 'Avoid flood waters'],
@@ -108,9 +111,9 @@ const getFloodRecommendations = (rating: FloodRating): string[] => {
 // Mock forecast data
 const generateMockForecasts = () => {
   const forecasts = [];
-  for (let i = 1; i <= 7; i++) {
+  for (let index = 1; index <= 7; index++) {
     const date = new Date();
-    date.setDate(date.getDate() + i);
+    date.setDate(date.getDate() + index);
     const confidenceOptions = ['low', 'medium', 'high'] as const;
     const confidenceIndex = Math.floor(Math.random() * confidenceOptions.length);
     
@@ -130,8 +133,8 @@ const generateMockForecasts = () => {
 const calculateCenter = (geometry: any): [number, number] => {
   if (geometry.type === 'Polygon') {
     const coords = geometry.coordinates[0];
-    const lngs = coords.map((coord: number[]) => coord[0]);
-    const lats = coords.map((coord: number[]) => coord[1]);
+    const lngs = coords.map((coord: Array<number>) => coord[0]);
+    const lats = coords.map((coord: Array<number>) => coord[1]);
     return [
       lngs.reduce((a: number, b: number) => a + b) / lngs.length,
       lats.reduce((a: number, b: number) => a + b) / lats.length
@@ -144,8 +147,8 @@ const calculateCenter = (geometry: any): [number, number] => {
 const calculateBounds = (geometry: any): [[number, number], [number, number]] => {
   if (geometry.type === 'Polygon') {
     const coords = geometry.coordinates[0];
-    const lngs = coords.map((coord: number[]) => coord[0]);
-    const lats = coords.map((coord: number[]) => coord[1]);
+    const lngs = coords.map((coord: Array<number>) => coord[0]);
+    const lats = coords.map((coord: Array<number>) => coord[1]);
     return [
       [Math.min(...lngs), Math.min(...lats)], // Southwest
       [Math.max(...lngs), Math.max(...lats)]  // Northeast
@@ -155,7 +158,7 @@ const calculateBounds = (geometry: any): [[number, number], [number, number]] =>
 };
 
 // Main mock data
-export const MOCK_WA_REGIONS: RegionWithEmergency[] = [
+export const MOCK_WA_REGIONS: Array<RegionWithEmergency> = [
   {
     id: 'wa-perth-metro',
     name: 'Perth Metro',
@@ -314,9 +317,9 @@ export const MOCK_WA_REGIONS: RegionWithEmergency[] = [
 ];
 
 // Generate additional mock regions with random data
-const additionalRegions: RegionWithEmergency[] = [
+const additionalRegions: Array<RegionWithEmergency> = [
   'Mid West', 'South West', 'Wheatbelt', 'Gascoyne', 'Peel'
-].map((name, index) => {
+].map((name) => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
   const geometryKey = slug as keyof typeof WA_REGIONS_GEOMETRY;
   
@@ -339,7 +342,7 @@ const additionalRegions: RegionWithEmergency[] = [
   };
 });
 
-export const getAllMockRegions = (): RegionWithEmergency[] => {
+export const getAllMockRegions = (): Array<RegionWithEmergency> => {
   return [...MOCK_WA_REGIONS, ...additionalRegions];
 };
 
@@ -371,7 +374,7 @@ export const getRegionById = (id: string): RegionWithEmergency | undefined => {
   return getAllMockRegions().find(region => region.id === id);
 };
 
-export const getRegionsByEmergencyType = (type: 'bushfire' | 'flood', minSeverity = 0): RegionWithEmergency[] => {
+export const getRegionsByEmergencyType = (type: 'bushfire' | 'flood', minSeverity = 0): Array<RegionWithEmergency> => {
   return getAllMockRegions().filter(region => 
     region.emergencyData[type].severity >= minSeverity
   );

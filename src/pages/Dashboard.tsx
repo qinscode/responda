@@ -6,7 +6,6 @@ import { DangerGauge } from '@/components/charts/DangerGauge';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Map, 
   List, 
@@ -17,7 +16,8 @@ import {
   Users
 } from 'lucide-react';
 import type { RegionWithEmergency } from '@/types/emergency';
-import { getAllMockRegions, BUSHFIRE_RATINGS, FLOOD_RATINGS } from '@/data/mockEmergencyData';
+import { BUSHFIRE_RATINGS, FLOOD_RATINGS } from '@/types/emergency';
+import { getAllMockRegions } from '@/data/mockEmergencyData';
 
 export const Dashboard = () => {
   const [selectedRegion, setSelectedRegion] = useState<RegionWithEmergency | undefined>();
@@ -37,6 +37,19 @@ export const Dashboard = () => {
   const activeIncidents = regions.filter(region => 
     region.emergencyData.bushfire.level !== 'no-rating' || region.emergencyData.flood.level !== 'no-warning'
   ).length;
+
+  // Calculate chart data
+  const bushfireData = Object.entries(BUSHFIRE_RATINGS).map(([level, info]) => ({
+    level,
+    count: regions.filter(r => r.emergencyData.bushfire.level === level).length,
+    color: info.color,
+  })).filter(item => item.count > 0);
+
+  const floodData = Object.entries(FLOOD_RATINGS).map(([level, info]) => ({
+    level,
+    count: regions.filter(r => r.emergencyData.flood.level === level).length,
+    color: info.color,
+  })).filter(item => item.count > 0);
 
   const handleRegionSelect = (region: RegionWithEmergency | undefined) => {
     setSelectedRegion(region);
@@ -88,28 +101,28 @@ export const Dashboard = () => {
             <div className="flex items-center space-x-2">
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <Button
-                  variant={viewMode === 'both' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewMode('both')}
                   className="h-8"
+                  size="sm"
+                  variant={viewMode === 'both' ? 'default' : 'ghost'}
+                  onClick={() => { setViewMode('both'); }}
                 >
                   <LayoutGrid className="mr-1 h-3 w-3" />
                   Both
                 </Button>
                 <Button
-                  variant={viewMode === 'map' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewMode('map')}
                   className="h-8"
+                  size="sm"
+                  variant={viewMode === 'map' ? 'default' : 'ghost'}
+                  onClick={() => { setViewMode('map'); }}
                 >
                   <Map className="mr-1 h-3 w-3" />
                   Map
                 </Button>
                 <Button
-                  variant={viewMode === 'list' ? 'default' : 'ghost'}
-                  size="sm"
-                  onClick={() => setViewMode('list')}
                   className="h-8"
+                  size="sm"
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  onClick={() => { setViewMode('list'); }}
                 >
                   <List className="mr-1 h-3 w-3" />
                   List
@@ -127,8 +140,8 @@ export const Dashboard = () => {
           {(viewMode === 'both' || viewMode === 'list') && (
             <div className={`${viewMode === 'both' ? 'lg:col-span-4' : 'lg:col-span-12'} bg-white rounded-lg shadow`}>
               <EmergencyList 
-                onRegionSelect={handleRegionSelect}
                 selectedRegionId={selectedRegion?.id}
+                onRegionSelect={handleRegionSelect}
               />
             </div>
           )}
@@ -144,6 +157,12 @@ export const Dashboard = () => {
           )}
         </div>
 
+        {/* Charts Section */}
+        <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <DangerGauge data={bushfireData} type="bushfire" />
+          <DangerGauge data={floodData} type="flood" />
+        </div>
+
         {/* Additional Info Cards (when region is selected) */}
         {selectedRegion && (
           <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -154,8 +173,8 @@ export const Dashboard = () => {
                   <div className="flex justify-between">
                     <span>Bushfire Risk:</span>
                     <Badge 
-                      variant="outline"
                       className="text-xs"
+                      variant="outline"
                     >
                       {selectedRegion.emergencyData.bushfire.level.replace('-', ' ')}
                     </Badge>
@@ -163,8 +182,8 @@ export const Dashboard = () => {
                   <div className="flex justify-between">
                     <span>Flood Risk:</span>
                     <Badge 
-                      variant="outline"
                       className="text-xs"
+                      variant="outline"
                     >
                       {selectedRegion.emergencyData.flood.level.replace('-', ' ')}
                     </Badge>

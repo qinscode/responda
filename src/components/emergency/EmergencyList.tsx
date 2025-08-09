@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, MapPin, Flame, Droplets, AlertTriangle } from 'lucide-react';
 import { getAllMockRegions } from '@/data/mockEmergencyData';
 import type { RegionWithEmergency, EmergencyType } from '@/types/emergency';
@@ -15,7 +14,6 @@ interface EmergencyListProps {
 
 export const EmergencyList = ({ onRegionSelect, selectedRegionId }: EmergencyListProps) => {
   const [selectedDate, setSelectedDate] = useState('today');
-  const [showBothTypes, setShowBothTypes] = useState(true);
   const [emergencyFilter, setEmergencyFilter] = useState<EmergencyType | 'both'>('both');
   
   const regions = getAllMockRegions();
@@ -72,7 +70,7 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId }: EmergencyLis
         </div>
 
         {/* Date Tabs */}
-        <Tabs value={selectedDate} onValueChange={setSelectedDate} className="mb-4">
+        <Tabs className="mb-4" value={selectedDate} onValueChange={setSelectedDate}>
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="today">Today</TabsTrigger>
             <TabsTrigger value="tomorrow">Tomorrow</TabsTrigger>
@@ -85,26 +83,26 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId }: EmergencyLis
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Button
-              variant={emergencyFilter === 'both' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setEmergencyFilter('both')}
+              variant={emergencyFilter === 'both' ? 'default' : 'outline'}
+              onClick={() => { setEmergencyFilter('both'); }}
             >
               Both
             </Button>
             <Button
-              variant={emergencyFilter === 'bushfire' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setEmergencyFilter('bushfire')}
               className="text-red-600 border-red-600 hover:bg-red-50"
+              size="sm"
+              variant={emergencyFilter === 'bushfire' ? 'default' : 'outline'}
+              onClick={() => { setEmergencyFilter('bushfire'); }}
             >
               <Flame className="mr-1 h-3 w-3" />
               Bushfire
             </Button>
             <Button
-              variant={emergencyFilter === 'flood' ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setEmergencyFilter('flood')}
               className="text-blue-600 border-blue-600 hover:bg-blue-50"
+              size="sm"
+              variant={emergencyFilter === 'flood' ? 'default' : 'outline'}
+              onClick={() => { setEmergencyFilter('flood'); }}
             >
               <Droplets className="mr-1 h-3 w-3" />
               Flood
