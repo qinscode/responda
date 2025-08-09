@@ -133,7 +133,7 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
       });
 
       // Click handler (fill and centers)
-      const handleClick = (e: mapboxgl.MapMouseEvent & mapboxgl.EventData) => {
+      const handleClick = (e: mapboxgl.MapMouseEvent) => {
         const features = map.queryRenderedFeatures(e.point, { layers: ['regions-fill', 'regions-centers'] });
         const f = features[0];
         if (!f) return;

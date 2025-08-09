@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 // import { OverviewStats } from '@/components/dashboard/OverviewStats';
-import { ControlBar } from '@/components/dashboard/ControlBar';
 import { CriticalAlerts } from '@/components/dashboard/CriticalAlerts';
 import { AnalyticsPanel } from '@/components/dashboard/AnalyticsPanel';
 import { MapContainer } from '@/components/maps/MapContainer';
@@ -45,7 +44,7 @@ export const Dashboard = () => {
     <AppShell onSearchChange={setSearchQuery}>
       {/* Top statistics removed per request */}
 
-      <ControlBar viewMode={viewMode} onChange={setViewMode} />
+
 
       {showOverview && (
         <CriticalAlerts regions={criticalRegions} onSelect={setSelectedRegion} />
@@ -63,6 +62,8 @@ export const Dashboard = () => {
                     searchQuery={searchQuery}
                     showHeader={true}
                     initialView="compact"
+                    externalViewMode={viewMode}
+                    onExternalViewModeChange={setViewMode}
                   />
                 </div>
               </CardContent>
@@ -90,7 +91,7 @@ export const Dashboard = () => {
       ) : (
         <Card className="card-modern">
           <CardContent className="p-0">
-            <EmergencyList onRegionSelect={setSelectedRegion} selectedRegionId={selectedRegion?.id} searchQuery={searchQuery} showHeader={true} initialView="compact" />
+            <EmergencyList onRegionSelect={setSelectedRegion} selectedRegionId={selectedRegion?.id} searchQuery={searchQuery} showHeader={true} initialView="compact" externalViewMode={viewMode} onExternalViewModeChange={setViewMode} />
           </CardContent>
         </Card>
       )}

@@ -14,7 +14,10 @@ import {
   Users,
   Info,
   ChevronRight,
-  Eye
+  Eye,
+  LayoutGrid,
+  Map as MapIcon,
+  List as ListIcon
 } from 'lucide-react';
 import { getAllMockRegions } from '@/data/mockEmergencyData';
 import type { RegionWithEmergency, EmergencyType } from '@/types/emergency';
@@ -26,12 +29,14 @@ interface EmergencyListProps {
   searchQuery?: string;
   showHeader?: boolean;
   initialView?: 'card' | 'compact';
+  externalViewMode?: 'both' | 'map' | 'list';
+  onExternalViewModeChange?: (mode: 'both' | 'map' | 'list') => void;
 }
 
 type SortOption = 'name' | 'risk-level' | 'population' | 'last-updated';
 type ViewMode = 'card' | 'compact';
 
-export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = '', showHeader = false, initialView = 'compact' }: EmergencyListProps) => {
+export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = '', showHeader = false, initialView = 'compact', externalViewMode, onExternalViewModeChange }: EmergencyListProps) => {
   const [emergencyFilter, setEmergencyFilter] = useState<EmergencyType | 'both'>('both');
   const [sortBy, setSortBy] = useState<SortOption>('risk-level');
   const [viewMode, setViewMode] = useState<ViewMode>(initialView);
@@ -149,6 +154,20 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
               <h2 className="text-base font-semibold heading-modern">Fire Danger Ratings</h2>
               <p className="text-xs text-muted-foreground">{filteredAndSortedRegions.length} of {regions.length} regions</p>
             </div>
+            {/* Move Both / Map / List toggle into the left header when controlled props provided */}
+            {externalViewMode && onExternalViewModeChange && (
+              <div className="flex items-center gap-2 bg-muted/50 p-1 rounded-lg">
+                <Button variant={externalViewMode === 'both' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('both')}>
+                  <LayoutGrid className="h-4 w-4 mr-2" /> Both
+                </Button>
+                <Button variant={externalViewMode === 'map' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('map')}>
+                  <MapIcon className="h-4 w-4 mr-2" /> Map
+                </Button>
+                <Button variant={externalViewMode === 'list' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('list')}>
+                  <ListIcon className="h-4 w-4 mr-2" /> List
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className="mt-3">
