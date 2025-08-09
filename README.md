@@ -1,7 +1,5 @@
 <div align="center">
 
-[![WA Emergency Dashboard Logo](./public/vite-react-boilerplate.png)](https://github.com/your-org/wa-emergency-dashboard/blob/main/public/vite-react-boilerplate.png)
-
 # WA Emergency Dashboard
 
 **Monitor Western Australia emergencies smarter, faster, and better.**  
