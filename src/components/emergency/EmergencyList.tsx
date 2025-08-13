@@ -1,19 +1,12 @@
 import { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
-  MapPin, 
-  Flame, 
-  Droplets, 
   AlertTriangle, 
-  Clock,
-  Users,
   Info,
-  ChevronRight,
   Eye,
   LayoutGrid,
   Map as MapIcon,
@@ -81,30 +74,6 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
     return filtered;
   }, [regions, emergencyFilter, effectiveSearchQuery, sortBy]);
 
-  const getEmergencyBadgeClass = (type: EmergencyType, level: string) => {
-    const baseClass = "status-indicator text-xs font-medium";
-    if (type === 'bushfire') {
-      switch (level) {
-        case 'no-rating': return `${baseClass} emergency-no-rating`;
-        case 'low-moderate': return `${baseClass} emergency-low-moderate`;
-        case 'high': return `${baseClass} emergency-high`;
-        case 'very-high': return `${baseClass} emergency-very-high`;
-        case 'severe': return `${baseClass} emergency-severe`;
-        case 'extreme': return `${baseClass} emergency-extreme`;
-        case 'catastrophic': return `${baseClass} emergency-catastrophic`;
-        default: return `${baseClass} emergency-no-rating`;
-      }
-    } else {
-      switch (level) {
-        case 'no-warning': return `${baseClass} flood-no-warning`;
-        case 'minor': return `${baseClass} flood-minor`;
-        case 'moderate': return `${baseClass} flood-moderate`;
-        case 'major': return `${baseClass} flood-major`;
-        default: return `${baseClass} flood-no-warning`;
-      }
-    }
-  };
-
   const getHighestRisk = (region: RegionWithEmergency) => {
     const { bushfire, flood } = region.emergencyData;
     return bushfire.severity >= flood.severity ? bushfire : flood;
@@ -125,10 +94,10 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
 
     return (
       <button
-        onClick={() => onRegionSelect?.(region)}
         className={`w-full text-left rounded-lg border px-3 py-3 transition-colors flex items-start justify-between ${
           isSelected ? 'bg-gray-900 text-white border-gray-900' : 'bg-white hover:bg-muted/50 border-border'
         }`}
+        onClick={() => { onRegionSelect?.(region); }}
       >
         <div className="flex items-start gap-3">
           <div className={`mt-0.5 h-6 w-6 rounded-full ${getRiskDotClass(highest.severity)} ring-2 ${isSelected ? 'ring-white/40' : 'ring-white'}`} />
@@ -157,13 +126,25 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
             {/* Move Both / Map / List toggle into the left header when controlled props provided */}
             {externalViewMode && onExternalViewModeChange && (
               <div className="flex items-center gap-2 bg-muted/50 p-1 rounded-lg">
-                <Button variant={externalViewMode === 'both' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('both')}>
+                <Button
+                  size="sm"
+                  variant={externalViewMode === 'both' ? 'default' : 'ghost'}
+                  onClick={() => { onExternalViewModeChange('both'); }}
+                >
                   <LayoutGrid className="h-4 w-4 mr-2" /> Both
                 </Button>
-                <Button variant={externalViewMode === 'map' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('map')}>
+                <Button
+                  size="sm"
+                  variant={externalViewMode === 'map' ? 'default' : 'ghost'}
+                  onClick={() => { onExternalViewModeChange('map'); }}
+                >
                   <MapIcon className="h-4 w-4 mr-2" /> Map
                 </Button>
-                <Button variant={externalViewMode === 'list' ? 'default' : 'ghost'} size="sm" onClick={() => onExternalViewModeChange('list')}>
+                <Button
+                  size="sm"
+                  variant={externalViewMode === 'list' ? 'default' : 'ghost'}
+                  onClick={() => { onExternalViewModeChange('list'); }}
+                >
                   <ListIcon className="h-4 w-4 mr-2" /> List
                 </Button>
               </div>
@@ -171,11 +152,15 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
           </div>
 
           <div className="mt-3">
-            <Tabs value={String(dayOffset)} onValueChange={(v) => setDayOffset(Number(v))}>
+            <Tabs value={String(dayOffset)} onValueChange={(v) => { setDayOffset(Number(v)); }}>
               <TabsList className="grid w-full grid-cols-4">
-                {[0,1,2,3].map((i) => (
-                  <TabsTrigger key={i} value={String(i)} className="text-xs">
-                    {i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : format(addDays(new Date(), i), 'dd MMM')}
+                {[0, 1, 2, 3].map((index) => (
+                  <TabsTrigger
+                    key={index}
+                    className="text-xs"
+                    value={String(index)}
+                  >
+                    {index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : format(addDays(new Date(), index), 'dd MMM')}
                   </TabsTrigger>
                 ))}
               </TabsList>
@@ -184,19 +169,23 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
 
           {!searchQuery && (
             <div className="relative mt-3">
-              <Input placeholder="Search regions..." value={localSearchQuery} onChange={(e) => setLocalSearchQuery(e.target.value)} />
+              <Input
+                placeholder="Search regions..."
+                value={localSearchQuery}
+                onChange={(event_) => { setLocalSearchQuery(event_.target.value); }}
+              />
             </div>
           )}
 
           <div className="mt-3 grid grid-cols-3 gap-3">
-            <Tabs value={emergencyFilter} onValueChange={(value) => setEmergencyFilter(value as EmergencyType | 'both')}>
+            <Tabs value={emergencyFilter} onValueChange={(value) => { setEmergencyFilter(value as EmergencyType | 'both'); }}>
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="both" className="text-xs">All</TabsTrigger>
-                <TabsTrigger value="bushfire" className="text-xs">Fire</TabsTrigger>
-                <TabsTrigger value="flood" className="text-xs">Flood</TabsTrigger>
+                <TabsTrigger className="text-xs" value="both">All</TabsTrigger>
+                <TabsTrigger className="text-xs" value="bushfire">Fire</TabsTrigger>
+                <TabsTrigger className="text-xs" value="flood">Flood</TabsTrigger>
               </TabsList>
             </Tabs>
-            <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
+            <Select value={sortBy} onValueChange={(value) => { setSortBy(value as SortOption); }}>
               <SelectTrigger><SelectValue placeholder="Sort by..." /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="risk-level">Risk Level</SelectItem>
@@ -205,10 +194,10 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
                 <SelectItem value="last-updated">Last Updated</SelectItem>
               </SelectContent>
             </Select>
-            <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as ViewMode)}>
+            <Tabs value={viewMode} onValueChange={(value) => { setViewMode(value as ViewMode); }}>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="compact" className="text-xs">List</TabsTrigger>
-                <TabsTrigger value="card" className="text-xs">Cards</TabsTrigger>
+                <TabsTrigger className="text-xs" value="compact">List</TabsTrigger>
+                <TabsTrigger className="text-xs" value="card">Cards</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -240,7 +229,7 @@ export const EmergencyList = ({ onRegionSelect, selectedRegionId, searchQuery = 
                       <div className={`h-3 w-3 rounded-full ${getRiskDotClass(getHighestRisk(region).severity)}`} />
                       <div className="font-medium">{region.name}</div>
                     </div>
-                    <Button size="sm" variant="outline" onClick={() => onRegionSelect?.(region)}>
+                    <Button size="sm" variant="outline" onClick={() => { onRegionSelect?.(region); }}>
                       <Eye className="h-3 w-3 mr-2" /> View
                     </Button>
                   </div>

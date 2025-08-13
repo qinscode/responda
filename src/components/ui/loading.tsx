@@ -44,8 +44,8 @@ export const LoadingCard = () => {
           <Skeleton className="h-16 w-full" />
         </div>
         <div className="space-y-2">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="space-y-1">
+          {[...Array(3)].map((_, index) => (
+            <div key={index} className="space-y-1">
               <div className="flex items-center justify-between">
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="h-4 w-12" />
@@ -132,8 +132,8 @@ export const LoadingFullPage = () => {
       <main className="container mx-auto px-4 py-6 space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[...Array(4)].map((_, i) => (
-            <Card key={i} className="card-modern">
+          {[...Array(4)].map((_, index) => (
+            <Card key={index} className="card-modern">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
@@ -165,8 +165,8 @@ export const LoadingFullPage = () => {
             </Card>
             <Card className="card-modern">
               <CardContent className="p-6 space-y-4">
-                {[...Array(3)].map((_, i) => (
-                  <LoadingRegionCard key={i} />
+                {[...Array(3)].map((_, index) => (
+                  <LoadingRegionCard key={index} />
                 ))}
               </CardContent>
             </Card>

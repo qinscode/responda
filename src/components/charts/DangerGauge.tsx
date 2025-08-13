@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -66,23 +66,23 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
     return null;
   };
 
-  const CustomLegend = ({ payload }: any) => {
-    return (
-      <div className="flex flex-wrap justify-center gap-2 mt-4">
-        {payload?.map((entry: any, index: number) => (
-          <div key={index} className="flex items-center gap-2 text-xs">
-            <div 
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: entry.color }}
-            />
-            <span className="text-muted-foreground">
-              {formatLabel(entry.payload.level)} ({entry.payload.count})
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  // const CustomLegend = ({ payload }: any) => {
+  //   return (
+  //     <div className="flex flex-wrap justify-center gap-2 mt-4">
+  //       {payload?.map((entry: any, index: number) => (
+  //         <div key={index} className="flex items-center gap-2 text-xs">
+  //           <div
+  //             className="w-3 h-3 rounded-full"
+  //             style={{ backgroundColor: entry.color }}
+  //           />
+  //           <span className="text-muted-foreground">
+  //             {formatLabel(entry.payload.level)} ({entry.payload.count})
+  //           </span>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   const CustomPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
     if (percent < 0.05) return null; // Don't show labels for very small segments
@@ -94,13 +94,13 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
 
     return (
       <text 
-        x={x} 
-        y={y} 
+        className="text-xs font-medium" 
+        dominantBaseline="central" 
         fill="white" 
-        textAnchor={x > cx ? 'start' : 'end'} 
-        dominantBaseline="central"
-        className="text-xs font-medium"
-        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
+        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }} 
+        textAnchor={x > cx ? 'start' : 'end'}
+        x={x}
+        y={y}
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
@@ -119,18 +119,18 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
           </CardTitle>
           <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
             <Button
-              variant={viewType === 'pie' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setViewType('pie')}
               className="h-7 w-7 p-0"
+              size="sm"
+              variant={viewType === 'pie' ? 'default' : 'ghost'}
+              onClick={() => { setViewType('pie'); }}
             >
               <PieChartIcon className="h-3 w-3" />
             </Button>
             <Button
-              variant={viewType === 'bar' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setViewType('bar')}
               className="h-7 w-7 p-0"
+              size="sm"
+              variant={viewType === 'bar' ? 'default' : 'ghost'}
+              onClick={() => { setViewType('bar'); }}
             >
               <BarChart3 className="h-3 w-3" />
             </Button>
@@ -141,7 +141,7 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
             <TrendingUp className="h-3 w-3" />
             <span>Total Regions: {total}</span>
           </div>
-          <Badge variant="outline" className="text-xs">
+          <Badge className="text-xs" variant="outline">
             Live Data
           </Badge>
         </div>
@@ -158,22 +158,22 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
         ) : (
           <>
             <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer height="100%" width="100%">
                 {viewType === 'pie' ? (
                   <PieChart>
                     <Pie
-                      data={data}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={CustomPieLabel}
-                      outerRadius={80}
-                      innerRadius={30}
-                      fill="#8884d8"
-                      dataKey="count"
                       animationBegin={0}
                       animationDuration={1000}
                       animationEasing="ease-out"
+                      cx="50%"
+                      cy="50%"
+                      data={data}
+                      dataKey="count"
+                      fill="#8884d8"
+                      innerRadius={30}
+                      label={CustomPieLabel}
+                      labelLine={false}
+                      outerRadius={80}
                     >
                       {data.map((entry, index) => (
                         <Cell 
@@ -189,20 +189,20 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
                 ) : (
                   <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <XAxis 
-                      dataKey="level" 
-                      tickFormatter={formatLabel}
-                      tick={{ fontSize: 10 }}
-                      angle={-45}
-                      textAnchor="end"
+                      angle={-45} 
+                      dataKey="level"
                       height={60}
+                      textAnchor="end"
+                      tick={{ fontSize: 10 }}
+                      tickFormatter={formatLabel}
                     />
                     <YAxis tick={{ fontSize: 10 }} />
                     <Tooltip content={<CustomTooltip />} />
                     <Bar 
-                      dataKey="count" 
-                      radius={[4, 4, 0, 0]}
+                      animationBegin={0} 
                       animationDuration={1000}
-                      animationBegin={0}
+                      dataKey="count"
+                      radius={[4, 4, 0, 0]}
                     >
                       {data.map((entry, index) => (
                         <Cell 
@@ -254,7 +254,7 @@ export const DangerGauge = ({ data, type, className }: DangerGaugeProps) => {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="text-muted-foreground">{item.count}</span>
-                          <Badge variant="outline" className="text-xs">
+                          <Badge className="text-xs" variant="outline">
                             {percentage.toFixed(1)}%
                           </Badge>
                         </div>

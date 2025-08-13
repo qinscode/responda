@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
+import type { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
 import { getAllMockRegions } from '@/data/mockEmergencyData';
@@ -17,7 +18,7 @@ const MAPBOX_STYLES: Record<'streets' | 'satellite' | 'terrain', string> = {
   terrain: 'mapbox://styles/mapbox/outdoors-v12',
 };
 
-export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerProps) => {
+export const MapContainer = ({  onRegionSelect }: MapContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
@@ -180,8 +181,10 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
-    const src = map.getSource('regions') as mapboxgl.GeoJSONSource | undefined;
-    if (src) src.setData(featureCollection as any);
+    const source = map.getSource('regions');
+    if (source) {
+      (source as GeoJSONSource).setData(featureCollection as any);
+    }
   }, [featureCollection]);
 
   const tokenMissing = !import.meta.env['VITE_MAPBOX_TOKEN'];
@@ -189,20 +192,20 @@ export const MapContainer = ({ selectedRegion, onRegionSelect }: MapContainerPro
   return (
     <div className="relative w-full h-full">
       {tokenMissing ? (
-        <div className="flex items-center justify-center h-[600px] bg-muted/50 rounded-lg border">
+        <div className="flex items-center justify-center h-[600px] bg-muted/50">
           <div className="text-center">
             <p className="font-medium mb-1">Mapbox token not configured</p>
             <p className="text-sm text-muted-foreground">Set VITE_MAPBOX_TOKEN in your environment to enable the interactive map.</p>
           </div>
         </div>
       ) : (
-        <div ref={containerRef} className="w-full h-full rounded-lg overflow-hidden" />
+        <div ref={containerRef} className="w-full h-full" />
       )}
 
       {/* Simple style switcher */}
-      <div className="absolute top-4 right-4 space-x-2" role="toolbar" aria-label="Map styles">
+      <div aria-label="Map styles" className="absolute top-3 right-3 space-x-2 z-10" role="toolbar">
         {(['streets', 'satellite', 'terrain'] as const).map((s) => (
-          <Button key={s} size="sm" variant={mapStyle === s ? 'default' : 'ghost'} onClick={() => setMapStyle(s)}>
+          <Button key={s} size="sm" variant={mapStyle === s ? 'default' : 'ghost'} onClick={() => { setMapStyle(s); }}>
             {s}
           </Button>
         ))}

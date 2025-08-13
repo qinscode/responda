@@ -21,7 +21,7 @@ export function CriticalAlerts({ regions, onSelect }: CriticalAlertsProps) {
             <h3 className="font-semibold text-red-800 mb-2">Critical Emergency Alerts</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {regions.map((region) => (
-                <button key={region.id} className="bg-white/80 rounded-lg p-3 border border-red-200 cursor-pointer hover:bg-white transition-colors text-left" onClick={() => onSelect(region)}>
+                <button key={region.id} className="bg-white/80 rounded-lg p-3 border border-red-200 cursor-pointer hover:bg-white transition-colors text-left" onClick={() => { onSelect(region); }}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="font-medium text-red-900">{region.name}</span>
                     <Badge className="bg-red-600 text-white">CRITICAL</Badge>

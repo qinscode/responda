@@ -17,10 +17,6 @@ export const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const regions = getAllMockRegions();
 
-  const totalRegions = regions.length;
-  const activeAlerts = regions.filter(r => r.emergencyData.bushfire.severity > 2 || r.emergencyData.flood.severity > 1).length;
-  const highRiskRegions = regions.filter(r => r.emergencyData.bushfire.severity >= 4 || r.emergencyData.flood.severity >= 3).length;
-  const totalPopulation = regions.reduce((sum, r) => sum + (r.population || 0), 0);
 
   const bushfireData = Object.entries(BUSHFIRE_RATINGS).map(([level, info]) => ({
     level,
@@ -40,40 +36,39 @@ export const Dashboard = () => {
 
   const showOverview = false; // Always hide top statistics
 
+  // Available content height inside main: adjust the constant if needed
+  const sectionHeightClass = 'min-h-[calc(100vh-160px)]';
+
   return (
     <AppShell onSearchChange={setSearchQuery}>
-      {/* Top statistics removed per request */}
-
-
-
       {showOverview && (
         <CriticalAlerts regions={criticalRegions} onSelect={setSelectedRegion} />
       )}
 
       {viewMode === 'both' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-4">
+        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 ${sectionHeightClass}`}>
+          <div className="lg:col-span-4 h-full">
             <Card className="card-modern h-full">
-              <CardContent className="p-0">
-                <div className="max-h-[600px] overflow-auto">
+              <CardContent className="p-0 h-full flex flex-col">
+                <div className="flex-1 overflow-auto">
                   <EmergencyList
-                    onRegionSelect={setSelectedRegion}
-                    selectedRegionId={selectedRegion?.id}
-                    searchQuery={searchQuery}
-                    showHeader={true}
-                    initialView="compact"
+                    showHeader
                     externalViewMode={viewMode}
+                    initialView="compact"
+                    searchQuery={searchQuery}
+                    selectedRegionId={selectedRegion?.id}
                     onExternalViewModeChange={setViewMode}
+                    onRegionSelect={setSelectedRegion}
                   />
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          <div className="lg:col-span-8">
-            <Card className="card-modern h-full">
-              <CardContent className="p-0">
-                <div className="map-container h-[600px]">
+          <div className="lg:col-span-8 h-full">
+            <Card className="bg-transparent border-0 shadow-none rounded-xl py-0 h-full">
+              <CardContent className="p-0 h-full">
+                <div className="map-container h-full">
                   <MapContainer selectedRegion={selectedRegion} onRegionSelect={setSelectedRegion} />
                 </div>
               </CardContent>
@@ -81,17 +76,19 @@ export const Dashboard = () => {
           </div>
         </div>
       ) : viewMode === 'map' ? (
-        <Card className="card-modern">
+        <Card className="bg-transparent border-0 shadow-none rounded-xl py-0">
           <CardContent className="p-0">
-            <div className="map-container h-[600px]">
+            <div className={`map-container h-[calc(100vh-160px)]`}>
               <MapContainer selectedRegion={selectedRegion} onRegionSelect={setSelectedRegion} />
             </div>
           </CardContent>
         </Card>
       ) : (
         <Card className="card-modern">
-          <CardContent className="p-0">
-            <EmergencyList onRegionSelect={setSelectedRegion} selectedRegionId={selectedRegion?.id} searchQuery={searchQuery} showHeader={true} initialView="compact" externalViewMode={viewMode} onExternalViewModeChange={setViewMode} />
+          <CardContent className={`p-0 h-[calc(100vh-160px)]`}> 
+            <div className="h-full overflow-auto">
+              <EmergencyList showHeader externalViewMode={viewMode} initialView="compact" searchQuery={searchQuery} selectedRegionId={selectedRegion?.id} onExternalViewModeChange={setViewMode} onRegionSelect={setSelectedRegion} />
+            </div>
           </CardContent>
         </Card>
       )}

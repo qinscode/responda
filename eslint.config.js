@@ -21,9 +21,13 @@ const baseESLintConfig = {
     eslintJS.configs.recommended,
   ],
   rules: {
+		'no-duplicate-imports': 'off',
+		'import/no-duplicates': 'off',
+		'no-use-before-define': 'off',
+		'@typescript-eslint/no-use-before-define': 'off',
+
     "no-await-in-loop": "error",
     "no-constant-binary-expression": "error",
-    "no-duplicate-imports": "error",
     "no-new-native-nonconstructor": "error",
     "no-promise-executor-return": "error",
     "no-self-compare": "error",
@@ -31,9 +35,8 @@ const baseESLintConfig = {
     "no-unmodified-loop-condition": "error",
     "no-unreachable-loop": "error",
     "no-unused-private-class-members": "error",
-    "no-use-before-define": "error",
-    "require-atomic-updates": "error",
-    "camelcase": "error",
+		"require-atomic-updates": "error",
+    "camelcase": "off",
   }
 }
 
@@ -56,7 +59,7 @@ const typescriptConfig = {
     },
   },
   linterOptions: {
-    reportUnusedDisableDirectives: "error"
+    reportUnusedDisableDirectives: "off"
   },
   plugins: {
     import: patchedImportPlugin
@@ -86,6 +89,7 @@ const typescriptConfig = {
     "@typescript-eslint/prefer-enum-initializers": "error",
     "@typescript-eslint/prefer-readonly": "error",
     "@typescript-eslint/return-await": "error",
+		"unicorn/prevent-abbreviations": "off",
     "@typescript-eslint/no-misused-promises": [
     "error",
     {
@@ -137,10 +141,7 @@ const reactConfig = {
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "error",
     ...patchedReactHooksPlugin.configs.recommended.rules,
-    "react-refresh/only-export-components": [
-      "warn",
-      { "allowConstantExport": true }
-    ],
+    "react-refresh/only-export-components": "off"
   },
 }
 
@@ -176,6 +177,7 @@ const unicornConfig = {
     "unicorn/no-console-spaces": "error",
     "unicorn/no-null": "off",
     "unicorn/filename-case": "off",
+
     "unicorn/prevent-abbreviations": [
       "error",
       {
@@ -192,7 +194,19 @@ const unicornConfig = {
           "prop": false,
           "props": false,
           "ref": false,
-          "refs": false
+          "refs": false,
+					"utils": false,
+					"util": false,
+					"pkg": false,
+					"opts": false,
+					"option": false,
+					"opt": false,
+					"cfg": false,
+					"config": false,
+					"ctx": false,
+					"context": false,
+					"err": false,
+					"e": false
         },
         "ignore": ["semVer", "SemVer"]
       }

@@ -220,3 +220,21 @@ body {
     0 8px 32px 0 rgba(31, 38, 135, 0.37),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+
+/* Ensure map wrapper rows do not add spacing */
+.map-container {
+  height: 600px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Make Mapbox map fully flush without radius */
+.mapboxgl-map, .mapboxgl-canvas, .mapboxgl-canvas-container {
+  border-radius: 0 !important;
+}
+
+/* Remove default Mapbox bottom attribution extra gap by tightening container */
+.mapboxgl-control-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
