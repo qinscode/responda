@@ -266,72 +266,175 @@ export const mockPredictiveAlerts: Array<PredictiveAlert> = [
   }
 ];
 
-// Mock regional risk profiles
-export const mockRegionalRiskProfiles: Array<RegionalRiskProfile> = getAllMockRegions().map(region => ({
-  regionId: region.id,
-  overallRiskScore: 30 + Math.random() * 60, // 30-90 range
-  riskFactors: [
-    {
-      id: 'temp-factor',
-      name: 'Temperature',
-      category: 'weather',
-      weight: 0.25,
-      currentValue: 25 + Math.random() * 15,
-      historicalAverage: 28,
-      trend: ['increasing', 'decreasing', 'stable'][Math.floor(Math.random() * 3)] as any
-    },
-    {
-      id: 'humidity-factor',
-      name: 'Humidity',
-      category: 'weather',
-      weight: 0.2,
-      currentValue: 40 + Math.random() * 40,
-      historicalAverage: 55,
-      trend: ['increasing', 'decreasing', 'stable'][Math.floor(Math.random() * 3)] as any
-    },
-    {
-      id: 'elevation-factor',
-      name: 'Elevation Risk',
-      category: 'geographic',
-      weight: 0.15,
-      currentValue: Math.random() * 100,
-      historicalAverage: 50,
-      trend: 'stable'
-    },
-    {
-      id: 'population-factor',
-      name: 'Population Density',
-      category: 'human',
-      weight: 0.1,
-      currentValue: Math.random() * 100,
-      historicalAverage: 45,
-      trend: 'increasing'
-    },
-    {
-      id: 'seasonal-factor',
-      name: 'Seasonal Risk',
-      category: 'seasonal',
-      weight: 0.3,
-      currentValue: 60 + Math.random() * 30,
-      historicalAverage: 65,
-      trend: ['increasing', 'decreasing', 'stable'][Math.floor(Math.random() * 3)] as any
-    }
-  ],
-  vulnerabilityIndex: 0.3 + Math.random() * 0.6,
-  adaptationCapacity: 0.2 + Math.random() * 0.7,
-  lastUpdated: new Date().toISOString()
-}));
+// Enhanced regional risk profiles with detailed factors for each category
+export const mockRegionalRiskProfiles: Array<RegionalRiskProfile> = getAllMockRegions().map(region => {
+  const overallRiskScore = 30 + Math.random() * 60;
+  
+  return {
+    regionId: region.id,
+    overallRiskScore,
+    riskFactors: [
+      // Weather factors
+      {
+        id: 'temperature-factor',
+        name: 'Temperature Extremes',
+        category: 'weather',
+        weight: 0.25,
+        currentValue: 35 + Math.random() * 10,
+        historicalAverage: 32,
+        trend: ['increasing', 'stable', 'decreasing'][Math.floor(Math.random() * 3)] as any
+      },
+      {
+        id: 'humidity-factor',
+        name: 'Relative Humidity',
+        category: 'weather',
+        weight: 0.2,
+        currentValue: 20 + Math.random() * 30,
+        historicalAverage: 45,
+        trend: ['decreasing', 'stable', 'increasing'][Math.floor(Math.random() * 3)] as any
+      },
+      {
+        id: 'wind-speed-factor',
+        name: 'Wind Speed',
+        category: 'weather',
+        weight: 0.18,
+        currentValue: 10 + Math.random() * 20,
+        historicalAverage: 15,
+        trend: ['increasing', 'stable', 'decreasing'][Math.floor(Math.random() * 3)] as any
+      },
+      {
+        id: 'rainfall-factor',
+        name: 'Precipitation Deficit',
+        category: 'weather',
+        weight: 0.22,
+        currentValue: 5 + Math.random() * 25,
+        historicalAverage: 18,
+        trend: ['decreasing', 'stable', 'increasing'][Math.floor(Math.random() * 3)] as any
+      },
+      
+      // Geographic factors
+      {
+        id: 'elevation-factor',
+        name: 'Elevation Risk',
+        category: 'geographic',
+        weight: 0.3,
+        currentValue: Math.random() * 100,
+        historicalAverage: 50,
+        trend: 'stable'
+      },
+      {
+        id: 'slope-factor',
+        name: 'Terrain Slope',
+        category: 'geographic',
+        weight: 0.25,
+        currentValue: 10 + Math.random() * 30,
+        historicalAverage: 20,
+        trend: 'stable'
+      },
+      {
+        id: 'vegetation-factor',
+        name: 'Vegetation Density',
+        category: 'geographic',
+        weight: 0.2,
+        currentValue: 40 + Math.random() * 40,
+        historicalAverage: 60,
+        trend: ['decreasing', 'stable'][Math.floor(Math.random() * 2)] as any
+      },
+      {
+        id: 'water-proximity-factor',
+        name: 'Water Body Proximity',
+        category: 'geographic',
+        weight: 0.25,
+        currentValue: Math.random() * 100,
+        historicalAverage: 50,
+        trend: 'stable'
+      },
+      
+      // Seasonal factors
+      {
+        id: 'seasonal-temperature-factor',
+        name: 'Seasonal Temperature Pattern',
+        category: 'seasonal',
+        weight: 0.35,
+        currentValue: 70 + Math.random() * 25,
+        historicalAverage: 65,
+        trend: ['increasing', 'stable'][Math.floor(Math.random() * 2)] as any
+      },
+      {
+        id: 'fire-season-factor',
+        name: 'Fire Season Intensity',
+        category: 'seasonal',
+        weight: 0.4,
+        currentValue: 60 + Math.random() * 35,
+        historicalAverage: 70,
+        trend: ['increasing', 'decreasing', 'stable'][Math.floor(Math.random() * 3)] as any
+      },
+      {
+        id: 'drought-pattern-factor',
+        name: 'Drought Cycle Pattern',
+        category: 'seasonal',
+        weight: 0.25,
+        currentValue: 40 + Math.random() * 40,
+        historicalAverage: 55,
+        trend: ['increasing', 'stable', 'decreasing'][Math.floor(Math.random() * 3)] as any
+      },
+      
+      // Human factors
+      {
+        id: 'population-density-factor',
+        name: 'Population Density',
+        category: 'human',
+        weight: 0.3,
+        currentValue: 20 + Math.random() * 60,
+        historicalAverage: 45,
+        trend: ['increasing', 'stable'][Math.floor(Math.random() * 2)] as any
+      },
+      {
+        id: 'infrastructure-factor',
+        name: 'Infrastructure Vulnerability',
+        category: 'human',
+        weight: 0.25,
+        currentValue: 30 + Math.random() * 50,
+        historicalAverage: 55,
+        trend: ['decreasing', 'stable', 'increasing'][Math.floor(Math.random() * 3)] as any
+      },
+      {
+        id: 'evacuation-capacity-factor',
+        name: 'Evacuation Capacity',
+        category: 'human',
+        weight: 0.2,
+        currentValue: 60 + Math.random() * 30,
+        historicalAverage: 70,
+        trend: ['increasing', 'stable'][Math.floor(Math.random() * 2)] as any
+      },
+      {
+        id: 'emergency-services-factor',
+        name: 'Emergency Services Coverage',
+        category: 'human',
+        weight: 0.25,
+        currentValue: 70 + Math.random() * 25,
+        historicalAverage: 75,
+        trend: ['increasing', 'stable', 'decreasing'][Math.floor(Math.random() * 3)] as any
+      }
+    ],
+    vulnerabilityIndex: 0.3 + Math.random() * 0.6,
+    adaptationCapacity: 0.2 + Math.random() * 0.7,
+    lastUpdated: new Date().toISOString()
+  };
+});
 
-// Mock correlation analysis
+// Enhanced correlation analysis with more detailed insights
 export const mockCorrelationAnalysis: CorrelationAnalysis = {
-  variables: ['temperature', 'humidity', 'wind_speed', 'rainfall', 'bushfire_risk', 'flood_risk'],
+  variables: ['temperature', 'humidity', 'wind_speed', 'rainfall', 'bushfire_risk', 'flood_risk', 'elevation', 'population_density'],
   correlationMatrix: [
-    [1.0, -0.65, 0.45, -0.23, 0.78, -0.12],
-    [-0.65, 1.0, -0.32, 0.55, -0.58, 0.67],
-    [0.45, -0.32, 1.0, -0.18, 0.62, -0.25],
-    [-0.23, 0.55, -0.18, 1.0, -0.34, 0.89],
-    [0.78, -0.58, 0.62, -0.34, 1.0, -0.45],
-    [-0.12, 0.67, -0.25, 0.89, -0.45, 1.0]
+    [1.0, -0.65, 0.45, -0.23, 0.78, -0.12, 0.32, 0.15],
+    [-0.65, 1.0, -0.32, 0.55, -0.58, 0.67, -0.18, 0.08],
+    [0.45, -0.32, 1.0, -0.18, 0.62, -0.25, 0.22, 0.12],
+    [-0.23, 0.55, -0.18, 1.0, -0.34, 0.89, -0.15, -0.05],
+    [0.78, -0.58, 0.62, -0.34, 1.0, -0.45, 0.28, 0.18],
+    [-0.12, 0.67, -0.25, 0.89, -0.45, 1.0, -0.22, -0.08],
+    [0.32, -0.18, 0.22, -0.15, 0.28, -0.22, 1.0, -0.35],
+    [0.15, 0.08, 0.12, -0.05, 0.18, -0.08, -0.35, 1.0]
   ],
   significantCorrelations: [
     {
@@ -361,13 +464,29 @@ export const mockCorrelationAnalysis: CorrelationAnalysis = {
       correlation: 0.67,
       pValue: 0.001,
       significance: 'high'
+    },
+    {
+      variable1: 'wind_speed',
+      variable2: 'bushfire_risk',
+      correlation: 0.62,
+      pValue: 0.003,
+      significance: 'medium'
+    },
+    {
+      variable1: 'elevation',
+      variable2: 'population_density',
+      correlation: -0.35,
+      pValue: 0.012,
+      significance: 'low'
     }
   ],
   insights: [
-    'Strong positive correlation between temperature and bushfire risk (r=0.78)',
-    'Rainfall is the strongest predictor of flood risk (r=0.89)',
-    'Temperature and humidity show inverse relationship during summer months',
-    'Wind speed moderately correlates with bushfire spread potential'
+    'Strong positive correlation between temperature and bushfire risk (r=0.78) - heat waves significantly increase fire danger',
+    'Rainfall is the strongest predictor of flood risk (r=0.89) - precipitation monitoring critical for flood prevention',
+    'Temperature and humidity show strong inverse relationship (r=-0.65) during dry seasons',
+    'Wind speed moderately correlates with bushfire spread potential (r=0.62) - wind monitoring essential',
+    'Higher elevation areas tend to have lower population density (r=-0.35) - affecting evacuation planning',
+    'Humidity levels are strong indicators of both flood potential and fire suppression conditions'
   ]
 };
 

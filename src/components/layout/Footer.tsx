@@ -5,9 +5,6 @@ export const Footer = () => {
         <p>
           The Guardians · Emergency monitoring system for design and development
         </p>
-        <p className="mt-2">
-          Built with ❤️ for Western Australia emergency preparedness
-        </p>
       </div>
     </footer>
   );

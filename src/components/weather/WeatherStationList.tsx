@@ -13,6 +13,8 @@ interface WeatherStationListProps {
   searchQuery?: string;
 }
 
+const ITEMS_PER_PAGE = 20;
+
 export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQuery = '' }: WeatherStationListProps) => {
   const [stations, setStations] = useState<WeatherStation[]>([]);
   const [weatherData, setWeatherData] = useState<Map<string, WeatherData>>(new Map());
@@ -20,6 +22,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   const [sortBy, setSortBy] = useState<'name' | 'number' | 'height'>('name');
   const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'closed'>('all');
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Load weather stations on component mount
   useEffect(() => {
@@ -46,10 +49,16 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   // Update local search when prop changes
   useEffect(() => {
     setLocalSearchQuery(searchQuery);
+    setCurrentPage(1); // Reset page when search changes
   }, [searchQuery]);
 
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sortBy, filterStatus, localSearchQuery]);
+
   // Filter and sort stations
-    const filteredStations = useMemo(() => {
+  const filteredStations = useMemo(() => {
     let filtered = stations.filter(station => {
       if (!station.name || !station.stationNumber) return false;
       
@@ -83,27 +92,39 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
     return filtered;
   }, [stations, localSearchQuery, sortBy, filterStatus]);
 
+  // Paginated stations
+  const paginatedStations = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredStations.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredStations, currentPage]);
+
+  const totalPages = Math.ceil(filteredStations.length / ITEMS_PER_PAGE);
+
   const handleStationClick = (station: WeatherStation) => {
     if (onStationSelect) {
       onStationSelect(station);
     }
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   if (loading) {
     return (
-      <Card className="h-full">
+      <Card className="h-full max-h-[calc(100vh-12rem)]">
         <CardContent className="p-6 flex items-center justify-center">
-                      <div className="text-center">
-              <div className="text-sm text-muted-foreground">Loading weather station data...</div>
-            </div>
+          <div className="text-center">
+            <div className="text-sm text-muted-foreground">Loading weather station data...</div>
+          </div>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader className="pb-4">
+    <Card className="h-full max-h-[calc(100vh-12rem)] flex flex-col">
+      <CardHeader className="pb-4 flex-shrink-0">
         <CardTitle className="text-lg font-semibold">Weather Stations (WA)</CardTitle>
         <div className="space-y-3">
           <Input
@@ -137,66 +158,113 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
         </div>
       </CardHeader>
       
-      <CardContent className="flex-1 overflow-auto p-0">
-        <div className="space-y-1 p-4 pt-0">
-          {filteredStations.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground text-sm">
-              No matching weather stations found
-            </div>
-          ) : (
-            filteredStations.map((station) => (
-              <div
-                key={station.id}
-                onClick={() => handleStationClick(station)}
-                className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:bg-muted/50 ${
-                  selectedStationId === station.id
-                    ? 'border-primary bg-primary/5 shadow-sm'
-                    : 'border-border hover:border-muted-foreground/20'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium text-sm leading-none">{station.name}</h4>
-                  <Badge 
-                    variant={(!station.closeDate || station.closeDate === 'Active') ? 'default' : 'destructive'}
-                    className="text-xs"
-                  >
-                    {(!station.closeDate || station.closeDate === 'Active') ? 'Active' : 'Closed'}
-                  </Badge>
-                </div>
-                
-                <div className="space-y-1 text-xs text-muted-foreground">
-                  <div className="flex justify-between">
-                    <span>Station: {station.stationNumber}</span>
-                    <span>Height: {station.height}m</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Coordinates: {station.latitude.toFixed(2)}°, {station.longitude.toFixed(2)}°</span>
-                  </div>
-                  {station.openDate && (
-                    <div className="text-xs">
-                      Opened: {station.openDate}
-                    </div>
-                  )}
-                  {weatherData.has(station.id) && (
-                    <div className="mt-2 p-2 bg-muted/30 rounded text-xs">
-                      <div className="flex justify-between">
-                        <span>{weatherData.get(station.id)!.temperature}°C</span>
-                        <span>{weatherData.get(station.id)!.humidity}% RH</span>
-                      </div>
-                      <div className="text-center mt-1 text-muted-foreground">
-                        {weatherData.get(station.id)!.conditions}
-                      </div>
-                    </div>
-                  )}
-                </div>
+      <CardContent className="flex-1 min-h-0 overflow-hidden p-0 flex flex-col">
+        <div className="flex-1 overflow-y-auto">
+          <div className="space-y-1 p-4 pt-0">
+            {paginatedStations.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground text-sm">
+                No matching weather stations found
               </div>
-            ))
-          )}
+            ) : (
+              paginatedStations.map((station) => (
+                <div
+                  key={station.id}
+                  onClick={() => handleStationClick(station)}
+                  className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:bg-muted/50 ${
+                    selectedStationId === station.id
+                      ? 'border-primary bg-primary/5 shadow-sm'
+                      : 'border-border hover:border-muted-foreground/20'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-sm leading-none">{station.name}</h4>
+                    <Badge 
+                      variant={(!station.closeDate || station.closeDate === 'Active') ? 'default' : 'destructive'}
+                      className="text-xs"
+                    >
+                      {(!station.closeDate || station.closeDate === 'Active') ? 'Active' : 'Closed'}
+                    </Badge>
+                  </div>
+                  
+                  <div className="space-y-1 text-xs text-muted-foreground">
+                    <div className="flex justify-between">
+                      <span>Station: {station.stationNumber}</span>
+                      <span>Height: {station.height}m</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Coordinates: {station.latitude.toFixed(2)}°, {station.longitude.toFixed(2)}°</span>
+                    </div>
+                    {station.openDate && (
+                      <div className="text-xs">
+                        Opened: {station.openDate}
+                      </div>
+                    )}
+                    {weatherData.has(station.id) && (
+                      <div className="mt-2 p-2 bg-muted/30 rounded text-xs">
+                        <div className="flex justify-between">
+                          <span>{weatherData.get(station.id)!.temperature}°C</span>
+                          <span>{weatherData.get(station.id)!.humidity}% RH</span>
+                        </div>
+                        <div className="text-center mt-1 text-muted-foreground">
+                          {weatherData.get(station.id)!.conditions}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="flex-shrink-0 p-4 border-t bg-muted/20">
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </div>
+              <div className="flex gap-1">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage <= 1}
+                  className="h-7 px-2 text-xs"
+                >
+                  ←
+                </Button>
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                  return (
+                    <Button
+                      key={page}
+                      size="sm"
+                      variant={page === currentPage ? "default" : "outline"}
+                      onClick={() => handlePageChange(page)}
+                      className="h-7 px-2 text-xs min-w-7"
+                    >
+                      {page}
+                    </Button>
+                  );
+                })}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage >= totalPages}
+                  className="h-7 px-2 text-xs"
+                >
+                  →
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </CardContent>
       
-      <div className="px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground">
-        Showing {filteredStations.length} / {stations.length} weather stations
+      <div className="px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground flex-shrink-0">
+        Showing {Math.min(filteredStations.length, ITEMS_PER_PAGE)} of {filteredStations.length} weather stations
       </div>
     </Card>
   );

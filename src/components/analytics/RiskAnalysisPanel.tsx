@@ -16,7 +16,15 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip
+  Tooltip,
+  LineChart,
+  Line,
+  Area,
+  AreaChart,
+  PieChart,
+  Pie,
+  Cell,
+  Legend
 } from 'recharts';
 import { 
   Shield, 
@@ -30,7 +38,16 @@ import {
   Thermometer,
   CloudRain,
   Wind,
-  Mountain
+  Mountain,
+  Droplets,
+  Sun,
+  Snowflake,
+  Users,
+  Building2,
+  Navigation,
+  Calendar,
+  MapPin,
+  Activity
 } from 'lucide-react';
 import type { 
   RegionalRiskProfile, 
@@ -52,7 +69,7 @@ export const RiskAnalysisPanel = ({
   const [selectedProfile, setSelectedProfile] = useState<RegionalRiskProfile | null>(
     regionalProfiles[0] || null
   );
-  const [riskCategory, setRiskCategory] = useState<'all' | 'weather' | 'geographic' | 'seasonal' | 'human'>('all');
+  const [activeTab, setActiveTab] = useState<'weather' | 'geographic' | 'seasonal' | 'human'>('weather');
 
   // Calculate overall statistics
   const overallStats = {
@@ -70,7 +87,7 @@ export const RiskAnalysisPanel = ({
       case 'weather': return Thermometer;
       case 'geographic': return Mountain;
       case 'seasonal': return CloudRain;
-      case 'human': return Shield;
+      case 'human': return Users;
       default: return BarChart3;
     }
   };
@@ -95,24 +112,480 @@ export const RiskAnalysisPanel = ({
     return 'bg-green-500';
   };
 
-  // Prepare radar chart data for selected profile
-  const radarData = selectedProfile ? selectedProfile.riskFactors
-    .filter(factor => riskCategory === 'all' || factor.category === riskCategory)
-    .map(factor => ({
-      factor: factor.name,
-      current: factor.currentValue,
-      historical: factor.historicalAverage,
-      weight: factor.weight * 100
-    })) : [];
+  // Generate enhanced mock data for different categories
+  const generateWeatherData = () => {
+    const days = Array.from({ length: 30 }, (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - 29 + i);
+      return {
+        date: date.toLocaleDateString(),
+        temperature: 20 + Math.random() * 20,
+        humidity: 30 + Math.random() * 50,
+        windSpeed: Math.random() * 25,
+        riskLevel: 20 + Math.random() * 60
+      };
+    });
+    return days;
+  };
 
-  // Prepare correlation heatmap data
-  const correlationHeatmapData = correlationData.significantCorrelations.map(corr => ({
-    x: corr.variable1,
-    y: corr.variable2,
-    value: Math.abs(corr.correlation),
-    correlation: corr.correlation,
-    significance: corr.significance
-  }));
+  const generateSeasonalData = () => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months.map(month => ({
+      month,
+      bushfireRisk: Math.random() * 100,
+      floodRisk: Math.random() * 100,
+      overallRisk: Math.random() * 100
+    }));
+  };
+
+  const generateGeographicData = () => [
+    { name: 'Elevation Risk', value: 75, color: '#8B5CF6' },
+    { name: 'Slope Factor', value: 60, color: '#06B6D4' },
+    { name: 'Vegetation Cover', value: 45, color: '#10B981' },
+    { name: 'Water Proximity', value: 80, color: '#F59E0B' }
+  ];
+
+  const generateHumanFactorData = () => [
+    { factor: 'Population Density', current: 65, capacity: 80, risk: 70 },
+    { factor: 'Infrastructure', current: 45, capacity: 70, risk: 55 },
+    { factor: 'Emergency Services', current: 85, capacity: 90, risk: 25 },
+    { factor: 'Evacuation Routes', current: 60, capacity: 75, risk: 45 }
+  ];
+
+  const weatherData = generateWeatherData();
+  const seasonalData = generateSeasonalData();
+  const geographicData = generateGeographicData();
+  const humanFactorData = generateHumanFactorData();
+
+  const COLORS = ['#3B82F6', '#EF4444', '#F59E0B', '#10B981', '#8B5CF6', '#06B6D4'];
+
+  // Weather Tab Component
+  const WeatherTab = () => (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Temperature and Risk Trend */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Thermometer className="h-5 w-5 text-red-500" />
+              Temperature & Risk Trends
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={weatherData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                  <YAxis tick={{ fontSize: 10 }} />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="temperature" stroke="#EF4444" name="Temperature (°C)" />
+                  <Line type="monotone" dataKey="riskLevel" stroke="#F59E0B" name="Risk Level" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Weather Factors Overview */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <CloudRain className="h-5 w-5 text-blue-500" />
+              Current Weather Factors
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Sun className="h-4 w-4 text-red-500" />
+                  <span className="text-sm font-medium">Temperature</span>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-red-600">32°C</div>
+                  <div className="text-xs text-muted-foreground">High Risk</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Droplets className="h-4 w-4 text-blue-500" />
+                  <span className="text-sm font-medium">Humidity</span>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-blue-600">25%</div>
+                  <div className="text-xs text-muted-foreground">Low</div>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Wind className="h-4 w-4 text-green-500" />
+                  <span className="text-sm font-medium">Wind Speed</span>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-green-600">15 km/h</div>
+                  <div className="text-xs text-muted-foreground">Moderate</div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Humidity and Wind Speed Chart */}
+      <Card className="card-modern">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Activity className="h-5 w-5 text-purple-500" />
+            Humidity & Wind Speed Correlation
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="h-64 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={weatherData}>
+                <defs>
+                  <linearGradient id="colorHumidity" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorWind" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                <YAxis tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Area type="monotone" dataKey="humidity" stackId="1" stroke="#3B82F6" fillOpacity={1} fill="url(#colorHumidity)" name="Humidity %" />
+                <Area type="monotone" dataKey="windSpeed" stackId="2" stroke="#10B981" fillOpacity={1} fill="url(#colorWind)" name="Wind Speed km/h" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  // Geographic Tab Component  
+  const GeographicTab = () => (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Geographic Risk Factors */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Mountain className="h-5 w-5 text-purple-500" />
+              Geographic Risk Factors
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={geographicData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {geographicData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Elevation and Terrain Analysis */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <MapPin className="h-5 w-5 text-green-500" />
+              Terrain Analysis
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              {geographicData.map((item, index) => (
+                <div key={item.name} className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="font-medium">{item.name}</span>
+                    <span>{item.value}%</span>
+                  </div>
+                  <Progress value={item.value} className="h-2" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Geographic Details */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="card-modern">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-purple-50 rounded-lg">
+                <Mountain className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">847m</div>
+                <div className="text-sm text-muted-foreground">Avg Elevation</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-modern">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-50 rounded-lg">
+                <Navigation className="h-5 w-5 text-green-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">15°</div>
+                <div className="text-sm text-muted-foreground">Avg Slope</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-modern">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <Droplets className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">2.3km</div>
+                <div className="text-sm text-muted-foreground">Water Distance</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+
+  // Seasonal Tab Component
+  const SeasonalTab = () => (
+    <div className="space-y-6">
+      {/* Seasonal Risk Patterns */}
+      <Card className="card-modern">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Calendar className="h-5 w-5 text-orange-500" />
+            Seasonal Risk Patterns
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="h-80 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={seasonalData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="bushfireRisk" fill="#EF4444" name="Bushfire Risk" />
+                <Bar dataKey="floodRisk" fill="#3B82F6" name="Flood Risk" />
+                <Bar dataKey="overallRisk" fill="#F59E0B" name="Overall Risk" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Current Season Analysis */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Sun className="h-5 w-5 text-yellow-500" />
+              Current Season: Summer
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium text-red-800">High Fire Season</span>
+                  <Badge variant="destructive">Critical</Badge>
+                </div>
+                <p className="text-sm text-red-700">Peak bushfire conditions with high temperatures and low humidity</p>
+              </div>
+              
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium text-blue-800">Dry Period</span>
+                  <Badge variant="secondary">Moderate</Badge>
+                </div>
+                <p className="text-sm text-blue-700">Limited rainfall expected, increasing vegetation dryness</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Seasonal Trends */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <TrendingUp className="h-5 w-5 text-green-500" />
+              Seasonal Trends
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Temperature Trend</span>
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-red-500" />
+                  <span className="text-sm font-medium">+2.3°C</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Humidity Trend</span>
+                <div className="flex items-center gap-2">
+                  <TrendingDown className="h-4 w-4 text-green-500" />
+                  <span className="text-sm font-medium">-15%</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Wind Speed</span>
+                <div className="flex items-center gap-2">
+                  <Minus className="h-4 w-4 text-gray-500" />
+                  <span className="text-sm font-medium">Stable</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+
+  // Human Factors Tab Component
+  const HumanTab = () => (
+    <div className="space-y-6">
+      {/* Human Factor Analysis */}
+      <Card className="card-modern">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Users className="h-5 w-5 text-blue-500" />
+            Human Factor Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="h-80 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={humanFactorData} layout="horizontal">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="factor" type="category" width={120} tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="current" fill="#3B82F6" name="Current Level" />
+                <Bar dataKey="capacity" fill="#10B981" name="Max Capacity" />
+                <Bar dataKey="risk" fill="#EF4444" name="Risk Level" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Population Impact */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Building2 className="h-5 w-5 text-purple-500" />
+              Infrastructure & Population
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-3 bg-blue-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">45,230</div>
+                  <div className="text-sm text-muted-foreground">Population</div>
+                </div>
+                <div className="text-center p-3 bg-green-50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">156</div>
+                  <div className="text-sm text-muted-foreground">per km²</div>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Vulnerable Population</span>
+                  <span>23%</span>
+                </div>
+                <Progress value={23} className="h-2" />
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Infrastructure Resilience</span>
+                  <span>67%</span>
+                </div>
+                <Progress value={67} className="h-2" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Emergency Preparedness */}
+        <Card className="card-modern">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Shield className="h-5 w-5 text-red-500" />
+              Emergency Preparedness
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              <div className="p-3 border rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">Fire Stations</span>
+                  <Badge variant="secondary">3 Active</Badge>
+                </div>
+                <div className="text-sm text-muted-foreground">Average response time: 8 minutes</div>
+              </div>
+              
+              <div className="p-3 border rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">Evacuation Centers</span>
+                  <Badge variant="secondary">5 Available</Badge>
+                </div>
+                <div className="text-sm text-muted-foreground">Capacity: 12,000 people</div>
+              </div>
+              
+              <div className="p-3 border rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-medium">Alert System Coverage</span>
+                  <Badge variant="default">98%</Badge>
+                </div>
+                <div className="text-sm text-muted-foreground">SMS, Radio, Mobile App</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
 
   return (
     <div className={`space-y-6 ${className}`}>
@@ -121,22 +594,6 @@ export const RiskAnalysisPanel = ({
         <div className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-blue-500" />
           <h2 className="text-lg font-semibold">Risk Analysis</h2>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
-            {(['all', 'weather', 'geographic', 'seasonal', 'human'] as const).map((category) => (
-              <Button
-                key={category}
-                size="sm"
-                variant={riskCategory === category ? 'default' : 'ghost'}
-                className="h-6 px-2 text-xs capitalize"
-                onClick={() => setRiskCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -199,355 +656,41 @@ export const RiskAnalysisPanel = ({
         </Card>
       </div>
 
-      <Tabs defaultValue="profiles" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="profiles">Regional Profiles</TabsTrigger>
-          <TabsTrigger value="factors">Risk Factors</TabsTrigger>
-          <TabsTrigger value="correlations">Correlations</TabsTrigger>
+      {/* Risk Analysis Tabs */}
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="space-y-4">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="weather" className="flex items-center gap-2">
+            <Thermometer className="h-4 w-4" />
+            Weather
+          </TabsTrigger>
+          <TabsTrigger value="geographic" className="flex items-center gap-2">
+            <Mountain className="h-4 w-4" />
+            Geographic
+          </TabsTrigger>
+          <TabsTrigger value="seasonal" className="flex items-center gap-2">
+            <CloudRain className="h-4 w-4" />
+            Seasonal
+          </TabsTrigger>
+          <TabsTrigger value="human" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Human
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="profiles" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Region selector */}
-            <Card className="card-modern">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">Regional Profiles</CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {regionalProfiles.map((profile) => (
-                    <div
-                      key={profile.regionId}
-                      className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                        selectedProfile?.regionId === profile.regionId
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                      onClick={() => setSelectedProfile(profile)}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-sm">{profile.regionId}</span>
-                        <div className={`w-3 h-3 rounded-full ${getRiskColor(profile.overallRiskScore)}`} />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs">
-                          <span>Risk Score</span>
-                          <span>{profile.overallRiskScore.toFixed(0)}</span>
-                        </div>
-                        <Progress value={profile.overallRiskScore} className="h-1" />
-                      </div>
-                      <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-                        <span>Vulnerability: {(profile.vulnerabilityIndex * 100).toFixed(0)}%</span>
-                        <span>Capacity: {(profile.adaptationCapacity * 100).toFixed(0)}%</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Selected profile details */}
-            {selectedProfile && (
-              <div className="lg:col-span-2 space-y-4">
-                <Card className="card-modern">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-base">
-                      <Map className="h-5 w-5 text-blue-500" />
-                      {selectedProfile.regionId} Risk Profile
-                    </CardTitle>
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className={`flex items-center gap-2 px-2 py-1 rounded ${
-                        selectedProfile.overallRiskScore >= 70 ? 'bg-red-50 text-red-700' :
-                        selectedProfile.overallRiskScore >= 40 ? 'bg-yellow-50 text-yellow-700' :
-                        'bg-green-50 text-green-700'
-                      }`}>
-                        <span>Overall Risk: {selectedProfile.overallRiskScore.toFixed(0)}/100</span>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        Updated: {new Date(selectedProfile.lastUpdated).toLocaleDateString()}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <div className="h-80 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <RadarChart data={radarData}>
-                          <PolarGrid />
-                          <PolarAngleAxis 
-                            dataKey="factor" 
-                            tick={{ fontSize: 10 }}
-                          />
-                          <PolarRadiusAxis 
-                            angle={90} 
-                            domain={[0, 100]}
-                            tick={{ fontSize: 8 }}
-                          />
-                          <Radar
-                            name="Current"
-                            dataKey="current"
-                            stroke="#3b82f6"
-                            fill="#3b82f6"
-                            fillOpacity={0.3}
-                            strokeWidth={2}
-                          />
-                          <Radar
-                            name="Historical Avg"
-                            dataKey="historical"
-                            stroke="#64748b"
-                            fill="#64748b"
-                            fillOpacity={0.1}
-                            strokeWidth={1}
-                            strokeDasharray="5 5"
-                          />
-                          <Tooltip 
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                const data = payload[0].payload;
-                                return (
-                                  <div className="glass rounded-lg shadow-lg p-3 border border-white/20">
-                                    <div className="font-medium text-sm mb-2">{data.factor}</div>
-                                    <div className="space-y-1 text-xs">
-                                      <div>Current: {data.current?.toFixed(1)}</div>
-                                      <div>Historical Avg: {data.historical?.toFixed(1)}</div>
-                                      <div>Weight: {data.weight?.toFixed(0)}%</div>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
-                        </RadarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card className="card-modern">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm">Vulnerability Assessment</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="space-y-3">
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-sm">
-                            <span>Vulnerability Index</span>
-                            <span>{(selectedProfile.vulnerabilityIndex * 100).toFixed(0)}%</span>
-                          </div>
-                          <Progress value={selectedProfile.vulnerabilityIndex * 100} className="h-2" />
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex justify-between text-sm">
-                            <span>Adaptation Capacity</span>
-                            <span>{(selectedProfile.adaptationCapacity * 100).toFixed(0)}%</span>
-                          </div>
-                          <Progress value={selectedProfile.adaptationCapacity * 100} className="h-2" />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="card-modern">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm">Top Risk Factors</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="space-y-2">
-                        {selectedProfile.riskFactors
-                          .sort((a, b) => b.weight - a.weight)
-                          .slice(0, 4)
-                          .map((factor, index) => {
-                            const CategoryIcon = getCategoryIcon(factor.category);
-                            const trendInfo = getTrendInfo(factor.trend);
-                            const TrendIcon = trendInfo.icon;
-                            
-                            return (
-                              <div key={factor.id} className="flex items-center justify-between p-2 border rounded">
-                                <div className="flex items-center gap-2">
-                                  <CategoryIcon className="h-4 w-4 text-muted-foreground" />
-                                  <span className="text-sm font-medium">{factor.name}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <div className={`p-1 rounded ${trendInfo.bgColor}`}>
-                                    <TrendIcon className={`h-3 w-3 ${trendInfo.color}`} />
-                                  </div>
-                                  <span className="text-sm">{(factor.weight * 100).toFixed(0)}%</span>
-                                </div>
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            )}
-          </div>
+        <TabsContent value="weather">
+          <WeatherTab />
         </TabsContent>
 
-        <TabsContent value="factors" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {riskCategory === 'all' ? (
-              ['weather', 'geographic', 'seasonal', 'human'].map(category => {
-                const factors = selectedProfile?.riskFactors.filter(f => f.category === category) || [];
-                const CategoryIcon = getCategoryIcon(category);
-                
-                return (
-                  <Card key={category} className="card-modern">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base capitalize">
-                        <CategoryIcon className="h-5 w-5 text-blue-500" />
-                        {category} Factors
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <div className="space-y-3">
-                        {factors.map((factor) => {
-                          const trendInfo = getTrendInfo(factor.trend);
-                          const TrendIcon = trendInfo.icon;
-                          
-                          return (
-                            <div key={factor.id} className="p-3 border rounded-lg">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="font-medium text-sm">{factor.name}</span>
-                                <div className={`p-1 rounded ${trendInfo.bgColor}`}>
-                                  <TrendIcon className={`h-3 w-3 ${trendInfo.color}`} />
-                                </div>
-                              </div>
-                              <div className="space-y-1">
-                                <div className="flex justify-between text-xs">
-                                  <span>Current: {factor.currentValue.toFixed(1)}</span>
-                                  <span>Avg: {factor.historicalAverage.toFixed(1)}</span>
-                                </div>
-                                <Progress value={(factor.weight * 100)} className="h-1" />
-                                <div className="text-xs text-muted-foreground text-right">
-                                  Weight: {(factor.weight * 100).toFixed(0)}%
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })
-            ) : (
-              <div className="lg:col-span-2">
-                <Card className="card-modern">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-base capitalize">
-                      {getCategoryIcon(riskCategory)({ className: "h-5 w-5 text-blue-500" })}
-                      {riskCategory} Risk Factors
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <div className="h-80 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart 
-                          data={selectedProfile?.riskFactors
-                            .filter(f => f.category === riskCategory)
-                            .map(f => ({
-                              name: f.name,
-                              current: f.currentValue,
-                              historical: f.historicalAverage,
-                              weight: f.weight * 100
-                            })) || []}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis 
-                            dataKey="name" 
-                            angle={-45}
-                            textAnchor="end"
-                            height={100}
-                            tick={{ fontSize: 10 }}
-                          />
-                          <YAxis tick={{ fontSize: 10 }} />
-                          <Tooltip />
-                          <Bar dataKey="current" fill="#3b82f6" name="Current Value" />
-                          <Bar dataKey="historical" fill="#64748b" name="Historical Average" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
-          </div>
+        <TabsContent value="geographic">
+          <GeographicTab />
         </TabsContent>
 
-        <TabsContent value="correlations" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="card-modern">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Network className="h-5 w-5 text-purple-500" />
-                  Significant Correlations
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-3 max-h-80 overflow-y-auto">
-                  {correlationData.significantCorrelations.map((corr, index) => (
-                    <div key={index} className="p-3 border rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex-1">
-                          <div className="text-sm font-medium">
-                            {corr.variable1} ↔ {corr.variable2}
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            p-value: {corr.pValue.toFixed(4)}
-                          </div>
-                        </div>
-                        <Badge 
-                          variant={
-                            corr.significance === 'high' ? 'default' : 
-                            corr.significance === 'medium' ? 'secondary' : 'outline'
-                          }
-                          className="text-xs"
-                        >
-                          {corr.significance}
-                        </Badge>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs">
-                          <span>Correlation</span>
-                          <span className={
-                            corr.correlation > 0 ? 'text-green-600' : 'text-red-600'
-                          }>
-                            {corr.correlation.toFixed(3)}
-                          </span>
-                        </div>
-                        <Progress 
-                          value={Math.abs(corr.correlation) * 100} 
-                          className="h-1"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+        <TabsContent value="seasonal">
+          <SeasonalTab />
+        </TabsContent>
 
-            <Card className="card-modern">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <BarChart3 className="h-5 w-5 text-green-500" />
-                  Key Insights
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="space-y-3">
-                  {correlationData.insights.map((insight, index) => (
-                    <div key={index} className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <div className="text-sm">{insight}</div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        <TabsContent value="human">
+          <HumanTab />
         </TabsContent>
       </Tabs>
     </div>
