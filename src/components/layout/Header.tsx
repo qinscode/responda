@@ -65,13 +65,27 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div 
               aria-label="The Guardians Emergency Dashboard Logo"
-              className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white shadow-lg"
+              className="flex h-12 w-12 items-center justify-center rounded-lg overflow-hidden bg-transparent"
               role="img"
             >
-              <Shield aria-hidden="true" className="h-6 w-6" />
+              <img 
+                alt="The Guardians Logo" 
+                className="h-10 w-10 object-contain" 
+                src="/logo.png"
+                onError={(e) => {
+                  // Fallback to Shield icon if logo fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.className = "flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white shadow-lg";
+                    parent.innerHTML = '<svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>';
+                  }
+                }}
+              />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-gray-900">
@@ -87,8 +101,8 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
         {/* Main Navigation - Desktop */}
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1" role="navigation">
           <Link 
-            to="/" 
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
+            to="/"
             activeProps={{ 
               className: "flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
             }}
@@ -97,8 +111,8 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
             Dashboard
           </Link>
           <Link 
-            to="/analytics" 
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
+            to="/analytics"
             activeProps={{ 
               className: "flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
             }}
@@ -232,8 +246,22 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
               <div className="flex flex-col gap-6 pt-6">
                 {/* Mobile Brand */}
                 <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white">
-                    <Shield aria-hidden="true" className="h-5 w-5" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg overflow-hidden bg-transparent">
+                    <img 
+                      alt="The Guardians Logo" 
+                      className="h-8 w-8 object-contain" 
+                      src="/logo.png"
+                      onError={(e) => {
+                        // Fallback to Shield icon if logo fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.className = "flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white";
+                          parent.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>';
+                        }
+                      }}
+                    />
                   </div>
                   <div>
                     <h2 className="font-bold text-gray-900">The Guardians</h2>
@@ -264,8 +292,8 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
                 <nav aria-label="Mobile navigation" role="navigation">
                   <div className="flex flex-col gap-2">
                     <Link 
-                      to="/" 
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
+                      to="/"
                       activeProps={{ 
                         className: "flex items-center gap-3 px-4 py-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
                       }}
@@ -275,8 +303,8 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
                       Dashboard
                     </Link>
                     <Link 
-                      to="/analytics" 
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
+                      to="/analytics"
                       activeProps={{ 
                         className: "flex items-center gap-3 px-4 py-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
                       }}
