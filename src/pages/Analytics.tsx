@@ -36,7 +36,9 @@ export const Analytics = () => {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => {
+      setTimeout(resolve, 2000);
+    });
     setIsRefreshing(false);
   };
 

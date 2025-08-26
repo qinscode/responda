@@ -26,7 +26,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
 
   // Load weather stations on component mount
   useEffect(() => {
-    parseWeatherStationsFromCSV().then(async (stations) => {
+    void parseWeatherStationsFromCSV().then(async (stations) => {
       setStations(stations);
       
       // Load weather data for first few stations

@@ -27,7 +27,7 @@ export const MapContainer = ({ selectedStation, onStationSelect }: MapContainerP
 
   // Load weather stations on component mount (Western Australia only)
   useEffect(() => {
-    parseWeatherStationsFromCSV().then(setStations);
+    void parseWeatherStationsFromCSV().then(setStations);
   }, []);
 
   // Prepare GeoJSON from weather stations
@@ -227,7 +227,7 @@ export const MapContainer = ({ selectedStation, onStationSelect }: MapContainerP
           .addTo(map);
 
         // Fetch weather data and update popup
-        getWeatherDataForStation(props.id).then(weatherData => {
+        void getWeatherDataForStation(props.id).then(weatherData => {
           if (popupRef.current && weatherData) {
             popupRef.current.setHTML(createPopupContent(weatherData));
           }
