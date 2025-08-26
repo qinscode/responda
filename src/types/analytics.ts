@@ -1,4 +1,4 @@
-// Analytics and prediction type definitions for WA Emergency Dashboard
+// Analytics and prediction type definitions for The Guardians Emergency Dashboard
 
 import type { EmergencyType, BushfireRating, FloodRating, RegionWithEmergency } from './emergency';
 

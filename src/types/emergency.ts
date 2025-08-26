@@ -1,4 +1,4 @@
-// Emergency type definitions for WA Emergency Dashboard
+// Emergency type definitions for The Guardians Emergency Dashboard
 
 export type EmergencyType = 'bushfire' | 'flood';
 

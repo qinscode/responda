@@ -1,4 +1,4 @@
-// Mock emergency data for WA Emergency Dashboard
+// Mock emergency data for The Guardians Emergency Dashboard
 // This simulates QGIS data output for development and testing
 
 import type { RegionWithEmergency, EmergencyRating, BushfireRating, FloodRating } from '../types/emergency';

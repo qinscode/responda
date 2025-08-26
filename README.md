@@ -1,6 +1,6 @@
 <div align="center">
 
-# WA Emergency Dashboard
+# The Guardians
 
 **Monitor Western Australia emergencies smarter, faster, and better.**  
 A modern web dashboard built with **React** and **TypeScript**, designed to display real-time emergency information (bushfire and flood) across Western Australia regions — all in one place.

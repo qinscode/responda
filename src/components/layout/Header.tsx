@@ -67,7 +67,7 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div 
-              aria-label="WA Emergency Dashboard Logo"
+              aria-label="The Guardians Emergency Dashboard Logo"
               className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white shadow-lg"
               role="img"
             >
@@ -75,10 +75,10 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-gray-900">
-                WA Emergency
+                The Guardians
               </h1>
               <p className="text-xs text-gray-600 -mt-1">
-                Real-time monitoring
+                Emergency monitoring system
               </p>
             </div>
           </div>
@@ -230,6 +230,17 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
             </SheetTrigger>
             <SheetContent className="w-80 bg-white/95 backdrop-blur" id="mobile-menu" side="right">
               <div className="flex flex-col gap-6 pt-6">
+                {/* Mobile Brand */}
+                <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white">
+                    <Shield aria-hidden="true" className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h2 className="font-bold text-gray-900">The Guardians</h2>
+                    <p className="text-xs text-gray-600">Emergency monitoring</p>
+                  </div>
+                </div>
+
                 {/* Mobile Search */}
                 <div className="md:hidden">
                   <label className="sr-only" htmlFor="mobile-search-input">
