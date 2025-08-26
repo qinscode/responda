@@ -61,20 +61,20 @@ export const Analytics = () => {
           
           <div className="flex items-center gap-2">
             <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              disabled={isRefreshing}
               className="flex items-center gap-2"
+              disabled={isRefreshing}
+              size="sm"
+              variant="outline"
+              onClick={handleRefresh}
             >
               <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               Refresh
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button className="flex items-center gap-2" size="sm" variant="outline">
               <Download className="h-4 w-4" />
               Export
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
+            <Button className="flex items-center gap-2" size="sm" variant="outline">
               <Settings className="h-4 w-4" />
               Settings
             </Button>
@@ -142,42 +142,42 @@ export const Analytics = () => {
           </Card>
         </div>
 
-        <Tabs defaultValue="trends" className="space-y-6">
+        <Tabs className="space-y-6" defaultValue="trends">
           <TabsList className="grid w-full grid-cols-4 bg-gray-100">
-            <TabsTrigger value="trends" className="flex items-center gap-2 data-[state=active]:bg-white">
+            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="trends">
               <TrendingUp className="h-4 w-4" />
               Trends
             </TabsTrigger>
-            <TabsTrigger value="predictions" className="flex items-center gap-2 data-[state=active]:bg-white">
+            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="predictions">
               <Brain className="h-4 w-4" />
               Predictions
             </TabsTrigger>
-            <TabsTrigger value="risk-analysis" className="flex items-center gap-2 data-[state=active]:bg-white">
+            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="risk-analysis">
               <Shield className="h-4 w-4" />
               Risk Analysis
             </TabsTrigger>
-            <TabsTrigger value="insights" className="flex items-center gap-2 data-[state=active]:bg-white">
+            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="insights">
               <BarChart3 className="h-4 w-4" />
               Insights
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="trends" className="space-y-6">
+          <TabsContent className="space-y-6" value="trends">
             {/* Trend Analysis Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <TrendChart
+                showAnomalies
+                showForecast
                 data={mockBushfireTimeSeriesAnalysis}
-                type="bushfire"
                 title="Bushfire Risk Trends"
-                showForecast={true}
-                showAnomalies={true}
+                type="bushfire"
               />
               <TrendChart
+                showAnomalies
+                showForecast
                 data={mockFloodTimeSeriesAnalysis}
-                type="flood"
                 title="Flood Risk Trends"
-                showForecast={true}
-                showAnomalies={true}
+                type="flood"
               />
             </div>
 
@@ -195,8 +195,8 @@ export const Analytics = () => {
                     <div className="text-sm font-medium">Bushfire Trend</div>
                     <div className="flex items-center gap-2">
                       <Badge 
-                        variant={dashboardData.trends.bushfireTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                         className="capitalize"
+                        variant={dashboardData.trends.bushfireTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                       >
                         {dashboardData.trends.bushfireTrend.trend}
                       </Badge>
@@ -213,8 +213,8 @@ export const Analytics = () => {
                     <div className="text-sm font-medium">Flood Trend</div>
                     <div className="flex items-center gap-2">
                       <Badge 
-                        variant={dashboardData.trends.floodTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                         className="capitalize"
+                        variant={dashboardData.trends.floodTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                       >
                         {dashboardData.trends.floodTrend.trend}
                       </Badge>
@@ -231,8 +231,8 @@ export const Analytics = () => {
                     <div className="text-sm font-medium">Overall Risk</div>
                     <div className="flex items-center gap-2">
                       <Badge 
-                        variant={dashboardData.trends.overallRiskTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                         className="capitalize"
+                        variant={dashboardData.trends.overallRiskTrend.trend === 'increasing' ? 'destructive' : 'secondary'}
                       >
                         {dashboardData.trends.overallRiskTrend.trend}
                       </Badge>
@@ -249,22 +249,22 @@ export const Analytics = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="predictions" className="space-y-6">
+          <TabsContent className="space-y-6" value="predictions">
             <PredictionPanel
-              forecasts={mockAdvancedForecasts}
               alerts={mockPredictiveAlerts}
+              forecasts={mockAdvancedForecasts}
               models={mockPredictionModels}
             />
           </TabsContent>
 
-          <TabsContent value="risk-analysis" className="space-y-6">
+          <TabsContent className="space-y-6" value="risk-analysis">
             <RiskAnalysisPanel
-              regionalProfiles={mockRegionalRiskProfiles}
               correlationData={mockCorrelationAnalysis}
+              regionalProfiles={mockRegionalRiskProfiles}
             />
           </TabsContent>
 
-          <TabsContent value="insights" className="space-y-6">
+          <TabsContent className="space-y-6" value="insights">
             {/* Model Performance */}
             <Card className="bg-white border-gray-200">
               <CardHeader>

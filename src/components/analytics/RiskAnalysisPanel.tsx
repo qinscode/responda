@@ -114,9 +114,9 @@ export const RiskAnalysisPanel = ({
 
   // Generate enhanced mock data for different categories
   const generateWeatherData = () => {
-    const days = Array.from({ length: 30 }, (_, i) => {
+    const days = Array.from({ length: 30 }, (_, index) => {
       const date = new Date();
-      date.setDate(date.getDate() - 29 + i);
+      date.setDate(date.getDate() - 29 + index);
       return {
         date: date.toLocaleDateString(),
         temperature: 20 + Math.random() * 20,
@@ -173,14 +173,14 @@ export const RiskAnalysisPanel = ({
           </CardHeader>
           <CardContent className="pt-0">
             <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer height="100%" width="100%">
                 <LineChart data={weatherData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" tick={{ fontSize: 10 }} />
                   <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="temperature" stroke="#EF4444" name="Temperature (°C)" />
-                  <Line type="monotone" dataKey="riskLevel" stroke="#F59E0B" name="Risk Level" />
+                  <Line dataKey="temperature" name="Temperature (°C)" stroke="#EF4444" type="monotone" />
+                  <Line dataKey="riskLevel" name="Risk Level" stroke="#F59E0B" type="monotone" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -244,14 +244,14 @@ export const RiskAnalysisPanel = ({
         </CardHeader>
         <CardContent className="pt-0">
           <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer height="100%" width="100%">
               <AreaChart data={weatherData}>
                 <defs>
-                  <linearGradient id="colorHumidity" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="colorHumidity" x1="0" x2="0" y1="0" y2="1">
                     <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8}/>
                     <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
                   </linearGradient>
-                  <linearGradient id="colorWind" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="colorWind" x1="0" x2="0" y1="0" y2="1">
                     <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
                     <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                   </linearGradient>
@@ -260,8 +260,8 @@ export const RiskAnalysisPanel = ({
                 <XAxis dataKey="date" tick={{ fontSize: 10 }} />
                 <YAxis tick={{ fontSize: 10 }} />
                 <Tooltip />
-                <Area type="monotone" dataKey="humidity" stackId="1" stroke="#3B82F6" fillOpacity={1} fill="url(#colorHumidity)" name="Humidity %" />
-                <Area type="monotone" dataKey="windSpeed" stackId="2" stroke="#10B981" fillOpacity={1} fill="url(#colorWind)" name="Wind Speed km/h" />
+                <Area dataKey="humidity" fill="url(#colorHumidity)" fillOpacity={1} name="Humidity %" stackId="1" stroke="#3B82F6" type="monotone" />
+                <Area dataKey="windSpeed" fill="url(#colorWind)" fillOpacity={1} name="Wind Speed km/h" stackId="2" stroke="#10B981" type="monotone" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -284,17 +284,17 @@ export const RiskAnalysisPanel = ({
           </CardHeader>
           <CardContent className="pt-0">
             <div className="h-64 w-full">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer height="100%" width="100%">
                 <PieChart>
                   <Pie
-                    data={geographicData}
                     cx="50%"
                     cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
+                    data={geographicData}
                     dataKey="value"
+                    fill="#8884d8"
+                    label={({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`}
+                    labelLine={false}
+                    outerRadius={80}
                   >
                     {geographicData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
@@ -323,7 +323,7 @@ export const RiskAnalysisPanel = ({
                     <span className="font-medium">{item.name}</span>
                     <span>{item.value}%</span>
                   </div>
-                  <Progress value={item.value} className="h-2" />
+                  <Progress className="h-2" value={item.value} />
                 </div>
               ))}
             </div>
@@ -391,7 +391,7 @@ export const RiskAnalysisPanel = ({
         </CardHeader>
         <CardContent className="pt-0">
           <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer height="100%" width="100%">
               <BarChart data={seasonalData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
@@ -490,11 +490,11 @@ export const RiskAnalysisPanel = ({
         </CardHeader>
         <CardContent className="pt-0">
           <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer height="100%" width="100%">
               <BarChart data={humanFactorData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" />
-                <YAxis dataKey="factor" type="category" width={120} tick={{ fontSize: 10 }} />
+                <YAxis dataKey="factor" tick={{ fontSize: 10 }} type="category" width={120} />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="current" fill="#3B82F6" name="Current Level" />
@@ -533,7 +533,7 @@ export const RiskAnalysisPanel = ({
                   <span>Vulnerable Population</span>
                   <span>23%</span>
                 </div>
-                <Progress value={23} className="h-2" />
+                <Progress className="h-2" value={23} />
               </div>
               
               <div className="space-y-2">
@@ -541,7 +541,7 @@ export const RiskAnalysisPanel = ({
                   <span>Infrastructure Resilience</span>
                   <span>67%</span>
                 </div>
-                <Progress value={67} className="h-2" />
+                <Progress className="h-2" value={67} />
               </div>
             </div>
           </CardContent>
@@ -657,21 +657,21 @@ export const RiskAnalysisPanel = ({
       </div>
 
       {/* Risk Analysis Tabs */}
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="space-y-4">
+      <Tabs className="space-y-4" value={activeTab} onValueChange={(value) => { setActiveTab(value as any); }}>
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="weather" className="flex items-center gap-2">
+          <TabsTrigger className="flex items-center gap-2" value="weather">
             <Thermometer className="h-4 w-4" />
             Weather
           </TabsTrigger>
-          <TabsTrigger value="geographic" className="flex items-center gap-2">
+          <TabsTrigger className="flex items-center gap-2" value="geographic">
             <Mountain className="h-4 w-4" />
             Geographic
           </TabsTrigger>
-          <TabsTrigger value="seasonal" className="flex items-center gap-2">
+          <TabsTrigger className="flex items-center gap-2" value="seasonal">
             <CloudRain className="h-4 w-4" />
             Seasonal
           </TabsTrigger>
-          <TabsTrigger value="human" className="flex items-center gap-2">
+          <TabsTrigger className="flex items-center gap-2" value="human">
             <Users className="h-4 w-4" />
             Human
           </TabsTrigger>

@@ -82,7 +82,7 @@ export const PredictionPanel = ({
         <div className="flex items-center gap-2">
           <Brain className="h-5 w-5 text-purple-500" />
           <h2 className="text-lg font-semibold">Predictive Analytics</h2>
-          <Badge variant="outline" className="text-xs">
+          <Badge className="text-xs" variant="outline">
             AI-Powered
           </Badge>
         </div>
@@ -93,10 +93,10 @@ export const PredictionPanel = ({
             {(['24h', '3d', '7d', '14d'] as const).map((timeframe) => (
               <Button
                 key={timeframe}
+                className="h-6 px-2 text-xs"
                 size="sm"
                 variant={selectedTimeframe === timeframe ? 'default' : 'ghost'}
-                className="h-6 px-2 text-xs"
-                onClick={() => setSelectedTimeframe(timeframe)}
+                onClick={() => { setSelectedTimeframe(timeframe); }}
               >
                 {timeframe}
               </Button>
@@ -108,10 +108,10 @@ export const PredictionPanel = ({
             {(['all', 'bushfire', 'flood'] as const).map((type) => (
               <Button
                 key={type}
+                className="h-6 px-2 text-xs capitalize"
                 size="sm"
                 variant={selectedEmergencyType === type ? 'default' : 'ghost'}
-                className="h-6 px-2 text-xs capitalize"
-                onClick={() => setSelectedEmergencyType(type)}
+                onClick={() => { setSelectedEmergencyType(type); }}
               >
                 {type}
               </Button>
@@ -138,7 +138,7 @@ export const PredictionPanel = ({
                       <div className="flex items-center gap-2 mb-1">
                         <div className={`w-2 h-2 rounded-full ${getSeverityColor(alert.severity)}`} />
                         <span className="font-medium text-sm">{alert.title}</span>
-                        <Badge variant="outline" className="text-xs">
+                        <Badge className="text-xs" variant="outline">
                           {alert.type}
                         </Badge>
                       </div>
@@ -165,14 +165,14 @@ export const PredictionPanel = ({
         </Card>
       )}
 
-      <Tabs defaultValue="forecasts" className="space-y-4">
+      <Tabs className="space-y-4" defaultValue="forecasts">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="forecasts">Forecasts</TabsTrigger>
           <TabsTrigger value="models">Models</TabsTrigger>
           <TabsTrigger value="insights">Insights</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="forecasts" className="space-y-4">
+        <TabsContent className="space-y-4" value="forecasts">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {filteredForecasts.map((forecast) => (
               <Card key={`${forecast.regionId}-${forecast.date}`} className="card-modern">
@@ -181,7 +181,7 @@ export const PredictionPanel = ({
                     <CardTitle className="text-sm font-medium">
                       Region {forecast.regionId}
                     </CardTitle>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge className="text-xs" variant="outline">
                       {new Date(forecast.date).toLocaleDateString()}
                     </Badge>
                   </div>
@@ -194,7 +194,7 @@ export const PredictionPanel = ({
                         <div className="w-3 h-3 bg-orange-500 rounded-full" />
                         <span className="text-sm font-medium">Bushfire</span>
                       </div>
-                      <Badge variant="outline" className="text-xs">
+                      <Badge className="text-xs" variant="outline">
                         {forecast.emergencyData.bushfire.level}
                       </Badge>
                     </div>
@@ -204,13 +204,13 @@ export const PredictionPanel = ({
                         <span>{(forecast.emergencyData.bushfire.probability * 100).toFixed(0)}%</span>
                       </div>
                       <Progress 
-                        value={forecast.emergencyData.bushfire.probability * 100} 
-                        className="h-2"
+                        className="h-2" 
+                        value={forecast.emergencyData.bushfire.probability * 100}
                       />
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {forecast.emergencyData.bushfire.factors.slice(0, 2).map((factor, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                        <Badge key={index} className="text-xs" variant="secondary">
                           {factor.name}: {factor.value.toFixed(1)}
                         </Badge>
                       ))}
@@ -224,7 +224,7 @@ export const PredictionPanel = ({
                         <div className="w-3 h-3 bg-blue-500 rounded-full" />
                         <span className="text-sm font-medium">Flood</span>
                       </div>
-                      <Badge variant="outline" className="text-xs">
+                      <Badge className="text-xs" variant="outline">
                         {forecast.emergencyData.flood.level}
                       </Badge>
                     </div>
@@ -234,13 +234,13 @@ export const PredictionPanel = ({
                         <span>{(forecast.emergencyData.flood.probability * 100).toFixed(0)}%</span>
                       </div>
                       <Progress 
-                        value={forecast.emergencyData.flood.probability * 100} 
-                        className="h-2"
+                        className="h-2" 
+                        value={forecast.emergencyData.flood.probability * 100}
                       />
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {forecast.emergencyData.flood.factors.slice(0, 2).map((factor, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                        <Badge key={index} className="text-xs" variant="secondary">
                           {factor.name}: {factor.value.toFixed(1)}
                         </Badge>
                       ))}
@@ -263,7 +263,7 @@ export const PredictionPanel = ({
           </div>
         </TabsContent>
 
-        <TabsContent value="models" className="space-y-4">
+        <TabsContent className="space-y-4" value="models">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {models.map((model) => (
               <Card key={model.id} className="card-modern">
@@ -271,8 +271,8 @@ export const PredictionPanel = ({
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm font-medium">{model.name}</CardTitle>
                                           <Badge 
-                        variant={bestModel && model.id === bestModel.id ? 'default' : 'outline'} 
-                        className="text-xs"
+                        className="text-xs" 
+                        variant={bestModel && model.id === bestModel.id ? 'default' : 'outline'}
                       >
                         {bestModel && model.id === bestModel.id ? 'Best' : model.type}
                     </Badge>
@@ -284,7 +284,7 @@ export const PredictionPanel = ({
                       <span>Accuracy</span>
                       <span className="font-medium">{(model.accuracy * 100).toFixed(1)}%</span>
                     </div>
-                    <Progress value={model.accuracy * 100} className="h-2" />
+                    <Progress className="h-2" value={model.accuracy * 100} />
                   </div>
                   
                   <div className="space-y-2">
@@ -294,12 +294,12 @@ export const PredictionPanel = ({
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {model.features.slice(0, 3).map((feature, index) => (
-                        <Badge key={index} variant="secondary" className="text-xs">
+                        <Badge key={index} className="text-xs" variant="secondary">
                           {feature}
                         </Badge>
                       ))}
                       {model.features.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge className="text-xs" variant="outline">
                           +{model.features.length - 3} more
                         </Badge>
                       )}
@@ -311,7 +311,7 @@ export const PredictionPanel = ({
                       <Clock className="h-3 w-3" />
                       <span>Last trained: {new Date(model.lastTrained).toLocaleDateString()}</span>
                     </div>
-                    <Button size="sm" variant="ghost" className="h-6 px-2">
+                    <Button className="h-6 px-2" size="sm" variant="ghost">
                       <Eye className="h-3 w-3 mr-1" />
                       Details
                     </Button>
@@ -322,7 +322,7 @@ export const PredictionPanel = ({
           </div>
         </TabsContent>
 
-        <TabsContent value="insights" className="space-y-4">
+        <TabsContent className="space-y-4" value="insights">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <Card className="card-modern">
               <CardHeader className="pb-3">

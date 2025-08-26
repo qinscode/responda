@@ -16,12 +16,12 @@ const generateTimeSeriesData = (days: number = 30, startValue: number = 2) => {
   const data = [];
   const today = new Date();
   
-  for (let i = days; i >= 0; i--) {
+  for (let index = days; index >= 0; index--) {
     const date = new Date(today);
-    date.setDate(date.getDate() - i);
+    date.setDate(date.getDate() - index);
     
     // Add some randomness and trend
-    const trend = Math.sin(i * 0.1) * 0.5;
+    const trend = Math.sin(index * 0.1) * 0.5;
     const noise = (Math.random() - 0.5) * 1;
     const value = Math.max(0, Math.min(6, startValue + trend + noise));
     
@@ -45,13 +45,13 @@ const generateForecastData = (days: number = 7, lastValue: number = 2) => {
   const data = [];
   const today = new Date();
   
-  for (let i = 1; i <= days; i++) {
+  for (let index = 1; index <= days; index++) {
     const date = new Date(today);
-    date.setDate(date.getDate() + i);
+    date.setDate(date.getDate() + index);
     
     // Forecast tends to be less certain further out
-    const uncertainty = i * 0.1;
-    const trend = Math.sin(i * 0.2) * 0.3;
+    const uncertainty = index * 0.1;
+    const trend = Math.sin(index * 0.2) * 0.3;
     const value = Math.max(0, Math.min(6, lastValue + trend + (Math.random() - 0.5) * uncertainty));
     
     data.push({
@@ -70,11 +70,11 @@ const generateAnomalies = (timeSeriesData: Array<any>) => {
   const anomalies = [];
   
   // Randomly select some points as anomalies
-  for (let i = 0; i < timeSeriesData.length; i++) {
+  for (let index = 0; index < timeSeriesData.length; index++) {
     if (Math.random() < 0.1) { // 10% chance of anomaly
       anomalies.push({
-        timestamp: timeSeriesData[i].timestamp,
-        value: timeSeriesData[i].value,
+        timestamp: timeSeriesData[index].timestamp,
+        value: timeSeriesData[index].value,
         anomalyScore: 0.6 + Math.random() * 0.4,
         type: ['point', 'contextual', 'collective'][Math.floor(Math.random() * 3)] as any
       });
@@ -174,9 +174,9 @@ export const mockPredictionModels: Array<PredictionModel> = [
 // Mock advanced forecasts
 export const mockAdvancedForecasts: Array<AdvancedForecast> = getAllMockRegions().slice(0, 5).flatMap(region => {
   const forecasts = [];
-  for (let i = 1; i <= 7; i++) {
+  for (let index = 1; index <= 7; index++) {
     const date = new Date();
-    date.setDate(date.getDate() + i);
+    date.setDate(date.getDate() + index);
     
     const bushfireLevel: BushfireRating = ['no-rating', 'low-moderate', 'high', 'very-high', 'severe'][
       Math.floor(Math.random() * 5)

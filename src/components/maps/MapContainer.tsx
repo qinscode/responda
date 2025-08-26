@@ -23,7 +23,7 @@ export const MapContainer = ({ selectedStation, onStationSelect }: MapContainerP
   const popupRef = useRef<mapboxgl.Popup | null>(null);
   const [mapStyle, setMapStyle] = useState<'streets' | 'satellite' | 'terrain'>('streets');
   const [isReady, setIsReady] = useState(false);
-  const [stations, setStations] = useState<WeatherStation[]>([]);
+  const [stations, setStations] = useState<Array<WeatherStation>>([]);
 
   // Load weather stations on component mount (Western Australia only)
   useEffect(() => {

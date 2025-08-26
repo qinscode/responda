@@ -16,7 +16,7 @@ interface WeatherStationListProps {
 const ITEMS_PER_PAGE = 20;
 
 export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQuery = '' }: WeatherStationListProps) => {
-  const [stations, setStations] = useState<WeatherStation[]>([]);
+  const [stations, setStations] = useState<Array<WeatherStation>>([]);
   const [weatherData, setWeatherData] = useState<Map<string, WeatherData>>(new Map());
   const [localSearchQuery, setLocalSearchQuery] = useState(searchQuery);
   const [sortBy, setSortBy] = useState<'name' | 'number' | 'height'>('name');
@@ -59,7 +59,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
 
   // Filter and sort stations
   const filteredStations = useMemo(() => {
-    let filtered = stations.filter(station => {
+    const filtered = stations.filter(station => {
       if (!station.name || !station.stationNumber) return false;
       
       const matchesSearch = station.name.toLowerCase().includes(localSearchQuery.toLowerCase()) ||
@@ -128,13 +128,13 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
         <CardTitle className="text-lg font-semibold">Weather Stations (WA)</CardTitle>
         <div className="space-y-3">
           <Input
+            className="text-sm"
             placeholder="Search station name or number..."
             value={localSearchQuery}
-            onChange={(e) => setLocalSearchQuery(e.target.value)}
-            className="text-sm"
+            onChange={(e) => { setLocalSearchQuery(e.target.value); }}
           />
           <div className="flex gap-2">
-            <Select value={sortBy} onValueChange={(value: 'name' | 'number' | 'height') => setSortBy(value)}>
+            <Select value={sortBy} onValueChange={(value: 'name' | 'number' | 'height') => { setSortBy(value); }}>
               <SelectTrigger className="text-xs">
                 <SelectValue />
               </SelectTrigger>
@@ -144,7 +144,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                 <SelectItem value="height">Sort by Height</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={filterStatus} onValueChange={(value: 'all' | 'active' | 'closed') => setFilterStatus(value)}>
+            <Select value={filterStatus} onValueChange={(value: 'all' | 'active' | 'closed') => { setFilterStatus(value); }}>
               <SelectTrigger className="text-xs">
                 <SelectValue />
               </SelectTrigger>
@@ -169,18 +169,18 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
               paginatedStations.map((station) => (
                 <div
                   key={station.id}
-                  onClick={() => handleStationClick(station)}
                   className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:bg-muted/50 ${
                     selectedStationId === station.id
                       ? 'border-primary bg-primary/5 shadow-sm'
                       : 'border-border hover:border-muted-foreground/20'
                   }`}
+                  onClick={() => { handleStationClick(station); }}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-sm leading-none">{station.name}</h4>
                     <Badge 
-                      variant={(!station.closeDate || station.closeDate === 'Active') ? 'default' : 'destructive'}
                       className="text-xs"
+                      variant={(!station.closeDate || station.closeDate === 'Active') ? 'default' : 'destructive'}
                     >
                       {(!station.closeDate || station.closeDate === 'Active') ? 'Active' : 'Closed'}
                     </Badge>
@@ -226,34 +226,34 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
               </div>
               <div className="flex gap-1">
                 <Button
+                  className="h-7 px-2 text-xs"
+                  disabled={currentPage <= 1}
                   size="sm"
                   variant="outline"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage <= 1}
-                  className="h-7 px-2 text-xs"
+                  onClick={() => { handlePageChange(currentPage - 1); }}
                 >
                   ←
                 </Button>
-                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                  const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                {Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
+                  const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + index;
                   return (
                     <Button
                       key={page}
+                      className="h-7 px-2 text-xs min-w-7"
                       size="sm"
                       variant={page === currentPage ? "default" : "outline"}
-                      onClick={() => handlePageChange(page)}
-                      className="h-7 px-2 text-xs min-w-7"
+                      onClick={() => { handlePageChange(page); }}
                     >
                       {page}
                     </Button>
                   );
                 })}
                 <Button
+                  className="h-7 px-2 text-xs"
+                  disabled={currentPage >= totalPages}
                   size="sm"
                   variant="outline"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage >= totalPages}
-                  className="h-7 px-2 text-xs"
+                  onClick={() => { handlePageChange(currentPage + 1); }}
                 >
                   →
                 </Button>

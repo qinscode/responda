@@ -125,8 +125,8 @@ export const TrendChart = ({
           <div className="mb-2">
             <div className="font-medium text-sm">{data.date}</div>
             <div className="text-xs text-muted-foreground flex items-center gap-1">
-              {data.type === 'forecast' && <Badge variant="outline" className="text-xs">Forecast</Badge>}
-              {isAnomaly && <Badge variant="destructive" className="text-xs">Anomaly</Badge>}
+              {data.type === 'forecast' && <Badge className="text-xs" variant="outline">Forecast</Badge>}
+              {isAnomaly && <Badge className="text-xs" variant="destructive">Anomaly</Badge>}
             </div>
           </div>
           
@@ -180,10 +180,10 @@ export const TrendChart = ({
               {(['7d', '30d', '90d', 'all'] as const).map((range) => (
                 <Button
                   key={range}
+                  className="h-6 px-2 text-xs"
                   size="sm"
                   variant={selectedTimeRange === range ? 'default' : 'ghost'}
-                  className="h-6 px-2 text-xs"
-                  onClick={() => setSelectedTimeRange(range)}
+                  onClick={() => { setSelectedTimeRange(range); }}
                 >
                   {range}
                 </Button>
@@ -193,18 +193,18 @@ export const TrendChart = ({
             {/* View controls */}
             <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
               <Button
+                className="h-6 w-6 p-0"
                 size="sm"
                 variant={viewMode === 'line' ? 'default' : 'ghost'}
-                className="h-6 w-6 p-0"
-                onClick={() => setViewMode('line')}
+                onClick={() => { setViewMode('line'); }}
               >
                 <Activity className="h-3 w-3" />
               </Button>
               <Button
+                className="h-6 w-6 p-0"
                 size="sm"
                 variant={viewMode === 'area' ? 'default' : 'ghost'}
-                className="h-6 w-6 p-0"
-                onClick={() => setViewMode('area')}
+                onClick={() => { setViewMode('area'); }}
               >
                 <BarChart3 className="h-3 w-3" />
               </Button>
@@ -212,10 +212,10 @@ export const TrendChart = ({
             
             {/* Toggle confidence bands */}
             <Button
+              className="h-6 w-6 p-0"
               size="sm"
               variant={showConfidence ? 'default' : 'ghost'}
-              className="h-6 w-6 p-0"
-              onClick={() => setShowConfidence(!showConfidence)}
+              onClick={() => { setShowConfidence(!showConfidence); }}
             >
               {showConfidence ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
             </Button>
@@ -232,7 +232,7 @@ export const TrendChart = ({
             </span>
           </div>
           
-          <Badge variant="outline" className="text-xs">
+          <Badge className="text-xs" variant="outline">
             {data.trend.period} analysis
           </Badge>
           
@@ -244,11 +244,11 @@ export const TrendChart = ({
       
       <CardContent className="pt-0">
         <div className="h-80 w-full">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer height="100%" width="100%">
             {viewMode === 'area' ? (
               <AreaChart data={filteredData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                 <defs>
-                  <linearGradient id={`colorGradient-${type}`} x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id={`colorGradient-${type}`} x1="0" x2="0" y1="0" y2="1">
                     <stop 
                       offset="5%" 
                       stopColor={type === 'bushfire' ? '#f97316' : '#3b82f6'} 
@@ -262,35 +262,35 @@ export const TrendChart = ({
                   </linearGradient>
                 </defs>
                 
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
+                <CartesianGrid stroke="rgba(148, 163, 184, 0.1)" strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="date"
-                  tick={{ fontSize: 10 }}
                   stroke="#64748b"
+                  tick={{ fontSize: 10 }}
                 />
                 <YAxis 
-                  tick={{ fontSize: 10 }}
-                  stroke="#64748b"
                   domain={[0, 6]}
+                  stroke="#64748b"
+                  tick={{ fontSize: 10 }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 
                 <Area
-                  type="monotone"
+                  connectNulls={false}
                   dataKey="value"
+                  fill={`url(#colorGradient-${type})`}
                   stroke={type === 'bushfire' ? '#f97316' : '#3b82f6'}
                   strokeWidth={2}
-                  fill={`url(#colorGradient-${type})`}
-                  connectNulls={false}
+                  type="monotone"
                 />
                 
                 {/* Forecast indicator line */}
                 {showForecast && (
                   <ReferenceLine 
-                    x={new Date().toLocaleDateString()} 
+                    label={{ value: "Now", position: "top" }} 
                     stroke="#64748b" 
                     strokeDasharray="5 5"
-                    label={{ value: "Now", position: "top" }}
+                    x={new Date().toLocaleDateString()}
                   />
                 )}
                 
@@ -302,39 +302,39 @@ export const TrendChart = ({
               </AreaChart>
             ) : (
               <LineChart data={filteredData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.1)" />
+                <CartesianGrid stroke="rgba(148, 163, 184, 0.1)" strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="date"
-                  tick={{ fontSize: 10 }}
                   stroke="#64748b"
+                  tick={{ fontSize: 10 }}
                 />
                 <YAxis 
-                  tick={{ fontSize: 10 }}
-                  stroke="#64748b"
                   domain={[0, 6]}
+                  stroke="#64748b"
+                  tick={{ fontSize: 10 }}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 
                 {/* Historical data line */}
                 <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke={type === 'bushfire' ? '#f97316' : '#3b82f6'}
-                  strokeWidth={2}
-                  dot={false}
                   activeDot={{ r: 4, stroke: type === 'bushfire' ? '#f97316' : '#3b82f6' }}
                   connectNulls={false}
+                  dataKey="value"
+                  dot={false}
+                  stroke={type === 'bushfire' ? '#f97316' : '#3b82f6'}
+                  strokeWidth={2}
+                  type="monotone"
                 />
                 
                 {/* Confidence bands */}
                 {showConfidence && (
                   <>
                     <Area
-                      type="monotone"
                       dataKey="confidence"
-                      stroke="none"
                       fill={type === 'bushfire' ? '#f97316' : '#3b82f6'}
                       fillOpacity={0.1}
+                      stroke="none"
+                      type="monotone"
                     />
                   </>
                 )}
@@ -342,10 +342,10 @@ export const TrendChart = ({
                 {/* Forecast indicator line */}
                 {showForecast && (
                   <ReferenceLine 
-                    x={new Date().toLocaleDateString()} 
+                    label={{ value: "Now", position: "top" }} 
                     stroke="#64748b" 
                     strokeDasharray="5 5"
-                    label={{ value: "Now", position: "top" }}
+                    x={new Date().toLocaleDateString()}
                   />
                 )}
                 
@@ -370,7 +370,7 @@ export const TrendChart = ({
               {data.anomalies.slice(0, 3).map((anomaly, index) => (
                 <div key={index} className="flex items-center justify-between text-xs bg-amber-50 border border-amber-200 rounded p-2">
                   <span>{new Date(anomaly.timestamp).toLocaleDateString()}</span>
-                  <Badge variant="outline" className="text-xs">
+                  <Badge className="text-xs" variant="outline">
                     {(anomaly.anomalyScore * 100).toFixed(0)}% anomaly
                   </Badge>
                 </div>

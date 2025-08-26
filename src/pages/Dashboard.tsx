@@ -19,9 +19,9 @@ export const Dashboard = () => {
         {/* Left sidebar - Weather Station List */}
         <div className="lg:col-span-4 h-full">
           <WeatherStationList
+            searchQuery={searchQuery}
             selectedStationId={selectedStation?.id}
             onStationSelect={setSelectedStation}
-            searchQuery={searchQuery}
           />
         </div>
 

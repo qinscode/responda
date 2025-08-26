@@ -1,6 +1,6 @@
 import type { WeatherStation } from '@/types/weather';
 
-export async function parseWeatherStationsFromCSV(): Promise<WeatherStation[]> {
+export async function parseWeatherStationsFromCSV(): Promise<Array<WeatherStation>> {
   try {
     // console.log('Starting to fetch CSV file...');
     // Fetch the clean weather stations CSV file
@@ -18,11 +18,11 @@ export async function parseWeatherStationsFromCSV(): Promise<WeatherStation[]> {
       throw new Error('CSV file appears to be empty or invalid');
     }
 
-    const stations: WeatherStation[] = [];
+    const stations: Array<WeatherStation> = [];
 
     // Process each data line (skip header)
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i]?.trim();
+    for (let index = 1; index < lines.length; index++) {
+      const line = lines[index]?.trim();
       if (!line) continue;
 
       const values = line.split(',');
@@ -32,19 +32,19 @@ export async function parseWeatherStationsFromCSV(): Promise<WeatherStation[]> {
       const stationId = values[0]?.trim();
       const stationNumber = values[1]?.trim();
       const stationName = values[2]?.trim();
-      const latitudeStr = values[3]?.trim();
-      const longitudeStr = values[4]?.trim();
+      const latitudeString = values[3]?.trim();
+      const longitudeString = values[4]?.trim();
       const state = values[5]?.trim();
-      const heightStr = values[6]?.trim();
+      const heightString = values[6]?.trim();
       const district = values[7]?.trim();
       const openDate = values[8]?.trim();
       const closeDate = values[9]?.trim();
       const status = values[10]?.trim();
 
       // Parse coordinates
-      const latitude = parseFloat(latitudeStr || '0');
-      const longitude = parseFloat(longitudeStr || '0');
-      const height = parseFloat(heightStr || '0');
+      const latitude = parseFloat(latitudeString || '0');
+      const longitude = parseFloat(longitudeString || '0');
+      const height = parseFloat(heightString || '0');
 
       // Skip invalid entries
       if (!stationId || !stationNumber || !stationName || 
@@ -93,8 +93,8 @@ export async function getWeatherDataForStation(stationId: string): Promise<any> 
     }
 
     // Find data for the specific station
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i]?.trim();
+    for (let index = 1; index < lines.length; index++) {
+      const line = lines[index]?.trim();
       if (!line) continue;
 
       const values = line.split(',');
@@ -125,12 +125,12 @@ export async function getWeatherDataForStation(stationId: string): Promise<any> 
 }
 
 // Function to get stations in a specific region or all stations
-export function getStationsInRegion(stations: WeatherStation[], bounds?: {
+export function getStationsInRegion(stations: Array<WeatherStation>, bounds?: {
   north: number;
   south: number;
   east: number;
   west: number;
-}): WeatherStation[] {
+}): Array<WeatherStation> {
   if (!bounds) return stations;
 
   return stations.filter(station => 
