@@ -1,3 +1,8 @@
-import { createRootRoute } from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
+import React from "react";
 
-export const Route = createRootRoute();
+export const Route = createRootRoute({
+  component: () => {
+    return React.createElement(Outlet);
+  },
+});
