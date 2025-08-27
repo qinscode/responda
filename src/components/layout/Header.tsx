@@ -48,7 +48,7 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
 			</div>
 
 			{/* Main Header */}
-			<div className="container mx-auto flex h-16 items-center justify-between px-4 max-w-7xl">
+			<div className="container mx-auto flex h-16 items-center justify-between px-2 max-w-none">
 				{/* Logo and Brand */}
 				<div className="flex items-center gap-3">
 					<div className="flex items-center gap-3">

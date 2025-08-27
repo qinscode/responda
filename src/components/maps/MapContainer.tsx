@@ -4,7 +4,7 @@ import type { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
 import { parseWeatherStationsFromCSV, getWeatherDataForStation } from '@/data/weatherStationParser';
-import { mockRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
+import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
 interface MapContainerProps {
@@ -46,7 +46,9 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
     const loadData = async () => {
       const weatherData = await parseWeatherStationsFromCSV();
       setWeatherStations(weatherData);
-      setRiverStations(mockRiverStations);
+      
+      const riverData = await getRiverStations();
+      setRiverStations(riverData);
     };
     void loadData();
   }, []);

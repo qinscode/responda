@@ -17,10 +17,10 @@ export const Dashboard = () => {
 
   return (
     <AppShell onSearchChange={setSearchQuery}>
-      <div className={`animate-fade-in ${sectionHeightClass} max-w-6xl mx-auto`}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+      <div className={`animate-fade-in ${sectionHeightClass} max-w-none mx-auto px-2`}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
           {/* Left sidebar - Weather Station List */}
-          <div className="lg:col-span-5 h-full animate-slide-in-right animate-delay-100">
+          <div className="lg:col-span-3 h-full animate-slide-in-right animate-delay-100">
             <WeatherStationList
               searchQuery={searchQuery}
               selectedStationId={selectedStation?.id}
@@ -30,7 +30,7 @@ export const Dashboard = () => {
           </div>
 
           {/* Right side - Map */}
-          <div className="lg:col-span-7 h-full animate-fade-in-up animate-delay-200">
+          <div className="lg:col-span-9 h-full animate-fade-in-up animate-delay-200">
             <Card className="card-modern-v2 border-0 shadow-none rounded-2xl py-0 h-full max-h-[calc(100vh-200px)] overflow-hidden">
               <CardContent className="p-0 h-full">
                 <div className="map-container h-full rounded-2xl overflow-hidden">

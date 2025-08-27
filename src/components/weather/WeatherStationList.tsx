@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 import { parseWeatherStationsFromCSV, getWeatherDataForStation } from '@/data/weatherStationParser';
-import { mockRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
+import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
 
 interface StationListProps {
   selectedStationId?: string;
@@ -44,8 +44,9 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
         const weatherStationsData = await parseWeatherStationsFromCSV();
         setWeatherStations(weatherStationsData);
         
-        // Set river stations (mock data)
-        setRiverStations(mockRiverStations);
+        // Load river stations from CSV
+        const riverStationsData = await getRiverStations();
+        setRiverStations(riverStationsData);
         
         // Load weather data for first few weather stations
         const weatherMap = new Map<string, WeatherData>();
@@ -63,7 +64,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
 
         // Load river data for first few river stations
         const riverMap = new Map<string, RiverData>();
-        for (const station of mockRiverStations.slice(0, 5)) {
+        for (const station of riverStationsData.slice(0, 5)) {
           try {
             const data = await getRiverDataForStation(station.id);
             if (data) {

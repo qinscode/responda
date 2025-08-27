@@ -11,7 +11,7 @@ export function AppShell({ children, onSearchChange }: AppShellProps) {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-muted/20">
       <Header onSearchChange={onSearchChange} />
-      <main className="container mx-auto px-4 py-6 space-y-6 flex-1 max-w-7xl">
+      <main className="container mx-auto px-2 py-6 space-y-6 flex-1 max-w-none">
         {children}
       </main>
       <Footer />
