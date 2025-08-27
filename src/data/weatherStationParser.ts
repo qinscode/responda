@@ -15,6 +15,9 @@ interface WeatherStationInfo {
 interface OpenWeatherMapResponse {
 	main?: {
 		temp?: number;
+		feels_like?: number;
+		temp_min?: number;
+		temp_max?: number;
 		humidity?: number;
 		pressure?: number;
 	};
@@ -29,9 +32,19 @@ interface OpenWeatherMapResponse {
 		"1h"?: number;
 	};
 	visibility?: number;
+	clouds?: {
+		all?: number; // cloudiness percentage
+	};
+	sys?: {
+		sunrise?: number;
+		sunset?: number;
+	};
 	weather?: Array<{
+		main?: string;
 		description?: string;
+		icon?: string;
 	}>;
+	dt?: number; // timestamp
 }
 
 // Parse weather stations from JSON file instead of CSV
@@ -137,62 +150,105 @@ export async function getWeatherDataFromAPI(
 		}
 
 		const fetchWeatherData = async () => {
-			const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}&units=metric`;
+			// Fetch current weather and UV index in parallel
+			const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}&units=metric`;
+			const uvUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}`;
 
-			const response = await fetch(url, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-				},
-			});
+			const [weatherResponse, uvResponse] = await Promise.allSettled([
+				fetch(weatherUrl, {
+					method: "GET",
+					headers: { Accept: "application/json" },
+				}),
+				fetch(uvUrl, {
+					method: "GET",
+					headers: { Accept: "application/json" },
+				})
+			]);
 
-			if (!response.ok) {
-				if (response.status === 401) {
-					console.error(
-						"Invalid API key for OpenWeatherMap. Please check your VITE_OPENWEATHER_API_KEY."
-					);
-				} else if (response.status === 429) {
-					console.error(
-						"API rate limit exceeded. Please wait before making more requests."
-					);
-				} else if (response.status === 404) {
-					console.error(
-						`No weather data found for coordinates: ${latitude}, ${longitude}`
-					);
+			// Handle weather response
+			if (weatherResponse.status === 'rejected' || !weatherResponse.value.ok) {
+				const status = weatherResponse.status === 'fulfilled' ? weatherResponse.value.status : 500;
+				if (status === 401) {
+					console.error("Invalid API key for OpenWeatherMap. Please check your VITE_OPENWEATHER_API_KEY.");
+				} else if (status === 429) {
+					console.error("API rate limit exceeded. Please wait before making more requests.");
+				} else if (status === 404) {
+					console.error(`No weather data found for coordinates: ${latitude}, ${longitude}`);
 				}
-				throw new Error(
-					`Weather API request failed: ${response.status} ${response.statusText}`
-				);
+				throw new Error(`Weather API request failed: ${status}`);
 			}
 
-			return response.json() as Promise<OpenWeatherMapResponse>;
+			const weatherData = await weatherResponse.value.json() as OpenWeatherMapResponse;
+			let uvData = null;
+			
+			// Handle UV response (optional, don't fail if UV data is unavailable)
+			if (uvResponse.status === 'fulfilled' && uvResponse.value.ok) {
+				try {
+					uvData = await uvResponse.value.json() as { value?: number };
+				} catch (error) {
+					console.warn('Failed to parse UV data:', error);
+				}
+			}
+
+			return { weather: weatherData, uv: uvData };
 		};
 
-		const data = await retryWithBackoff(fetchWeatherData, 3, 1000);
-		if (!data) {
+		const result = await retryWithBackoff(fetchWeatherData, 3, 1000);
+		if (!result) {
 			return null;
 		}
+
+		const data = result.weather;
+		const uvData = result.uv;
 
 		const currentDate =
 			new Date().toISOString().split("T")[0] || new Date().toDateString();
 		const currentTime =
 			new Date().toTimeString().split(" ")[0] || new Date().toTimeString();
 
+		// Helper function to format time
+		const formatTime = (timestamp: number) => {
+			return new Date(timestamp * 1000).toLocaleTimeString('en-US', { 
+				hour12: false, 
+				hour: '2-digit', 
+				minute: '2-digit' 
+			});
+		};
+
+		// Calculate dew point (approximation)
+		const calculateDewPoint = (temp: number, humidity: number) => {
+			const a = 17.27;
+			const b = 237.7;
+			const alpha = ((a * temp) / (b + temp)) + Math.log(humidity / 100);
+			return Math.round(((b * alpha) / (a - alpha)) * 10) / 10;
+		};
+
+		const temp = data.main?.temp || 0;
+		const humidity = data.main?.humidity || 0;
+
 		return {
 			stationId: `api_${latitude}_${longitude}`,
 			date: currentDate,
 			time: currentTime,
-			temperature: Math.round((data.main?.temp || 0) * 10) / 10, // Round to 1 decimal
-			humidity: Math.round(data.main?.humidity || 0),
+			temperature: Math.round(temp * 10) / 10,
+			humidity: Math.round(humidity),
 			pressure: Math.round(data.main?.pressure || 0),
-			windSpeed: Math.round((data.wind?.speed || 0) * 10) / 10, // Round to 1 decimal
+			windSpeed: Math.round((data.wind?.speed || 0) * 10) / 10,
 			windDirection: data.wind?.deg ? `${Math.round(data.wind.deg)}°` : "N/A",
-			precipitation:
-				Math.round((data.rain?.["1h"] || data.snow?.["1h"] || 0) * 10) / 10,
-			visibility: data.visibility
-				? Math.round((data.visibility / 1000) * 10) / 10
-				: 0, // Convert to km
+			precipitation: Math.round((data.rain?.["1h"] || data.snow?.["1h"] || 0) * 10) / 10,
+			visibility: data.visibility ? Math.round((data.visibility / 1000) * 10) / 10 : 0,
 			conditions: data.weather?.[0]?.description || "Unknown",
+			// Extended data
+			feelsLike: data.main?.feels_like ? Math.round(data.main.feels_like * 10) / 10 : undefined,
+			tempMin: data.main?.temp_min ? Math.round(data.main.temp_min * 10) / 10 : undefined,
+			tempMax: data.main?.temp_max ? Math.round(data.main.temp_max * 10) / 10 : undefined,
+			cloudiness: data.clouds?.all || 0,
+			uvIndex: uvData?.value ? Math.round(uvData.value * 10) / 10 : undefined,
+			dewPoint: humidity > 0 ? calculateDewPoint(temp, humidity) : undefined,
+			sunrise: data.sys?.sunrise ? formatTime(data.sys.sunrise) : undefined,
+			sunset: data.sys?.sunset ? formatTime(data.sys.sunset) : undefined,
+			weatherIcon: data.weather?.[0]?.icon || undefined,
+			weatherMain: data.weather?.[0]?.main || undefined,
 		};
 	} catch (error) {
 		console.error("Error fetching weather data from API:", error);

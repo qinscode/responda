@@ -8,6 +8,8 @@ import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from
 import { getRiverStations, getRiverDataForStation } from '@/data/riverData';
 import { RiverStageChart } from '@/components/charts/RiverStageChart';
 import { RiverRiskPrediction } from '@/components/analytics/RiverRiskPrediction';
+import { WeatherRiskAnalysis } from '@/components/analytics/WeatherRiskAnalysis';
+import { WeatherDataDisplay } from '@/components/weather/WeatherDataDisplay';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
 interface MapContainerProps {
@@ -464,7 +466,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
         popupRef.current = new mapboxgl.Popup({ 
           closeButton: false,
           className: 'custom-popup',
-          maxWidth: '820px',
+          maxWidth: props.type === 'weather' ? '800px' : '820px',
           anchor: 'bottom',
           offset: [0, -10]
         })
@@ -476,7 +478,62 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
         if (props.type === 'weather') {
           void getWeatherDataForStationWithCoords(props.id, props.latitude, props.longitude).then(weatherData => {
             if (popupRef.current && weatherData) {
-              popupRef.current.setHTML(createPopupContent(weatherData));
+              // Create enhanced weather station popup with side-by-side layout
+              const popupContainer = document.createElement('div');
+              
+              popupContainer.innerHTML = `
+                <div style="position: relative; display: flex; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); overflow: hidden; width: 800px; min-height: 400px;">
+                  <button onclick="this.closest('.mapboxgl-popup').remove()" 
+                          style="position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; 
+                                 background: rgba(255,255,255,0.9); border: none; border-radius: 50%; 
+                                 display: flex; align-items: center; justify-content: center; 
+                                 cursor: pointer; z-index: 10; color: #374151; font-size: 16px; 
+                                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                                 transition: all 0.2s ease;">×</button>
+                  
+                  <!-- Left side: Weather Data -->
+                  <div style="flex: 0 0 400px; padding: 20px; display: flex; flex-direction: column; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);">
+                    <div id="weather-data-display-${props.id}" style="flex: 1;">
+                    </div>
+                  </div>
+                  
+                  <!-- Right side: AI Risk Analysis -->
+                  <div style="flex: 1; background: #ffffff; border-left: 1px solid #e5e7eb; padding: 20px; display: flex; flex-direction: column;">
+                    <div id="weather-ai-analysis-${props.id}" style="flex: 1;">
+                    </div>
+                  </div>
+                </div>
+              `;
+              
+              popupRef.current.setDOMContent(popupContainer);
+              
+              // Render weather data display component in the left panel
+              const weatherContainer = document.getElementById(`weather-data-display-${props.id}`);
+              if (weatherContainer) {
+                const weatherRoot = createRoot(weatherContainer);
+                weatherRoot.render(<WeatherDataDisplay 
+                  weatherData={weatherData}
+                  stationName={props.name}
+                  stationNumber={props.stationNumber}
+                  latitude={props.latitude}
+                  longitude={props.longitude}
+                  height={props.height}
+                  isCompact={true}
+                />);
+              }
+              
+              // Render AI analysis component in the right panel
+              const aiContainer = document.getElementById(`weather-ai-analysis-${props.id}`);
+              if (aiContainer) {
+                const aiRoot = createRoot(aiContainer);
+                aiRoot.render(<WeatherRiskAnalysis 
+                  stationId={props.id}
+                  weatherData={weatherData}
+                  stationName={props.name}
+                  latitude={props.latitude}
+                  longitude={props.longitude}
+                />);
+              }
             }
           });
         } else if (props.type === 'river') {

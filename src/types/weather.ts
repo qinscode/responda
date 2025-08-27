@@ -28,6 +28,17 @@ export interface WeatherData {
   precipitation: number;
   visibility: number;
   conditions: string;
+  // Extended API data
+  feelsLike?: number;
+  tempMin?: number;
+  tempMax?: number;
+  cloudiness?: number; // percentage
+  uvIndex?: number;
+  dewPoint?: number;
+  sunrise?: string;
+  sunset?: string;
+  weatherIcon?: string;
+  weatherMain?: string; // Rain, Snow, Clear, etc.
 }
 
 export interface WeatherStationData extends WeatherStation {
