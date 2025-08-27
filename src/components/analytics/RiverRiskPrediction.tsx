@@ -170,10 +170,7 @@ export const RiverRiskPrediction = ({ siteNumber, currentStage, stationName }: R
           <p className="text-xs text-gray-700">{prediction.recommendation}</p>
         </div>
 
-        {/* Footer */}
-        <div className="text-xs text-gray-500 text-center border-t border-blue-200 pt-2">
-          Analysis powered by AI • Updated in real-time
-        </div>
+
       </div>
     </Card>
   );

@@ -18,6 +18,7 @@ import { RiverRiskPrediction } from '@/components/analytics/RiverRiskPrediction'
 interface RiverStageChartProps {
   siteNumber: string;
   stationName?: string;
+  showAI?: boolean;
 }
 
 interface ChartDataPoint {
@@ -68,7 +69,7 @@ const getRiskThresholds = (data: Array<ChartDataPoint>) => {
   return { low, high, min: chartMin, max: chartMax };
 };
 
-export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProps) => {
+export const RiverStageChart = ({ siteNumber, stationName, showAI = true }: RiverStageChartProps) => {
   const [chartData, setChartData] = useState<Array<ChartDataPoint>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -93,7 +94,7 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
             datetime: point.datetime,
             stage: point.stage,
             discharge: point.discharge,
-            formattedTime: format(parseISO(point.datetime), 'MMM dd HH:mm')
+            formattedTime: format(parseISO(point.datetime), 'dd HH:mm')
           }));
 
         // Check if we have enough valid data points after filtering
@@ -142,21 +143,15 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
 
   return (
     <div className="w-full">
-      <div className="mb-3">
-        <h3 className="text-sm font-semibold text-gray-800">
-          River Stage - Last 6 Days
-        </h3>
-        {stationName && (
-          <p className="text-xs text-gray-600 mt-1">{stationName}</p>
-        )}
-        <p className="text-xs text-gray-500 mt-1">
+      <div className="mb-2">
+        <p className="text-xs text-gray-500">
           Range: {thresholds.min.toFixed(3)}m - {thresholds.max.toFixed(3)}m
         </p>
       </div>
       
-      <div className="h-64">
+      <div className="h-72">
         <ResponsiveContainer height="100%" width="100%">
-          <LineChart data={chartData} margin={{ top: 10, right: 20, left: 40, bottom: 80 }}>
+          <LineChart data={chartData} margin={{ top: 10, right: 20, left: 20, bottom: 10 }}>
             <CartesianGrid opacity={0.3} strokeDasharray="3 3" />
             
             {/* Risk level background areas */}
@@ -194,10 +189,10 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
             />
             
             <XAxis
-              angle={-45}
+              angle={-30}
               dataKey="formattedTime"
-              fontSize={10}
-              height={60}
+              fontSize={9}
+              height={35}
               interval="preserveStartEnd"
               textAnchor="end"
             />
@@ -243,20 +238,22 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
         </ResponsiveContainer>
       </div>
       
-      <div className="mt-2 text-xs text-gray-600 flex justify-between">
+      <div className="mt-1 text-xs text-gray-600 flex justify-between">
         <span>Low: &lt; {thresholds.low.toFixed(3)}m</span>
         <span>Medium: {thresholds.low.toFixed(3)}m - {thresholds.high.toFixed(3)}m</span>
         <span>High: &gt; {thresholds.high.toFixed(3)}m</span>
       </div>
       
-      {/* AI Risk Prediction */}
-      <div className="mt-4">
-        <RiverRiskPrediction 
-          siteNumber={siteNumber} 
-          currentStage={chartData[chartData.length - 1]?.stage || 0}
-          stationName={stationName}
-        />
-      </div>
+      {/* AI Risk Prediction - only show if showAI is true */}
+      {showAI && (
+        <div className="mt-3">
+          <RiverRiskPrediction 
+            siteNumber={siteNumber} 
+            currentStage={chartData[chartData.length - 1]?.stage || 0}
+            stationName={stationName}
+          />
+        </div>
+      )}
     </div>
   );
 }; 

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from '@/data/weatherStationParser';
 import { getRiverStations, getRiverDataForStation } from '@/data/riverData';
 import { RiverStageChart } from '@/components/charts/RiverStageChart';
+import { RiverRiskPrediction } from '@/components/analytics/RiverRiskPrediction';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
 interface MapContainerProps {
@@ -384,41 +385,23 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
           let riverInfo = '';
           if (riverData && props.type === 'river') {
             riverInfo = `
-              <div style="margin-top: 4px; padding: 12px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 6px; border: 1px solid #d1fae5; border-top: 2px solid #a7f3d0;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #d1fae5;">
-                  <h4 style="font-weight: 600; font-size: 12px; color: #1e293b; margin: 0;">River Data</h4>
-                  <div style="display: flex; align-items: center; gap: 4px;">
-                    <span style="font-size: 14px; line-height: 1; display: inline-block; width: 14px; text-align: center;">🌊</span>
-                    <span style="font-size: 10px; color: #064e3b; font-weight: 500;">${riverData.quality}</span>
-                  </div>
+              <div style="margin-top: 6px; padding: 8px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 4px; border: 1px solid #d1fae5;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <h4 style="font-weight: 600; font-size: 11px; color: #064e3b; margin: 0;">River Data</h4>
+                  <span style="font-size: 10px; color: #064e3b; font-weight: 500;">🌊 ${riverData.quality}</span>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
-                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">📏</div>
-                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">LEVEL</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.waterLevel.toFixed(1)}m</div>
+                <div style="font-size: 10px; color: #065f46; line-height: 1.3;">
+                  <div style="margin-bottom: 2px;">
+                    <span style="color: #047857;">📏 Level:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.waterLevel.toFixed(1)}m</span>
+                    <span style="margin: 0 6px; color: #86efac;">•</span>
+                    <span style="color: #047857;">🌊 Flow:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.flow.toFixed(1)} m³/s</span>
+                    <span style="margin: 0 6px; color: #86efac;">•</span>
+                    <span style="color: #047857;">🌡️ Temp:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.temperature.toFixed(1)}°C</span>
                   </div>
-                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌊</div>
-                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">FLOW</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 10px; line-height: 1;">${riverData.flow.toFixed(1)} m³/s</div>
-                  </div>
-                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌡️</div>
-                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">TEMP</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.temperature.toFixed(1)}°C</div>
-                  </div>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
-                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌫️</div>
-                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">TURBIDITY</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 10px; line-height: 1;">${riverData.turbidity.toFixed(1)} NTU</div>
-                  </div>
-                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">⚗️</div>
-                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">PH</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.ph.toFixed(1)}</div>
+                  <div>
+                    <span style="color: #047857;">🌫️ Turbidity:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.turbidity.toFixed(1)} NTU</span>
+                    <span style="margin: 0 6px; color: #86efac;">•</span>
+                    <span style="color: #047857;">⚗️ pH:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.ph.toFixed(1)}</span>
                   </div>
                 </div>
               </div>
@@ -442,9 +425,9 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
           };
           
           return `
-            <div style="font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; width: 100%; background: transparent; overflow: visible;">
+            <div style="font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; width: 100%; background: white; overflow: visible; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
               <!-- Header Section -->
-              <div style="padding: 14px; background: linear-gradient(135deg, ${props.color}08 0%, ${props.color}12 100%); border-bottom: 1px solid #e2e8f0;">
+              <div style="padding: 10px; background: linear-gradient(135deg, ${props.color}08 0%, ${props.color}12 100%); border-bottom: 1px solid #e2e8f0; border-radius: 8px 8px 0 0;">
                 <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px;">
                   <div style="display: flex; align-items: baseline; gap: 8px;">
                     <div style="width: 12px; height: 12px; background: ${props.color}; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-top: 2px;"></div>
@@ -462,35 +445,16 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
               </div>
               
               <!-- Info Section -->
-              <div style="padding: 14px;">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px;">
-                  <div style="padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; height: 44px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    <div style="font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px;">STATE</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 13px;">${props.state}</div>
-                  </div>
-                  <div style="padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; height: 44px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    <div style="font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px;">ELEVATION</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 13px;">${props.height}m</div>
-                  </div>
-                  <div style="padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; height: 44px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    <div style="font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px;">OPENED</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px;">${formatDate(props.openDate || 'Unknown')}</div>
-                  </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 8px;">
-                  <div style="padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; height: 44px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    <div style="font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px;">📍 LATITUDE</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; font-family: monospace;">${props.latitude.toFixed(4)}°</div>
-                  </div>
-                  <div style="padding: 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; height: 44px; display: flex; flex-direction: column; justify-content: center; text-align: center;">
-                    <div style="font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px;">📍 LONGITUDE</div>
-                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; font-family: monospace;">${props.longitude.toFixed(4)}°</div>
+              <div style="padding: 8px 10px;">
+                <!-- Ultra compact info display -->
+                <div style="font-size: 10px; color: #6b7280; line-height: 1.3; margin-bottom: 6px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>📍 ${props.latitude.toFixed(4)}°, ${props.longitude.toFixed(4)}°</span>
+                    <span style="font-weight: 500;">⛰️ ${props.height}m</span>
                   </div>
                 </div>
                 
                 ${weatherInfo}
-                ${riverInfo}
               </div>
             </div>
           `;
@@ -534,14 +498,38 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
                                  cursor: pointer; z-index: 10; color: #64748b; font-size: 14px; 
                                  transition: all 0.2s ease;">×</button>
                   
-                  <!-- Left side: Station info -->
-                  <div style="flex: 0 0 360px; padding: 0;">
-                    ${basicContent}
+                  <!-- Left side: Station info + AI Analysis -->
+                  <div style="flex: 0 0 320px; padding: 0; display: flex; flex-direction: column;">
+                    <div style="flex: 0 0 auto;">
+                      ${basicContent}
+                    </div>
+                    <div id="ai-analysis-${siteNumber}" style="flex: 1; padding: 12px; background: #f8fafc;">
+                    </div>
                   </div>
                   
-                  <!-- Right side: Chart -->
-                  <div style="flex: 1; background: #f8fafc; border-left: 1px solid #e2e8f0; padding: 16px;">
-                    <div id="river-chart-${siteNumber}" style="width: 100%; height: 300px;"></div>
+                  <!-- Right side: River Data + Chart -->
+                  <div style="flex: 1; background: white; border-left: 1px solid #e2e8f0; padding: 16px;">
+                    <!-- River Data - Compact horizontal layout -->
+                    <div style="margin-bottom: 12px; padding: 6px 10px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 6px; border: 1px solid #d1fae5;">
+                      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 9px; color: #065f46;">
+                          <span style="font-weight: 600; color: #064e3b; font-size: 10px;">🌊 ${riverData.quality}</span>
+                          <span style="color: #047857;">📏 ${riverData.waterLevel.toFixed(1)}m</span>
+                          <span style="color: #047857;">🌊 ${riverData.flow.toFixed(1)} m³/s</span>
+                          <span style="color: #047857;">🌡️ ${riverData.temperature.toFixed(1)}°C</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; font-size: 9px; color: #065f46;">
+                          <span style="color: #047857;">🌫️ ${riverData.turbidity.toFixed(1)} NTU</span>
+                          <span style="color: #047857;">⚗️ pH ${riverData.ph.toFixed(1)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Chart Section -->
+                    <div style="margin-bottom: 8px;">
+                      <h3 style="font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">River Stage - Last 6 Days</h3>
+                    </div>
+                    <div id="river-chart-${siteNumber}" style="width: 100%; height: 280px;"></div>
                   </div>
                 </div>
               `;
@@ -552,7 +540,15 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
               const chartContainer = document.getElementById(`river-chart-${siteNumber}`);
               if (chartContainer) {
                 const root = createRoot(chartContainer);
-                root.render(<RiverStageChart siteNumber={siteNumber} stationName={props.name} />);
+                root.render(<RiverStageChart siteNumber={siteNumber} stationName={props.name} showAI={false} />);
+              }
+              
+              // Render AI analysis component in the left panel
+              const aiContainer = document.getElementById(`ai-analysis-${siteNumber}`);
+              if (aiContainer) {
+                const aiRoot = createRoot(aiContainer);
+                const latestStage = riverData ? riverData.waterLevel : 0;
+                aiRoot.render(<RiverRiskPrediction siteNumber={siteNumber} currentStage={latestStage} stationName={props.name} />);
               }
             }
           });
@@ -655,7 +651,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
           padding: 0 !important;
           border-radius: 8px !important;
           box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-          background: transparent !important;
+          background: white !important;
         }
         .custom-popup .mapboxgl-popup-tip {
           display: none !important;
