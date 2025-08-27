@@ -12,7 +12,8 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { format, parseISO } from 'date-fns';
-import { getRiverStationChartData } from '@/data/mockRiverData';
+import { getRiverStationChartData } from '@/data/riverData';
+import { RiverRiskPrediction } from '@/components/analytics/RiverRiskPrediction';
 
 interface RiverStageChartProps {
   siteNumber: string;
@@ -26,29 +27,49 @@ interface ChartDataPoint {
   formattedTime: string;
 }
 
-// Risk level thresholds - these could be made configurable per station
-const getRiskThresholds = (data: ChartDataPoint[]) => {
+// Risk level thresholds - dynamically calculated based on actual data range
+const getRiskThresholds = (data: Array<ChartDataPoint>) => {
   if (data.length === 0) return { low: 0, high: 0, min: 0, max: 1 };
   
   const stages = data.map(d => d.stage);
-  const min = Math.min(...stages);
-  const max = Math.max(...stages);
-  const range = max - min;
+  const dataMin = Math.min(...stages);
+  const dataMax = Math.max(...stages);
+  const range = dataMax - dataMin;
   
-  // Set thresholds relative to the data range
-  const low = min + range * 0.3;
-  const high = min + range * 0.7;
+  // Create a tight range around the data to show changes clearly
+  let chartMin, chartMax;
+  if (range < 0.005) {
+    // For very stable water levels, show a 1cm range around the data
+    const center = (dataMin + dataMax) / 2;
+    chartMin = center - 0.005;
+    chartMax = center + 0.005;
+  } else if (range < 0.02) {
+    // For small changes, add minimal padding to focus on the variation
+    const padding = Math.max(0.002, range * 0.1); // At least 2mm padding
+    chartMin = dataMin - padding;
+    chartMax = dataMax + padding;
+  } else {
+    // For larger changes, add 10% padding
+    const padding = range * 0.1;
+    chartMin = dataMin - padding;
+    chartMax = dataMax + padding;
+  }
   
-  // Add some padding for the chart display
-  const padding = range * 0.1;
-  const chartMin = Math.max(0, min - padding);
-  const chartMax = max + padding;
+  // Ensure we don't have negative water levels unless data actually contains them
+  if (dataMin > 0 && chartMin < 0) {
+    chartMin = Math.max(0, dataMin - 0.01); // Allow small negative for padding, but not too much
+  }
+  
+  // Set risk thresholds relative to the visible range
+  const visibleRange = chartMax - chartMin;
+  const low = chartMin + visibleRange * 0.3;
+  const high = chartMin + visibleRange * 0.7;
   
   return { low, high, min: chartMin, max: chartMax };
 };
 
 export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProps) => {
-  const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
+  const [chartData, setChartData] = useState<Array<ChartDataPoint>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,13 +86,21 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
           return;
         }
 
-        // Transform data for recharts
-        const transformedData: ChartDataPoint[] = rawData.map(point => ({
-          datetime: point.datetime,
-          stage: point.stage,
-          discharge: point.discharge,
-          formattedTime: format(parseISO(point.datetime), 'MMM dd HH:mm')
-        }));
+        // Transform data for recharts, filtering out invalid stage data (≤ 0)
+        const transformedData: Array<ChartDataPoint> = rawData
+          .filter(point => point.stage > 0) // Ignore data points with stage <= 0
+          .map(point => ({
+            datetime: point.datetime,
+            stage: point.stage,
+            discharge: point.discharge,
+            formattedTime: format(parseISO(point.datetime), 'MMM dd HH:mm')
+          }));
+
+        // Check if we have enough valid data points after filtering
+        if (transformedData.length === 0) {
+          setError('No valid chart data available (all stage values ≤ 0)');
+          return;
+        }
 
         setChartData(transformedData);
       } catch (err) {
@@ -82,7 +111,7 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
       }
     };
 
-    loadChartData();
+    void loadChartData();
   }, [siteNumber]);
 
   if (loading) {
@@ -113,77 +142,89 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
 
   return (
     <div className="w-full">
-      <div className="mb-2">
+      <div className="mb-3">
         <h3 className="text-sm font-semibold text-gray-800">
-          River Stage - Last 6 Days {stationName && `(${stationName})`}
+          River Stage - Last 6 Days
         </h3>
+        {stationName && (
+          <p className="text-xs text-gray-600 mt-1">{stationName}</p>
+        )}
+        <p className="text-xs text-gray-500 mt-1">
+          Range: {thresholds.min.toFixed(3)}m - {thresholds.max.toFixed(3)}m
+        </p>
       </div>
       
       <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-            <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
+        <ResponsiveContainer height="100%" width="100%">
+          <LineChart data={chartData} margin={{ top: 10, right: 20, left: 40, bottom: 80 }}>
+            <CartesianGrid opacity={0.3} strokeDasharray="3 3" />
             
             {/* Risk level background areas */}
             <ReferenceArea
-              y1={thresholds.min}
-              y2={thresholds.low}
               fill="#6CCF6C"
               fillOpacity={0.15}
+              y1={thresholds.min}
+              y2={thresholds.low}
             />
             <ReferenceArea
-              y1={thresholds.low}
-              y2={thresholds.high}
               fill="#FFD27F"
               fillOpacity={0.15}
+              y1={thresholds.low}
+              y2={thresholds.high}
             />
             <ReferenceArea
-              y1={thresholds.high}
-              y2={thresholds.max}
               fill="#FF9A9A"
               fillOpacity={0.15}
+              y1={thresholds.high}
+              y2={thresholds.max}
             />
             
             {/* Threshold lines */}
             <ReferenceLine
-              y={thresholds.low}
               stroke="#6CCF6C"
               strokeDasharray="5 5"
               strokeWidth={1}
+              y={thresholds.low}
             />
             <ReferenceLine
-              y={thresholds.high}
               stroke="#FF9A9A"
               strokeDasharray="5 5"
               strokeWidth={1}
+              y={thresholds.high}
             />
             
             <XAxis
-              dataKey="formattedTime"
               angle={-45}
-              textAnchor="end"
-              height={60}
+              dataKey="formattedTime"
               fontSize={10}
+              height={60}
               interval="preserveStartEnd"
+              textAnchor="end"
             />
             <YAxis
               domain={[thresholds.min, thresholds.max]}
-              label={{ value: 'Stage (m)', angle: -90, position: 'insideLeft' }}
               fontSize={11}
+              label={{ value: 'Stage (m)', angle: -90, position: 'insideLeft' }}
+              tickFormatter={(value) => {
+                if (typeof value === 'number') {
+                  return value.toFixed(3);
+                }
+                return String(value);
+              }}
             />
             
             <Tooltip
               labelFormatter={(value) => `Time: ${value}`}
-              formatter={(value: number, name: string) => [
-                `${value.toFixed(3)} m`,
-                name === 'stage' ? 'Water Level' : name
-              ]}
               contentStyle={{
                 backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 border: '1px solid #ccc',
                 borderRadius: '4px',
                 fontSize: '12px'
               }}
+              formatter={(value: number, name: string) => [
+                `${value.toFixed(3)} m`,
+                name === 'stage' ? 'Water Level' : name
+              ]}
             />
             
             <Legend 
@@ -191,12 +232,12 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
             />
             
             <Line
-              type="monotone"
+              activeDot={{ r: 4 }}
               dataKey="stage"
+              dot={{ r: 2 }}
               stroke="#2563eb"
               strokeWidth={2}
-              dot={{ r: 2 }}
-              activeDot={{ r: 4 }}
+              type="monotone"
             />
           </LineChart>
         </ResponsiveContainer>
@@ -206,6 +247,15 @@ export const RiverStageChart = ({ siteNumber, stationName }: RiverStageChartProp
         <span>Low: &lt; {thresholds.low.toFixed(3)}m</span>
         <span>Medium: {thresholds.low.toFixed(3)}m - {thresholds.high.toFixed(3)}m</span>
         <span>High: &gt; {thresholds.high.toFixed(3)}m</span>
+      </div>
+      
+      {/* AI Risk Prediction */}
+      <div className="mt-4">
+        <RiverRiskPrediction 
+          siteNumber={siteNumber} 
+          currentStage={chartData[chartData.length - 1]?.stage || 0}
+          stationName={stationName}
+        />
       </div>
     </div>
   );

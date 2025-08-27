@@ -2,13 +2,13 @@ import type { WeatherStation, WeatherData } from '@/types/weather';
 
 // Type definition for weather station info JSON structure
 interface WeatherStationInfo {
-  WeatherStation: string;
-  Latitude: number;
-  Longitude: number;
-  Population: number | null;
-  NearestFireStation: string;
-  NearestHospital: string;
-  HighwayEscape: string;
+  "station name": string;
+  lat: number;
+  long: number;
+  Population?: number | null;
+  NearestFireStation?: string;
+  NearestHospital?: string;
+  HighwayEscape?: string;
 }
 
 // Type definition for OpenWeatherMap API response
@@ -42,7 +42,7 @@ export async function parseWeatherStationsFromJSON(): Promise<Array<WeatherStati
       throw new Error(`Failed to fetch weather station info: ${response.status}`);
     }
     
-    const jsonData = await response.json() as WeatherStationInfo[];
+    const jsonData = await response.json() as Array<WeatherStationInfo>;
     const stations: Array<WeatherStation> = [];
 
     for (let index = 0; index < jsonData.length; index++) {
@@ -50,23 +50,23 @@ export async function parseWeatherStationsFromJSON(): Promise<Array<WeatherStati
       
       // Skip if stationData is undefined or has invalid entries
       if (!stationData || 
-          !stationData.WeatherStation || 
-          typeof stationData.Latitude !== 'number' || 
-          typeof stationData.Longitude !== 'number' ||
-          stationData.Latitude === 0 || stationData.Longitude === 0) {
+          !stationData["station name"] || 
+          typeof stationData.lat !== 'number' || 
+          typeof stationData.long !== 'number' ||
+          stationData.lat === 0 || stationData.long === 0) {
         continue;
       }
 
       stations.push({
         id: `ws_${index + 1}`, // Generate unique ID
-        name: stationData.WeatherStation,
-        latitude: stationData.Latitude,
-        longitude: stationData.Longitude,
+        name: stationData["station name"],
+        latitude: stationData.lat,
+        longitude: stationData.long,
         state: 'WA', // All stations in WA
-        population: stationData.Population,
-        nearestFireStation: stationData.NearestFireStation,
-        nearestHospital: stationData.NearestHospital,
-        highwayEscape: stationData.HighwayEscape,
+        population: stationData.Population || null,
+        nearestFireStation: stationData.NearestFireStation || 'Unknown',
+        nearestHospital: stationData.NearestHospital || 'Unknown',
+        highwayEscape: stationData.HighwayEscape || 'Unknown',
         district: '0' // Default district
       });
     }

@@ -580,7 +580,7 @@ export const RiskAnalysisPanel = ({
             <ResponsiveContainer height="100%" width="100%">
               <BarChart data={humanFactorData} layout="horizontal">
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" domain={[0, 100]} />
+                <XAxis domain={[0, 100]} type="number" />
                 <YAxis dataKey="factor" tick={{ fontSize: 10 }} type="category" width={180} />
                 <Tooltip 
                   formatter={(value, name) => [`${value}%`, name]}
@@ -766,13 +766,13 @@ export const RiskAnalysisPanel = ({
               <ResponsiveContainer height="100%" width="100%">
                 <PieChart>
                   <Pie
-                    data={evacuationCapacityData}
                     cx="50%"
                     cy="50%"
+                    data={evacuationCapacityData}
+                    dataKey="value"
                     innerRadius={40}
                     outerRadius={80}
                     paddingAngle={5}
-                    dataKey="value"
                   >
                     {evacuationCapacityData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />

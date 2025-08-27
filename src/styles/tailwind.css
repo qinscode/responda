@@ -421,6 +421,33 @@ body {
 /* Modern attribution styling */
 .mapboxgl-ctrl-attrib {
   background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Custom popup styling for river stations */
+.custom-popup .mapboxgl-popup-content {
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+  max-width: min(820px, 95vw) !important;
+  max-height: 80vh !important;
+  overflow: visible !important;
+}
+
+.custom-popup .mapboxgl-popup-tip {
+  border-top-color: white !important;
+}
+
+.custom-popup .mapboxgl-popup-close-button {
+  display: none !important;
+}
+
+/* Custom close button styling */
+.custom-popup button:hover {
+  background: rgba(0,0,0,0.2) !important;
+  transform: scale(1.1) !important;
+}
+
+.mapboxgl-ctrl-attrib-inner {
   backdrop-filter: blur(8px) !important;
   border-radius: 8px !important;
   font-size: 10px !important;

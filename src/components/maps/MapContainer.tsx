@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import mapboxgl from 'mapbox-gl';
 import type { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
 import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from '@/data/weatherStationParser';
-import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
+import { getRiverStations, getRiverDataForStation } from '@/data/riverData';
+import { RiverStageChart } from '@/components/charts/RiverStageChart';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
 interface MapContainerProps {
@@ -29,7 +31,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
   const [riverStations, setRiverStations] = useState<Array<RiverStation>>([]);
 
   // Combine stations into unified format
-  const allStations = useMemo((): Station[] => {
+  const allStations = useMemo((): Array<Station> => {
     const weatherWithType = weatherStations.map(station => ({ ...station, type: 'weather' as const }));
     const riverWithType = riverStations.map(station => ({ ...station, type: 'river' as const }));
     return [...weatherWithType, ...riverWithType];
@@ -427,20 +429,20 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
           const statusDot = props.closeDate === 'Active' ? '●' : '●';
           
           // Format date to be more readable
-          const formatDate = (dateStr: string | undefined) => {
-            if (!dateStr || dateStr === 'Unknown') return 'Unknown';
-            const parts = dateStr.split('/');
+          const formatDate = (dateString: string | undefined) => {
+            if (!dateString || dateString === 'Unknown') return 'Unknown';
+            const parts = dateString.split('/');
             if (parts.length === 2) {
               const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
               const monthIndex = parseInt(parts[0] || '1', 10) - 1;
               const year = parts[1] || '';
               return `${months[monthIndex] || 'Jan'} ${year}`;
             }
-            return dateStr;
+            return dateString;
           };
           
           return `
-            <div style="font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-width: 280px; max-width: 300px; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden;">
+            <div style="font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; width: 100%; background: transparent; overflow: visible;">
               <!-- Header Section -->
               <div style="padding: 14px; background: linear-gradient(135deg, ${props.color}08 0%, ${props.color}12 100%); border-bottom: 1px solid #e2e8f0;">
                 <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px;">
@@ -497,7 +499,10 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
         // Show initial popup with custom styling
         popupRef.current = new mapboxgl.Popup({ 
           closeButton: false,
-          className: 'custom-popup'
+          className: 'custom-popup',
+          maxWidth: '820px',
+          anchor: 'bottom',
+          offset: [0, -10]
         })
           .setLngLat([props.longitude, props.latitude])
           .setHTML(createPopupContent())
@@ -513,7 +518,42 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
         } else if (props.type === 'river') {
           void getRiverDataForStation(props.id).then(riverData => {
             if (popupRef.current && riverData) {
-              popupRef.current.setHTML(createPopupContent(undefined, riverData));
+              // Create a container for the React component
+              const popupContainer = document.createElement('div');
+              const siteNumber = props.id.replace('river-', '');
+              
+              // Create enhanced content with side-by-side layout
+              const basicContent = createPopupContent(undefined, riverData);
+              
+              popupContainer.innerHTML = `
+                <div style="position: relative; display: flex; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); overflow: hidden; width: 800px; min-height: 350px;">
+                  <button onclick="this.closest('.mapboxgl-popup').remove()" 
+                          style="position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; 
+                                 background: rgba(0,0,0,0.1); border: none; border-radius: 50%; 
+                                 display: flex; align-items: center; justify-content: center; 
+                                 cursor: pointer; z-index: 10; color: #64748b; font-size: 14px; 
+                                 transition: all 0.2s ease;">×</button>
+                  
+                  <!-- Left side: Station info -->
+                  <div style="flex: 0 0 360px; padding: 0;">
+                    ${basicContent}
+                  </div>
+                  
+                  <!-- Right side: Chart -->
+                  <div style="flex: 1; background: #f8fafc; border-left: 1px solid #e2e8f0; padding: 16px;">
+                    <div id="river-chart-${siteNumber}" style="width: 100%; height: 300px;"></div>
+                  </div>
+                </div>
+              `;
+              
+              popupRef.current.setDOMContent(popupContainer);
+              
+              // Render the chart component
+              const chartContainer = document.getElementById(`river-chart-${siteNumber}`);
+              if (chartContainer) {
+                const root = createRoot(chartContainer);
+                root.render(<RiverStageChart siteNumber={siteNumber} stationName={props.name} />);
+              }
             }
           });
         }

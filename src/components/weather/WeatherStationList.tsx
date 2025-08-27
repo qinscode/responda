@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from '@/data/weatherStationParser';
-import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
+import { getRiverStations, getRiverDataForStation } from '@/data/riverData';
 
 interface StationListProps {
   selectedStationId?: string;
@@ -30,7 +30,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   const [currentPage, setCurrentPage] = useState(1);
 
   // Combine stations into unified format
-  const allStations = useMemo((): Station[] => {
+  const allStations = useMemo((): Array<Station> => {
     const weatherWithType = weatherStations.map(station => ({ ...station, type: 'weather' as const }));
     const riverWithType = riverStations.map(station => ({ ...station, type: 'river' as const }));
     return [...weatherWithType, ...riverWithType];
@@ -186,9 +186,9 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                 <SelectValue placeholder="Sort by Name" />
               </SelectTrigger>
               <SelectContent className="card-modern-v2 border-0">
-                <SelectItem value="name" className="hover:bg-blue-50">Sort by Name</SelectItem>
-                <SelectItem value="number" className="hover:bg-blue-50">Sort by Number</SelectItem>
-                <SelectItem value="height" className="hover:bg-blue-50">Sort by Height</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="name">Sort by Name</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="number">Sort by Number</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="height">Sort by Height</SelectItem>
               </SelectContent>
             </Select>
             <Select value={filterStatus} onValueChange={(value: 'all' | 'active' | 'closed') => { setFilterStatus(value); }}>
@@ -196,9 +196,9 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent className="card-modern-v2 border-0">
-                <SelectItem value="all" className="hover:bg-blue-50">All Status</SelectItem>
-                <SelectItem value="active" className="hover:bg-blue-50">Active</SelectItem>
-                <SelectItem value="closed" className="hover:bg-blue-50">Closed</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="all">All Status</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="active">Active</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="closed">Closed</SelectItem>
               </SelectContent>
             </Select>
             <Select value={filterType} onValueChange={(value: 'all' | 'weather' | 'river') => { 
@@ -209,9 +209,9 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
               <SelectContent className="card-modern-v2 border-0">
-                <SelectItem value="all" className="hover:bg-blue-50">All Types</SelectItem>
-                <SelectItem value="weather" className="hover:bg-blue-50">Weather</SelectItem>
-                <SelectItem value="river" className="hover:bg-blue-50">River</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="all">All Types</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="weather">Weather</SelectItem>
+                <SelectItem className="hover:bg-blue-50" value="river">River</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -243,23 +243,23 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                         {station.name.replace(/\s+at\s+.+$/i, '')}
                       </h4>
                       <Badge 
+                        variant="outline"
                         className={`text-xs font-medium shrink-0 px-1.5 py-0.5 whitespace-nowrap ${
                           station.type === 'weather' 
                             ? 'bg-sky-50 border-sky-200 text-sky-700' 
                             : 'bg-emerald-50 border-emerald-200 text-emerald-700'
                         }`}
-                        variant="outline"
                       >
                         {station.type === 'weather' ? '🌤️' : '🌊'}
                       </Badge>
                     </div>
                     <Badge 
+                      variant="outline"
                       className={`text-xs font-medium shrink-0 px-1.5 py-0.5 whitespace-nowrap ${
                         (!station.closeDate || station.closeDate === 'Active') 
                           ? 'bg-green-50 border-green-200 text-green-700' 
                           : 'bg-red-50 border-red-200 text-red-700'
                       }`}
-                      variant="outline"
                     >
                       {(!station.closeDate || station.closeDate === 'Active') ? 'Active' : 'Closed'}
                     </Badge>
@@ -364,13 +364,13 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                   return (
                     <Button
                       key={page}
+                      size="sm"
+                      variant={page === currentPage ? "default" : "outline"}
                       className={`h-8 px-3 text-xs min-w-8 rounded-lg btn-spring ${
                         page === currentPage 
                           ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-md' 
                           : 'hover:bg-blue-50'
                       }`}
-                      size="sm"
-                      variant={page === currentPage ? "default" : "outline"}
                       onClick={() => { handlePageChange(page); }}
                     >
                       {page}

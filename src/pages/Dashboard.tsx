@@ -24,8 +24,8 @@ export const Dashboard = () => {
             <WeatherStationList
               searchQuery={searchQuery}
               selectedStationId={selectedStation?.id}
-              onStationSelect={setSelectedStation}
               onFilterTypeChange={setStationTypeFilter}
+              onStationSelect={setSelectedStation}
             />
           </div>
 
@@ -36,8 +36,8 @@ export const Dashboard = () => {
                 <div className="map-container h-full rounded-2xl overflow-hidden">
                   <MapContainer 
                     selectedStation={selectedStation} 
-                    onStationSelect={setSelectedStation}
                     stationTypeFilter={stationTypeFilter}
+                    onStationSelect={setSelectedStation}
                   />
                 </div>
               </CardContent>

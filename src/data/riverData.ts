@@ -11,9 +11,10 @@ interface RealRiverDataRow {
 }
 
 // CSV parsing function for river stations
-export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
+export const parseRiverStationsFromCSV = async (): Promise<Array<RiverStation>> => {
   try {
-    const response = await fetch('/river_station.csv');
+    // Use the real stations summary file with proper station data
+    const response = await fetch('/river_station_water_level/stations_summary_ALL.csv');
     const csvText = await response.text();
     
     const lines = csvText.trim().split('\n');
@@ -24,11 +25,11 @@ export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
       return [];
     }
     
-    const stations: RiverStation[] = [];
+    const stations: Array<RiverStation> = [];
     
     // Parse each data line (skip header)
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i]?.trim();
+    for (let index = 1; index < lines.length; index++) {
+      const line = lines[index]?.trim();
       if (!line) continue;
       
       const values = line.split(',');
@@ -48,26 +49,26 @@ export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
       }
       
       // Determine district based on station number (first digit indicates region)
-      const getDistrictFromSiteNumber = (siteNum: string): string => {
-        const firstDigit = siteNum.charAt(0);
+      const getDistrictFromSiteNumber = (siteNumber: string): string => {
+        const firstDigit = siteNumber.charAt(0);
         switch (firstDigit) {
           case '6':
-            if (siteNum.startsWith('601') || siteNum.startsWith('602')) return 'South West';
-            if (siteNum.startsWith('603') || siteNum.startsWith('604')) return 'Great Southern';
-            if (siteNum.startsWith('605') || siteNum.startsWith('606')) return 'South West';
-            if (siteNum.startsWith('607') || siteNum.startsWith('608')) return 'South West';
-            if (siteNum.startsWith('609')) return 'South West';
-            if (siteNum.startsWith('610') || siteNum.startsWith('611')) return 'South West';
-            if (siteNum.startsWith('612') || siteNum.startsWith('613')) return 'South West';
-            if (siteNum.startsWith('614')) return 'Peel';
-            if (siteNum.startsWith('615')) return 'Wheatbelt';
-            if (siteNum.startsWith('616')) return 'Perth Metro';
-            if (siteNum.startsWith('617')) return 'Perth Metro';
+            if (siteNumber.startsWith('601') || siteNumber.startsWith('602')) return 'South West';
+            if (siteNumber.startsWith('603') || siteNumber.startsWith('604')) return 'Great Southern';
+            if (siteNumber.startsWith('605') || siteNumber.startsWith('606')) return 'South West';
+            if (siteNumber.startsWith('607') || siteNumber.startsWith('608')) return 'South West';
+            if (siteNumber.startsWith('609')) return 'South West';
+            if (siteNumber.startsWith('610') || siteNumber.startsWith('611')) return 'South West';
+            if (siteNumber.startsWith('612') || siteNumber.startsWith('613')) return 'South West';
+            if (siteNumber.startsWith('614')) return 'Peel';
+            if (siteNumber.startsWith('615')) return 'Wheatbelt';
+            if (siteNumber.startsWith('616')) return 'Perth Metro';
+            if (siteNumber.startsWith('617')) return 'Perth Metro';
             return 'South West';
           case '7':
             return 'Mid West';
           case '8':
-            if (siteNum.startsWith('80')) return 'Kimberley';
+            if (siteNumber.startsWith('80')) return 'Kimberley';
             return 'Pilbara';
           default:
             return 'Unknown';
@@ -87,10 +88,10 @@ export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
         if (river.includes('avon')) return 4000;
         if (river.includes('collie')) return 2500;
         
-        // Default estimation based on latitude (northern rivers tend to be larger)
-        if (latitude > -20) return Math.random() * 50000 + 10000; // Kimberley/Pilbara
-        if (latitude > -26) return Math.random() * 20000 + 5000;  // Mid West
-        return Math.random() * 5000 + 500; // South West
+        // Conservative estimation based on latitude (northern rivers tend to be larger)
+        if (latitude > -20) return 25000; // Kimberley/Pilbara - larger catchments
+        if (latitude > -26) return 10000; // Mid West - medium catchments  
+        return 2000; // South West - smaller catchments
       };
       
       const station: RiverStation = {
@@ -100,7 +101,7 @@ export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
         latitude,
         longitude,
         state: 'WA',
-        height: Math.max(0, Math.round((latitude + 35) * 20 + Math.random() * 100)), // Rough elevation estimate
+        height: Math.max(0, Math.round((latitude + 35) * 20)), // Rough elevation estimate based on latitude
         openDate: '1/1990', // Default for historical stations
         closeDate: 'Active',
         district: getDistrictFromSiteNumber(site),
@@ -121,88 +122,25 @@ export const parseRiverStationsFromCSV = async (): Promise<RiverStation[]> => {
 };
 
 // Cache for river stations to avoid repeated CSV parsing
-let riverStationsCache: RiverStation[] | null = null;
+let riverStationsCache: Array<RiverStation> | null = null;
 
 // Get river stations (with caching)
-export const getRiverStations = async (): Promise<RiverStation[]> => {
+export const getRiverStations = async (): Promise<Array<RiverStation>> => {
   if (riverStationsCache) {
     return riverStationsCache;
   }
   
-  riverStationsCache = await parseRiverStationsFromCSV();
-  return riverStationsCache;
+  const stations = await parseRiverStationsFromCSV();
+  riverStationsCache = stations;
+  return stations;
 };
 
-// Cache for real river data
-let realRiverDataCache: Map<string, RealRiverDataRow[]> | null = null;
+// Removed: No longer need cache for combined data file
 
-// Parse real river data from the CSV file
-export const parseRealRiverData = async (): Promise<Map<string, RealRiverDataRow[]>> => {
-  if (realRiverDataCache) {
-    return realRiverDataCache;
-  }
+// This function is no longer needed as we load data directly from individual station files
 
-  try {
-    const response = await fetch('/all_stations_last6days.csv');
-    const csvText = await response.text();
-    
-    const lines = csvText.trim().split('\n');
-    if (lines.length === 0) {
-      console.error('No data found in river data CSV file');
-      return new Map();
-    }
-    
-    // Skip header
-    const dataByStation = new Map<string, RealRiverDataRow[]>();
-    
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i]?.trim();
-      if (!line) continue;
-      
-      const values = line.split(',');
-      if (values.length < 6) continue;
-      
-      const datetime = values[0]?.trim();
-      const stage = parseFloat(values[1]?.trim() || '0');
-      const discharge = parseFloat(values[2]?.trim() || '0');
-      const siteId = values[3]?.trim();
-      const varFrom = parseFloat(values[4]?.trim() || '0');
-      const varTo = parseFloat(values[5]?.trim() || '0');
-      
-      if (!datetime || !siteId || isNaN(stage) || isNaN(discharge)) {
-        continue;
-      }
-      
-      const rowData: RealRiverDataRow = {
-        datetime,
-        stage,
-        discharge,
-        siteId,
-        varFrom,
-        varTo
-      };
-      
-      if (!dataByStation.has(siteId)) {
-        dataByStation.set(siteId, []);
-      }
-      dataByStation.get(siteId)?.push(rowData);
-    }
-    
-    console.log(`Loaded real river data for ${dataByStation.size} stations`);
-    realRiverDataCache = dataByStation;
-    return dataByStation;
-    
-  } catch (error) {
-    console.error('Error parsing real river data CSV:', error);
-    return new Map();
-  }
-};
-
-// Get real river data for a station
+// Get real river data for a station (using only real data from CSV files)
 export const getRiverDataForStation = async (stationId: string): Promise<RiverData | null> => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
-  
   if (!stationId.startsWith('river-')) {
     return null;
   }
@@ -210,16 +148,16 @@ export const getRiverDataForStation = async (stationId: string): Promise<RiverDa
   const siteNumber = stationId.replace('river-', '');
   
   try {
-    const realData = await parseRealRiverData();
-    const stationData = realData.get(siteNumber);
+    // Get data directly from individual station CSV file
+    const chartData = await getRiverStationChartData(siteNumber);
     
-    if (!stationData || stationData.length === 0) {
-      console.warn(`No real data found for station ${siteNumber}, station may not have recent data`);
+    if (chartData.length === 0) {
+      console.warn(`No real data found for station ${siteNumber}`);
       return null;
     }
     
     // Get the most recent data point
-    const latestData = stationData[stationData.length - 1];
+    const latestData = chartData[chartData.length - 1];
     if (!latestData) {
       return null;
     }
@@ -227,7 +165,7 @@ export const getRiverDataForStation = async (stationId: string): Promise<RiverDa
     // Parse datetime
     const datetime = new Date(latestData.datetime);
     
-    // Calculate water quality based on flow rate
+    // Calculate water quality based on actual flow rate from data
     const getQuality = (discharge: number): 'Excellent' | 'Good' | 'Fair' | 'Poor' => {
       if (discharge > 100) return 'Excellent';
       if (discharge > 50) return 'Good';
@@ -235,35 +173,35 @@ export const getRiverDataForStation = async (stationId: string): Promise<RiverDa
       return 'Poor';
     };
     
-    // Estimate turbidity based on discharge (higher flow = lower turbidity)
-    const estimateTurbidity = (discharge: number): number => {
+    // Calculate turbidity based on actual discharge (higher flow = lower turbidity)
+    const calculateTurbidity = (discharge: number): number => {
       const baseTurbidity = Math.max(1, 30 - (discharge * 0.2));
       return Math.round(baseTurbidity * 10) / 10;
     };
     
-    // Estimate temperature based on season and location
+    // Estimate temperature based on actual location and season (could be enhanced with real temp data)
     const estimateTemperature = (datetime: Date, siteNumber: string): number => {
       const month = datetime.getMonth();
       const isWinter = month >= 5 && month <= 8; // June to September in Southern Hemisphere
-      const baseTemp = isWinter ? 12 : 22;
+      const baseTemporary = isWinter ? 12 : 22;
       
-      // Northern stations are warmer
+      // Northern stations are warmer (based on site number regions)
       const isNorthern = siteNumber.startsWith('7') || siteNumber.startsWith('8');
-      const tempAdjustment = isNorthern ? 8 : 0;
+      const temporaryAdjustment = isNorthern ? 8 : 0;
       
-      return baseTemp + tempAdjustment + (Math.random() * 4 - 2); // ±2 degrees variation
+      return Math.round((baseTemporary + temporaryAdjustment) * 10) / 10;
     };
     
     return {
       stationId,
       date: datetime.toISOString().split('T')[0] || '',
       time: datetime.toLocaleTimeString('en-AU', { hour12: false }),
-      waterLevel: Math.round(latestData.stage * 100) / 100, // Stage in meters
-      flow: Math.round(latestData.discharge * 100) / 100, // Discharge in m³/s
-      temperature: Math.round(estimateTemperature(datetime, siteNumber) * 10) / 10,
+      waterLevel: Math.round(latestData.stage * 100) / 100, // Real stage data in meters
+      flow: Math.round(latestData.discharge * 100) / 100, // Real discharge data in m³/s
+      temperature: estimateTemperature(datetime, siteNumber),
       quality: getQuality(latestData.discharge),
-      turbidity: estimateTurbidity(latestData.discharge),
-      ph: Math.round((7.0 + Math.random() * 1.5) * 10) / 10 // pH between 7.0-8.5
+      turbidity: calculateTurbidity(latestData.discharge),
+      ph: 7.2 // Default neutral pH for rivers
     };
     
   } catch (error) {
@@ -272,8 +210,7 @@ export const getRiverDataForStation = async (stationId: string): Promise<RiverDa
   }
 };
 
-// Legacy export for backward compatibility (will be empty initially)
-export let mockRiverStations: RiverStation[] = []; 
+// All station data is now loaded from real CSV files 
 
 // Interface for chart data from individual station files
 interface RiverStageDataPoint {
@@ -286,10 +223,10 @@ interface RiverStageDataPoint {
 }
 
 // Cache for individual station chart data
-let stationChartDataCache: Map<string, RiverStageDataPoint[]> = new Map();
+const stationChartDataCache: Map<string, Array<RiverStageDataPoint>> = new Map();
 
 // Get chart data for a specific river station
-export const getRiverStationChartData = async (siteNumber: string): Promise<RiverStageDataPoint[]> => {
+export const getRiverStationChartData = async (siteNumber: string): Promise<Array<RiverStageDataPoint>> => {
   // Check cache first
   if (stationChartDataCache.has(siteNumber)) {
     return stationChartDataCache.get(siteNumber) || [];
@@ -310,11 +247,11 @@ export const getRiverStationChartData = async (siteNumber: string): Promise<Rive
       return [];
     }
     
-    const dataPoints: RiverStageDataPoint[] = [];
+    const dataPoints: Array<RiverStageDataPoint> = [];
     
     // Skip header line
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i]?.trim();
+    for (let index = 1; index < lines.length; index++) {
+      const line = lines[index]?.trim();
       if (!line) continue;
       
       const values = line.split(',');
@@ -324,8 +261,8 @@ export const getRiverStationChartData = async (siteNumber: string): Promise<Rive
       const stage = parseFloat(values[1]?.trim() || '0');
       const discharge = parseFloat(values[2]?.trim() || '0');
       const siteId = values[3]?.trim() || '';
-      const varFrom = parseFloat(values[4]?.trim() || '0');
-      const varTo = parseFloat(values[5]?.trim() || '0');
+      const variableFrom = parseFloat(values[4]?.trim() || '0');
+      const variableTo = parseFloat(values[5]?.trim() || '0');
       
       if (!datetime || !siteId || isNaN(stage) || isNaN(discharge)) {
         continue;
@@ -336,8 +273,8 @@ export const getRiverStationChartData = async (siteNumber: string): Promise<Rive
         stage,
         discharge,
         siteId,
-        varFrom,
-        varTo
+        varFrom: variableFrom,
+        varTo: variableTo
       });
     }
     
