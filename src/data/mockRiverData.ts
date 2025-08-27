@@ -1,0 +1,222 @@
+import type { RiverStation, RiverData } from '@/types/river';
+
+export const mockRiverStations: RiverStation[] = [
+  {
+    id: 'R001',
+    stationNumber: '610001',
+    name: 'Swan River at Maylands',
+    state: 'WA',
+    latitude: -31.9285,
+    longitude: 115.8879,
+    river: 'Swan River',
+    catchment: 'Swan Coastal',
+    openDate: '03/1985',
+    district: 1,
+    purpose: ['Water Quality', 'Flow Monitoring'],
+  },
+  {
+    id: 'R002',
+    stationNumber: '610015',
+    name: 'Murray River at Pinjarra',
+    state: 'WA',
+    latitude: -32.6284,
+    longitude: 115.8693,
+    river: 'Murray River',
+    catchment: 'Peel-Harvey',
+    openDate: '07/1990',
+    district: 2,
+    purpose: ['Flow Monitoring', 'Flood Warning'],
+  },
+  {
+    id: 'R003',
+    stationNumber: '610032',
+    name: 'Canning River at Kent Street Weir',
+    state: 'WA',
+    latitude: -32.0178,
+    longitude: 115.8569,
+    river: 'Canning River',
+    catchment: 'Swan Coastal',
+    openDate: '11/1988',
+    district: 1,
+    purpose: ['Water Quality', 'Flow Monitoring', 'Recreation'],
+  },
+  {
+    id: 'R004',
+    stationNumber: '610045',
+    name: 'Helena River at Ellis Brook',
+    state: 'WA',
+    latitude: -32.0845,
+    longitude: 116.0234,
+    river: 'Helena River',
+    catchment: 'Swan Coastal',
+    openDate: '01/1992',
+    district: 1,
+    purpose: ['Flow Monitoring'],
+  },
+  {
+    id: 'R005',
+    stationNumber: '615002',
+    name: 'Avon River at Northam',
+    state: 'WA',
+    latitude: -31.6489,
+    longitude: 116.6693,
+    river: 'Avon River',
+    catchment: 'Avon',
+    openDate: '05/1975',
+    district: 3,
+    purpose: ['Flow Monitoring', 'Water Quality'],
+  },
+  {
+    id: 'R006',
+    stationNumber: '615018',
+    name: 'Mortlock River at Wundowie',
+    state: 'WA',
+    latitude: -31.7567,
+    longitude: 116.3789,
+    river: 'Mortlock River',
+    catchment: 'Avon',
+    openDate: '09/1982',
+    district: 3,
+    purpose: ['Flow Monitoring'],
+  },
+  {
+    id: 'R007',
+    stationNumber: '616005',
+    name: 'Collie River at Collie',
+    state: 'WA',
+    latitude: -33.3604,
+    longitude: 116.1538,
+    river: 'Collie River',
+    catchment: 'Collie',
+    openDate: '02/1978',
+    district: 4,
+    purpose: ['Flow Monitoring', 'Water Quality', 'Mining Impact'],
+  },
+  {
+    id: 'R008',
+    stationNumber: '616021',
+    name: 'Brunswick River at Roelands',
+    state: 'WA',
+    latitude: -33.4812,
+    longitude: 115.7234,
+    river: 'Brunswick River',
+    catchment: 'Leschenault',
+    openDate: '08/1986',
+    district: 4,
+    purpose: ['Flow Monitoring', 'Flood Warning'],
+  },
+  {
+    id: 'R009',
+    stationNumber: '612003',
+    name: 'Moore River at Gingin Brook',
+    state: 'WA',
+    latitude: -31.3456,
+    longitude: 115.9123,
+    river: 'Moore River',
+    catchment: 'Moore',
+    openDate: '06/1981',
+    district: 2,
+    purpose: ['Flow Monitoring', 'Water Supply'],
+  },
+  {
+    id: 'R010',
+    stationNumber: '617012',
+    name: 'Blackwood River at Bridgetown',
+    state: 'WA',
+    latitude: -33.9567,
+    longitude: 116.1345,
+    river: 'Blackwood River',
+    catchment: 'Blackwood',
+    openDate: '04/1989',
+    district: 5,
+    purpose: ['Flow Monitoring', 'Water Quality'],
+  },
+  {
+    id: 'R011',
+    stationNumber: '617028',
+    name: 'Donnelly River at Pump Hill',
+    state: 'WA',
+    latitude: -34.2134,
+    longitude: 115.8967,
+    river: 'Donnelly River',
+    catchment: 'Blackwood',
+    openDate: '12/1984',
+    district: 5,
+    purpose: ['Flow Monitoring', 'Forest Impact'],
+  },
+  {
+    id: 'R012',
+    stationNumber: '618004',
+    name: 'Margaret River at Margaret River',
+    state: 'WA',
+    latitude: -33.9544,
+    longitude: 115.0713,
+    river: 'Margaret River',
+    catchment: 'Busselton Coast',
+    openDate: '03/1987',
+    district: 5,
+    purpose: ['Flow Monitoring', 'Tourism Impact'],
+  },
+  {
+    id: 'R013',
+    stationNumber: '620007',
+    name: 'Murchison River at Kalbarri',
+    state: 'WA',
+    latitude: -27.7089,
+    longitude: 114.1672,
+    river: 'Murchison River',
+    catchment: 'Murchison',
+    openDate: '10/1979',
+    district: 6,
+    purpose: ['Flow Monitoring', 'Coastal Impact'],
+  },
+  {
+    id: 'R014',
+    stationNumber: '621015',
+    name: 'Gascoyne River at Fishy Pool',
+    state: 'WA',
+    latitude: -24.8789,
+    longitude: 113.6234,
+    river: 'Gascoyne River',
+    catchment: 'Gascoyne',
+    openDate: '01/1983',
+    district: 7,
+    purpose: ['Flow Monitoring', 'Water Supply'],
+  },
+  {
+    id: 'R015',
+    stationNumber: '622009',
+    name: 'Fortescue River at Millstream',
+    state: 'WA',
+    latitude: -21.5789,
+    longitude: 117.0634,
+    river: 'Fortescue River',
+    catchment: 'Pilbara',
+    openDate: '05/1991',
+    district: 8,
+    purpose: ['Flow Monitoring', 'Mining Impact', 'Indigenous Values'],
+  }
+];
+
+export const generateMockRiverData = (stationId: string): RiverData => {
+  // Generate consistent mock data based on station ID
+  const seed = stationId.charCodeAt(stationId.length - 1);
+  
+  return {
+    waterLevel: Math.round((Math.sin(seed) * 0.5 + 1.5) * 100) / 100, // 1.0 - 2.0m
+    flow: Math.round((Math.sin(seed * 2) * 20 + 30) * 10) / 10, // 10 - 50 cumecs
+    temperature: Math.round((Math.sin(seed * 3) * 5 + 18) * 10) / 10, // 13 - 23°C
+    turbidity: Math.round(Math.abs(Math.sin(seed * 4)) * 15 + 2), // 2 - 17 NTU
+    ph: Math.round((Math.sin(seed * 5) * 1 + 7.2) * 10) / 10, // 6.2 - 8.2
+    conductivity: Math.round(Math.abs(Math.sin(seed * 6)) * 400 + 200), // 200 - 600 µS/cm
+    lastUpdated: new Date(Date.now() - Math.random() * 3600000).toISOString(), // Within last hour
+    qualityGrade: (['Excellent', 'Good', 'Fair', 'Poor'] as const)[seed % 4] as 'Excellent' | 'Good' | 'Fair' | 'Poor'
+  };
+};
+
+export const getRiverDataForStation = async (stationId: string): Promise<RiverData | null> => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 200));
+  
+  return generateMockRiverData(stationId);
+}; 
