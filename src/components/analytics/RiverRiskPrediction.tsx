@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
+import { Bot, AlertTriangle, Target } from 'lucide-react';
 
 interface RiskPredictionProps {
   siteNumber: string;
@@ -102,7 +103,10 @@ export const RiverRiskPrediction = ({ siteNumber, currentStage, stationName }: R
         <div className="flex items-center space-x-3">
           <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
           <div>
-            <h4 className="text-sm font-semibold text-gray-800">🤖 AI Risk Analysis</h4>
+            <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-2">
+              <Bot size={16} className="text-blue-600" />
+              AI Risk Analysis
+            </h4>
             <p className="text-xs text-gray-600">Analyzing flood risk patterns...</p>
           </div>
         </div>
@@ -114,7 +118,7 @@ export const RiverRiskPrediction = ({ siteNumber, currentStage, stationName }: R
     return (
       <Card className="p-4 bg-red-50 border-red-200">
         <div className="flex items-center space-x-2">
-          <span className="text-red-500">⚠️</span>
+          <AlertTriangle size={16} className="text-red-500" />
           <div>
             <h4 className="text-sm font-semibold text-red-800">AI Analysis Unavailable</h4>
             <p className="text-xs text-red-600">{error || 'Unable to generate prediction'}</p>
@@ -129,8 +133,8 @@ export const RiverRiskPrediction = ({ siteNumber, currentStage, stationName }: R
       <div className="space-y-3">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-semibold text-gray-800 flex items-center">
-            <span className="mr-2">🤖</span>
+          <h4 className="text-sm font-semibold text-gray-800 flex items-center gap-2">
+            <Bot size={16} className="text-blue-600" />
             AI Flood Risk Prediction
           </h4>
           <span className={`text-xs font-medium ${getConfidenceColor(prediction.confidence)}`}>
@@ -166,7 +170,10 @@ export const RiverRiskPrediction = ({ siteNumber, currentStage, stationName }: R
 
         {/* Recommendation */}
         <div className="bg-white bg-opacity-60 rounded-lg p-3 border border-blue-200">
-          <p className="text-xs font-medium text-gray-700 mb-1">🎯 Recommendation:</p>
+          <p className="text-xs font-medium text-gray-700 mb-1 flex items-center gap-1">
+            <Target size={12} className="text-blue-600" />
+            Recommendation:
+          </p>
           <p className="text-xs text-gray-700">{prediction.recommendation}</p>
         </div>
 

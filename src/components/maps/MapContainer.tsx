@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import mapboxgl from 'mapbox-gl';
 import type { GeoJSONSource } from 'mapbox-gl';
@@ -11,6 +11,76 @@ import { RiverRiskPrediction } from '@/components/analytics/RiverRiskPrediction'
 import { WeatherRiskAnalysis } from '@/components/analytics/WeatherRiskAnalysis';
 import { WeatherDataDisplay } from '@/components/weather/WeatherDataDisplay';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
+import { 
+  Sun, 
+  Cloud, 
+  CloudRain, 
+  CloudSnow, 
+  Zap, 
+  Snowflake, 
+  Thermometer, 
+  Droplets, 
+  Wind, 
+  BarChart, 
+  CloudRain as Rain, 
+  Eye, 
+  Waves, 
+  Ruler, 
+  Gauge, 
+  FlaskConical, 
+  MapPin, 
+  Mountain,
+  CloudSun
+} from 'lucide-react';
+
+// Helper function to create SVG icon strings
+const createSVGIcon = (paths: string, size = 12, color = 'currentColor') => {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle;">${paths}</svg>`;
+};
+
+// Icon mapping functions
+const getWeatherIconSVG = (conditions: string, size = 14) => {
+  const cond = conditions.toLowerCase();
+  if (cond.includes('sunny') || cond.includes('clear')) {
+    return createSVGIcon('<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>', size);
+  }
+  if (cond.includes('cloudy') || cond.includes('overcast')) {
+    return createSVGIcon('<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>', size);
+  }
+  if (cond.includes('partly')) {
+    return createSVGIcon('<path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>', size);
+  }
+  if (cond.includes('rain') || cond.includes('shower')) {
+    return createSVGIcon('<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m16 14-3 5"/><path d="m8 14-3 5"/><path d="m16 20-3 5"/><path d="m8 20-3 5"/>', size);
+  }
+  if (cond.includes('storm') || cond.includes('thunder')) {
+    return createSVGIcon('<path d="m13 2-3 7h4l-3 7"/>', size);
+  }
+  if (cond.includes('snow')) {
+    return createSVGIcon('<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 15h.01"/><path d="M8 19h.01"/><path d="M12 17h.01"/><path d="M12 21h.01"/><path d="M16 15h.01"/><path d="M16 19h.01"/>', size);
+  }
+  if (cond.includes('fog') || cond.includes('mist')) {
+    return createSVGIcon('<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>', size);
+  }
+  // Default partly cloudy
+  return createSVGIcon('<path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>', size);
+};
+
+// Common icon SVGs
+const iconSVGs = {
+  thermometer: createSVGIcon('<path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>'),
+  droplets: createSVGIcon('<path d="m12 2.69 5.66 5.66a8 8 0 1 1-11.31 0Z"/>'),
+  wind: createSVGIcon('<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>'),
+  barChart: createSVGIcon('<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>'),
+  rain: createSVGIcon('<path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="m16 14-3 5"/><path d="m8 14-3 5"/><path d="m16 20-3 5"/><path d="m8 20-3 5"/>'),
+  eye: createSVGIcon('<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>'),
+  waves: createSVGIcon('<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>'),
+  ruler: createSVGIcon('<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>'),
+  gauge: createSVGIcon('<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>'),
+  flaskConical: createSVGIcon('<path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/>'),
+  mapPin: createSVGIcon('<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>'),
+  mountain: createSVGIcon('<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>')
+};
 
 interface MapContainerProps {
   selectedStation?: Station;
@@ -323,58 +393,45 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
         const createPopupContent = (weatherData?: WeatherData, riverData?: RiverData) => {
           let weatherInfo = '';
           if (weatherData) {
-            // Weather icon mapping
-            const getWeatherIcon = (conditions: string) => {
-              const cond = conditions.toLowerCase();
-              if (cond.includes('sunny') || cond.includes('clear')) return '☀️';
-              if (cond.includes('cloudy') || cond.includes('overcast')) return '☁️';
-              if (cond.includes('partly')) return '⛅';
-              if (cond.includes('rain') || cond.includes('shower')) return '🌧️';
-              if (cond.includes('storm') || cond.includes('thunder')) return '⛈️';
-              if (cond.includes('snow')) return '❄️';
-              if (cond.includes('fog') || cond.includes('mist')) return '🌫️';
-              return '🌤️'; // Default
-            };
-
             weatherInfo = `
               <div style="margin-top: 4px; padding: 12px; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 6px; border: 1px solid #e2e8f0; border-top: 2px solid #e2e8f0;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e2e8f0;">
                   <h4 style="font-weight: 600; font-size: 12px; color: #1e293b; margin: 0;">Current Weather</h4>
                   <div style="display: flex; align-items: center; gap: 4px;">
-                    <span style="font-size: 14px; line-height: 1; display: inline-block; width: 14px; text-align: center;">${getWeatherIcon(weatherData.conditions)}</span>
+                    <span style="line-height: 1; display: inline-block; width: 14px; text-align: center;">${getWeatherIconSVG(weatherData.conditions, 14)}</span>
                     <span style="font-size: 10px; color: #64748b; font-weight: 500;">${weatherData.conditions}</span>
                   </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌡️</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.thermometer}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">TEMP</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${weatherData.temperature}°C</div>
                   </div>
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">💧</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.droplets}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">HUMIDITY</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${weatherData.humidity}%</div>
                   </div>
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">💨</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.wind}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">WIND</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${weatherData.windSpeed} km/h</div>
                   </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">📊</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.barChart}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">PRESSURE</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 10px; line-height: 1;">${weatherData.pressure} hPa</div>
                   </div>
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌧️</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.rain}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">RAIN</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${weatherData.precipitation} mm</div>
                   </div>
                   <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
-                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">👁️</div>
+                    <div style="line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">${iconSVGs.eye}</div>
                     <div style="font-size: 8px; color: #64748b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">VISIBILITY</div>
                     <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${weatherData.visibility} km</div>
                   </div>
@@ -390,20 +447,20 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
               <div style="margin-top: 6px; padding: 8px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 4px; border: 1px solid #d1fae5;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
                   <h4 style="font-weight: 600; font-size: 11px; color: #064e3b; margin: 0;">River Data</h4>
-                  <span style="font-size: 10px; color: #064e3b; font-weight: 500;">🌊 ${riverData.quality}</span>
+                  <span style="font-size: 10px; color: #064e3b; font-weight: 500; display: flex; align-items: center; gap: 2px;">${iconSVGs.waves} ${riverData.quality}</span>
                 </div>
                 <div style="font-size: 10px; color: #065f46; line-height: 1.3;">
-                  <div style="margin-bottom: 2px;">
-                    <span style="color: #047857;">📏 Level:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.waterLevel.toFixed(1)}m</span>
-                    <span style="margin: 0 6px; color: #86efac;">•</span>
-                    <span style="color: #047857;">🌊 Flow:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.flow.toFixed(1)} m³/s</span>
-                    <span style="margin: 0 6px; color: #86efac;">•</span>
-                    <span style="color: #047857;">🌡️ Temp:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.temperature.toFixed(1)}°C</span>
+                  <div style="margin-bottom: 2px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                    <span style="color: #047857; display: flex; align-items: center; gap: 2px;">${iconSVGs.ruler} Level:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.waterLevel.toFixed(1)}m</span>
+                    <span style="margin: 0 2px; color: #86efac;">•</span>
+                    <span style="color: #047857; display: flex; align-items: center; gap: 2px;">${iconSVGs.gauge} Flow:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.flow.toFixed(1)} m³/s</span>
+                    <span style="margin: 0 2px; color: #86efac;">•</span>
+                    <span style="color: #047857; display: flex; align-items: center; gap: 2px;">${iconSVGs.thermometer} Temp:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.temperature.toFixed(1)}°C</span>
                   </div>
-                  <div>
-                    <span style="color: #047857;">🌫️ Turbidity:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.turbidity.toFixed(1)} NTU</span>
-                    <span style="margin: 0 6px; color: #86efac;">•</span>
-                    <span style="color: #047857;">⚗️ pH:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.ph.toFixed(1)}</span>
+                  <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                    <span style="color: #047857; display: flex; align-items: center; gap: 2px;">${iconSVGs.droplets} Turbidity:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.turbidity.toFixed(1)} NTU</span>
+                    <span style="margin: 0 2px; color: #86efac;">•</span>
+                    <span style="color: #047857; display: flex; align-items: center; gap: 2px;">${iconSVGs.flaskConical} pH:</span> <span style="font-weight: 600; color: #064e3b;">${riverData.ph.toFixed(1)}</span>
                   </div>
                 </div>
               </div>
@@ -442,7 +499,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
                 </div>
                 <div style="font-size: 11px; color: #64748b; font-weight: 500;">
                   Station #${props.stationNumber} • District ${props.district}
-                  ${props.type === 'river' && props.riverName ? `<br/>🌊 ${props.riverName} • Catchment: ${props.catchmentArea?.toLocaleString()} km²` : ''}
+                  ${props.type === 'river' && props.riverName ? `<br/><span style="display: flex; align-items: center; gap: 2px;">${iconSVGs.waves} ${props.riverName} • Catchment: ${props.catchmentArea?.toLocaleString()} km²</span>` : ''}
                 </div>
               </div>
               
@@ -451,8 +508,8 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
                 <!-- Ultra compact info display -->
                 <div style="font-size: 10px; color: #6b7280; line-height: 1.3; margin-bottom: 6px; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px;">
                   <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span>📍 ${props.latitude.toFixed(4)}°, ${props.longitude.toFixed(4)}°</span>
-                    <span style="font-weight: 500;">⛰️ ${props.height}m</span>
+                    <span style="display: flex; align-items: center; gap: 2px;">${iconSVGs.mapPin} ${props.latitude.toFixed(4)}°, ${props.longitude.toFixed(4)}°</span>
+                    <span style="font-weight: 500; display: flex; align-items: center; gap: 2px;">${iconSVGs.mountain} ${props.height}m</span>
                   </div>
                 </div>
                 
