@@ -1,1235 +1,1762 @@
-[
-  {
-    "WeatherStation":"WYNDHAM AERO",
-    "Latitude":-15.51,
-    "Longitude":128.15,
-    "Population":941.0,
-    "NearestFireStation":"Wyndham Fire Station, 20 St Pauls Way, Wyndham",
-    "NearestHospital":"Wyndham Health Service, Wyndham",
-    "HighwayEscape":"Great Northern Hwy (south)"
-  },
-  {
-    "WeatherStation":"TROUGHTON ISLAND",
-    "Latitude":-13.7542,
-    "Longitude":8.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MOUNT ELIZABETH",
-    "Latitude":-16.4181,
-    "Longitude":126.1025,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KALUMBURU",
-    "Latitude":-14.2964,
-    "Longitude":24.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"TRUSCOTT",
-    "Latitude":-14.09,
-    "Longitude":52.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DOONGAN",
-    "Latitude":-15.3797,
-    "Longitude":126.3114,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WARMUN",
-    "Latitude":-17.0154,
-    "Longitude":128.2174,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KUNUNURRA AERO",
-    "Latitude":-15.78,
-    "Longitude":128.71,
-    "Population":7477.0,
-    "NearestFireStation":"Kununurra Fire & Rescue Service, 1B Coolibah Dr, Kununurra",
-    "NearestHospital":"Kununurra District Hospital, 96 Coolibah Dr, Kununurra",
-    "HighwayEscape":"Victoria Hwy (east or west)"
-  },
-  {
-    "WeatherStation":"ARGYLE AERODROME",
-    "Latitude":-16.638,
-    "Longitude":165.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"HALLS CREEK AIRPORT",
-    "Latitude":-18.23,
-    "Longitude":127.67,
-    "Population":1463.0,
-    "NearestFireStation":"Halls Creek VFES (local DFES unit)",
-    "NearestHospital":"Halls Creek Health Service, Great Northern Hwy, Halls Creek",
-    "HighwayEscape":"Great Northern Hwy"
-  },
-  {
-    "WeatherStation":"BROOME AIRPORT",
-    "Latitude":-17.95,
-    "Longitude":122.24,
-    "Population":14242.0,
-    "NearestFireStation":"DFES Broome Fire Station, Frederick St & Carnarvon St, Broome",
-    "NearestHospital":"Broome Health Campus, 28 Robinson St, Broome",
-    "HighwayEscape":"Broome Rd to Great Northern Hwy (south)"
-  },
-  {
-    "WeatherStation":"BIDYADANGA",
-    "Latitude":-18.6844,
-    "Longitude":12.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DERBY AERO",
-    "Latitude":-17.3,
-    "Longitude":123.62,
-    "Population":3245.0,
-    "NearestFireStation":"Derby Fire Station, Lot 550 Sutherland St & Derby Hwy, Derby",
-    "NearestHospital":"Derby Health Service, Loch St, Derby",
-    "HighwayEscape":"Derby Hwy to Great Northern Hwy"
-  },
-  {
-    "WeatherStation":"CYGNET BAY",
-    "Latitude":-16.4513,
-    "Longitude":9.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CURTIN AERO",
-    "Latitude":-17.5768,
-    "Longitude":78.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"FITZROY CROSSING AERO",
-    "Latitude":-18.1814,
-    "Longitude":115.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"YAMPI SOUND (DEFENCE)",
-    "Latitude":-16.7671,
-    "Longitude":41.9,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MANDORA",
-    "Latitude":-19.7419,
-    "Longitude":8.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PARDOO STATION",
-    "Latitude":-20.1078,
-    "Longitude":10.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PORT HEDLAND AIRPORT",
-    "Latitude":-20.37,
-    "Longitude":118.63,
-    "Population":16602.0,
-    "NearestFireStation":"Port Hedland Volunteer Fire & Rescue Service, Coolinda St",
-    "NearestHospital":"Hedland Health Campus, 26 Colebatch Way, South Hedland",
-    "HighwayEscape":"Great Northern Hwy"
-  },
-  {
-    "WeatherStation":"KARRATHA AERO",
-    "Latitude":-20.71,
-    "Longitude":116.77,
-    "Population":18408.0,
-    "NearestFireStation":"Karratha Volunteer Fire & Rescue Service, Welcome Rd\/Hillview Rd",
-    "NearestHospital":"Karratha Health Campus, 62 Balmoral Rd, Karratha",
-    "HighwayEscape":"North West Coastal Hwy"
-  },
-  {
-    "WeatherStation":"ROEBOURNE AERO",
-    "Latitude":-20.7594,
-    "Longitude":11.2,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LEGENDRE ISLAND",
-    "Latitude":-20.3583,
-    "Longitude":29.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BEDOUT ISLAND",
-    "Latitude":-19.5894,
-    "Longitude":9.4,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MARBLE BAR",
-    "Latitude":-21.1756,
-    "Longitude":119.7497,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LEARMONTH AIRPORT",
-    "Latitude":-22.24,
-    "Longitude":114.09,
-    "Population":2881.0,
-    "NearestFireStation":"Exmouth Volunteer Fire & Rescue Service",
-    "NearestHospital":"Exmouth Hospital, 8 Hospital Rd, Exmouth",
-    "HighwayEscape":"Minilya\u2013Exmouth Rd to NW Coastal Hwy"
-  },
-  {
-    "WeatherStation":"MARDIE",
-    "Latitude":-21.1906,
-    "Longitude":12.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ONSLOW AIRPORT",
-    "Latitude":-21.6689,
-    "Longitude":11.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"THEVENARD ISLAND",
-    "Latitude":-21.4609,
-    "Longitude":6.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BARROW ISLAND AIRPORT",
-    "Latitude":-20.874,
-    "Longitude":6.9,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KARIJINI NORTH",
-    "Latitude":-22.2999,
-    "Longitude":118.4498,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CARNARVON AIRPORT",
-    "Latitude":-24.88,
-    "Longitude":113.67,
-    "Population":4445.0,
-    "NearestFireStation":"Carnarvon Volunteer Fire & Rescue Service",
-    "NearestHospital":"Carnarvon Health Campus, 69 Cleaver St, Carnarvon",
-    "HighwayEscape":"North West Coastal Hwy"
-  },
-  {
-    "WeatherStation":"GASCOYNE JUNCTION",
-    "Latitude":-25.0544,
-    "Longitude":145.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DENHAM",
-    "Latitude":-25.9265,
-    "Longitude":2.8,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"EMU CREEK STATION",
-    "Latitude":-23.0314,
-    "Longitude":112.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MURCHISON",
-    "Latitude":-26.8956,
-    "Longitude":115.9567,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"SHARK BAY AIRPORT",
-    "Latitude":-25.8925,
-    "Longitude":34.3,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MEEKATHARRA AIRPORT",
-    "Latitude":-26.6136,
-    "Longitude":118.5372,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PAYNES FIND",
-    "Latitude":-29.2708,
-    "Longitude":117.6836,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NEWMAN AERO",
-    "Latitude":-23.4212,
-    "Longitude":119.8015,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PARABURDOO AERO",
-    "Latitude":-23.1726,
-    "Longitude":117.7493,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MOUNT MAGNET AERO",
-    "Latitude":-28.1156,
-    "Longitude":117.8425,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CARNAMAH",
-    "Latitude":-29.6883,
-    "Longitude":115.8857,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MULLEWA",
-    "Latitude":-28.5367,
-    "Longitude":115.5142,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WONGAN HILLS",
-    "Latitude":-30.8917,
-    "Longitude":116.7186,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KALBARRI",
-    "Latitude":-27.7119,
-    "Longitude":7.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NORTH ISLAND",
-    "Latitude":-28.3009,
-    "Longitude":2.7,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MORAWA AIRPORT",
-    "Latitude":-29.2039,
-    "Longitude":116.0247,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DALWALLINU",
-    "Latitude":-30.2761,
-    "Longitude":116.6714,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GERALDTON AIRPORT",
-    "Latitude":-28.8047,
-    "Longitude":30.2,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PERTH AIRPORT",
-    "Latitude":-31.93,
-    "Longitude":115.97,
-    "Population":2059483.0,
-    "NearestFireStation":"Perth Airport Fire Service (airfield) \/ Belmont Fire Station (nearest urban)",
-    "NearestHospital":"Royal Perth Hospital (closest major ED)",
-    "HighwayEscape":"Tonkin Hwy \/ Great Eastern Hwy"
-  },
-  {
-    "WeatherStation":"BADGINGARRA RESEARCH STN",
-    "Latitude":-30.3381,
-    "Longitude":115.5394,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PEARCE RAAF",
-    "Latitude":-31.6669,
-    "Longitude":46.2,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"INNER DOLPHIN PYLON",
-    "Latitude":-31.9889,
-    "Longitude":115.8311,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GOSNELLS CITY",
-    "Latitude":-32.0481,
-    "Longitude":10.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KARNET",
-    "Latitude":-32.4389,
-    "Longitude":116.0789,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"JURIEN BAY",
-    "Latitude":-30.3081,
-    "Longitude":4.7,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"JANDAKOT AERO",
-    "Latitude":-32.1011,
-    "Longitude":30.7,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GINGIN AERO",
-    "Latitude":-31.4628,
-    "Longitude":74.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ROTTNEST ISLAND",
-    "Latitude":-32.0069,
-    "Longitude":43.1,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"OCEAN REEF",
-    "Latitude":-31.7594,
-    "Longitude":10.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"SWANBOURNE",
-    "Latitude":-31.956,
-    "Longitude":41.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PERTH METRO",
-    "Latitude":-31.9192,
-    "Longitude":25.4,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BICKLEY",
-    "Latitude":-32.0072,
-    "Longitude":116.1369,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GARDEN ISLAND HSF",
-    "Latitude":-32.2433,
-    "Longitude":6.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LANCELIN (DEFENCE)",
-    "Latitude":-30.8392,
-    "Longitude":4.1,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MILLENDON (SWAN VALLEY)",
-    "Latitude":-31.8112,
-    "Longitude":16.4,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ALBANY",
-    "Latitude":-35.0289,
-    "Longitude":3.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CAPE LEEUWIN",
-    "Latitude":-34.3728,
-    "Longitude":14.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CAPE NATURALISTE",
-    "Latitude":-33.5372,
-    "Longitude":109.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DONNYBROOK",
-    "Latitude":-33.5719,
-    "Longitude":63.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"DWELLINGUP",
-    "Latitude":-32.7103,
-    "Longitude":116.0594,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ESPERANCE AERO",
-    "Latitude":-33.6825,
-    "Longitude":142.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ESPERANCE AERO",
-    "Latitude":-33.83,
-    "Longitude":27.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MANJIMUP",
-    "Latitude":-34.2508,
-    "Longitude":116.145,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MOUNT BARKER",
-    "Latitude":-34.625,
-    "Longitude":117.6361,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PEMBERTON",
-    "Latitude":-34.4478,
-    "Longitude":175.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BUSSELTON AERO",
-    "Latitude":-33.6818,
-    "Longitude":16.9,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BRIDGETOWN",
-    "Latitude":-33.9486,
-    "Longitude":179.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ESPERANCE",
-    "Latitude":-33.6825,
-    "Longitude":142.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ESPERANCE",
-    "Latitude":-33.83,
-    "Longitude":27.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"JARRAHWOOD",
-    "Latitude":-33.7964,
-    "Longitude":130.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WINDY HARBOUR",
-    "Latitude":-34.8373,
-    "Longitude":2.9,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BUSSELTON JETTY",
-    "Latitude":-33.6294,
-    "Longitude":3.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"HOPETOUN NORTH",
-    "Latitude":-33.9306,
-    "Longitude":27.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ROCKY GULLY",
-    "Latitude":-34.5714,
-    "Longitude":117.0106,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BUNBURY",
-    "Latitude":-33.3567,
-    "Longitude":6.2,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"SHANNON",
-    "Latitude":-34.5683,
-    "Longitude":116.3367,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MANDURAH",
-    "Latitude":-32.5219,
-    "Longitude":3.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"COLLIE EAST",
-    "Latitude":-33.3608,
-    "Longitude":116.1717,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NORTH WALPOLE",
-    "Latitude":-34.9469,
-    "Longitude":73.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ALBANY AIRPORT",
-    "Latitude":-34.9411,
-    "Longitude":70.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BENCUBBIN",
-    "Latitude":-30.8081,
-    "Longitude":117.8603,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GOOMALLING",
-    "Latitude":-31.2994,
-    "Longitude":116.8269,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KELLERBERRIN",
-    "Latitude":-31.6183,
-    "Longitude":117.7217,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MERREDIN",
-    "Latitude":-31.4756,
-    "Longitude":118.2789,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NORTHAM",
-    "Latitude":-31.6508,
-    "Longitude":170.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CUNDERDIN AIRFIELD",
-    "Latitude":-31.6219,
-    "Longitude":117.2217,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"YORK",
-    "Latitude":-31.8997,
-    "Longitude":179.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BEVERLEY",
-    "Latitude":-32.1083,
-    "Longitude":116.9247,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BROOKTON",
-    "Latitude":-32.3728,
-    "Longitude":117.0086,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CORRIGIN",
-    "Latitude":-32.3292,
-    "Longitude":117.8733,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"HYDEN",
-    "Latitude":-32.4419,
-    "Longitude":118.8983,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NARROGIN",
-    "Latitude":-32.9342,
-    "Longitude":117.1797,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ONGERUP",
-    "Latitude":-33.9634,
-    "Longitude":118.4788,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"PINGELLY",
-    "Latitude":-32.5336,
-    "Longitude":117.0831,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"RAVENSTHORPE",
-    "Latitude":-33.5803,
-    "Longitude":120.0458,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WAGIN",
-    "Latitude":-33.3075,
-    "Longitude":117.3403,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NEWDEGATE RESEARCH STATION",
-    "Latitude":-33.1129,
-    "Longitude":118.84,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"JACUP",
-    "Latitude":-33.8878,
-    "Longitude":119.1092,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LAKE GRACE",
-    "Latitude":-33.1006,
-    "Longitude":118.4647,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KATANNING",
-    "Latitude":-33.6856,
-    "Longitude":117.6064,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WANDERING",
-    "Latitude":-32.6722,
-    "Longitude":116.6706,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"EUCLA",
-    "Latitude":-31.6797,
-    "Longitude":93.6,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"EYRE",
-    "Latitude":-32.2464,
-    "Longitude":6.1,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"FORREST",
-    "Latitude":-30.8453,
-    "Longitude":160.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"RED ROCKS POINT",
-    "Latitude":-32.2028,
-    "Longitude":3.6,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"NORSEMAN AERO",
-    "Latitude":-32.2147,
-    "Longitude":121.7547,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"KALGOORLIE-BOULDER AIRPORT",
-    "Latitude":-30.7847,
-    "Longitude":121.4533,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"MUNGLINUP WEST",
-    "Latitude":-33.5547,
-    "Longitude":120.6997,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"SALMON GUMS RES.STN.",
-    "Latitude":-32.9869,
-    "Longitude":121.6239,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"BULGA DOWNS",
-    "Latitude":-28.4967,
-    "Longitude":119.7436,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LEONORA AERO",
-    "Latitude":-28.8789,
-    "Longitude":121.3186,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LAVERTON AERO",
-    "Latitude":-28.6133,
-    "Longitude":122.4236,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"LEINSTER AERO",
-    "Latitude":-27.8386,
-    "Longitude":120.7031,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"SOUTHERN CROSS AIRFIELD",
-    "Latitude":-31.2353,
-    "Longitude":119.3564,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WARBURTON AIRFIELD",
-    "Latitude":-26.1317,
-    "Longitude":126.5839,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CARNEGIE",
-    "Latitude":-25.7964,
-    "Longitude":122.9753,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"GILES METEOROLOGICAL OFFICE",
-    "Latitude":-25.0341,
-    "Longitude":128.301,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"TELFER AERO",
-    "Latitude":-21.7125,
-    "Longitude":122.2281,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WILUNA AERO",
-    "Latitude":-26.6273,
-    "Longitude":120.2195,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"WITCHCLIFFE WEST",
-    "Latitude":-34.0258,
-    "Longitude":85.2,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"VARANUS ISLAND",
-    "Latitude":-20.655,
-    "Longitude":24.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"COCOS ISLAND AIRPORT",
-    "Latitude":-12.1892,
-    "Longitude":4.0,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ROWLEY SHOALS",
-    "Latitude":-17.5217,
-    "Longitude":7.6,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"ADELE ISLAND",
-    "Latitude":-15.5114,
-    "Longitude":5.5,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  },
-  {
-    "WeatherStation":"CHRISTMAS ISLAND AERO",
-    "Latitude":-10.4515,
-    "Longitude":105.689,
-    "Population":null,
-    "NearestFireStation":"TBD",
-    "NearestHospital":"TBD",
-    "HighwayEscape":"TBD"
-  }
-]
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.1503,
+          -15.5100
+        ]
+      },
+      "properties": {
+        "name": "WYNDHAM AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.1485,
+          -13.7542
+        ]
+      },
+      "properties": {
+        "name": "TROUGHTON ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.1025,
+          -16.4181
+        ]
+      },
+      "properties": {
+        "name": "MOUNT ELIZABETH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6453,
+          -14.2964
+        ]
+      },
+      "properties": {
+        "name": "KALUMBURU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.3867,
+          -14.0900
+        ]
+      },
+      "properties": {
+        "name": "TRUSCOTT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.3114,
+          -15.3797
+        ]
+      },
+      "properties": {
+        "name": "DOONGAN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.2174,
+          -17.0154
+        ]
+      },
+      "properties": {
+        "name": "WARMUN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.7100,
+          -15.7814
+        ]
+      },
+      "properties": {
+        "name": "KUNUNURRA AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.4516,
+          -16.6380
+        ]
+      },
+      "properties": {
+        "name": "ARGYLE AERODROME"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.6666,
+          -18.2337
+        ]
+      },
+      "properties": {
+        "name": "HALLS CREEK AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.2352,
+          -17.9475
+        ]
+      },
+      "properties": {
+        "name": "BROOME AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.7803,
+          -18.6844
+        ]
+      },
+      "properties": {
+        "name": "BIDYADANGA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6611,
+          -17.3706
+        ]
+      },
+      "properties": {
+        "name": "DERBY AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0087,
+          -16.4513
+        ]
+      },
+      "properties": {
+        "name": "CYGNET BAY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8297,
+          -17.5768
+        ]
+      },
+      "properties": {
+        "name": "CURTIN AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.5619,
+          -18.1814
+        ]
+      },
+      "properties": {
+        "name": "FITZROY CROSSING AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9810,
+          -16.7671
+        ]
+      },
+      "properties": {
+        "name": "YAMPI SOUND (DEFENCE)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.8433,
+          -19.7419
+        ]
+      },
+      "properties": {
+        "name": "MANDORA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.5811,
+          -20.1078
+        ]
+      },
+      "properties": {
+        "name": "PARDOO STATION"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.6317,
+          -20.3725
+        ]
+      },
+      "properties": {
+        "name": "PORT HEDLAND AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.7742,
+          -20.7097
+        ]
+      },
+      "properties": {
+        "name": "KARRATHA AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.1583,
+          -20.7594
+        ]
+      },
+      "properties": {
+        "name": "ROEBOURNE AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.8431,
+          -20.3583
+        ]
+      },
+      "properties": {
+        "name": "LEGENDRE ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.1000,
+          -19.5894
+        ]
+      },
+      "properties": {
+        "name": "BEDOUT ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.7497,
+          -21.1756
+        ]
+      },
+      "properties": {
+        "name": "MARBLE BAR"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.0967,
+          -22.2406
+        ]
+      },
+      "properties": {
+        "name": "LEARMONTH AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.9797,
+          -21.1906
+        ]
+      },
+      "properties": {
+        "name": "MARDIE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.1092,
+          -21.6689
+        ]
+      },
+      "properties": {
+        "name": "ONSLOW AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.0188,
+          -21.4609
+        ]
+      },
+      "properties": {
+        "name": "THEVENARD ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.4066,
+          -20.8740
+        ]
+      },
+      "properties": {
+        "name": "BARROW ISLAND AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.4498,
+          -22.2999
+        ]
+      },
+      "properties": {
+        "name": "KARIJINI NORTH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.6700,
+          -24.8878
+        ]
+      },
+      "properties": {
+        "name": "CARNARVON AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.2100,
+          -25.0544
+        ]
+      },
+      "properties": {
+        "name": "GASCOYNE JUNCTION"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5325,
+          -25.9265
+        ]
+      },
+      "properties": {
+        "name": "DENHAM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.0414,
+          -23.0314
+        ]
+      },
+      "properties": {
+        "name": "EMU CREEK STATION"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.9567,
+          -26.8956
+        ]
+      },
+      "properties": {
+        "name": "MURCHISON"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5772,
+          -25.8925
+        ]
+      },
+      "properties": {
+        "name": "SHARK BAY AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.5372,
+          -26.6136
+        ]
+      },
+      "properties": {
+        "name": "MEEKATHARRA AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.6836,
+          -29.2708
+        ]
+      },
+      "properties": {
+        "name": "PAYNES FIND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.8015,
+          -23.4212
+        ]
+      },
+      "properties": {
+        "name": "NEWMAN AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.7493,
+          -23.1726
+        ]
+      },
+      "properties": {
+        "name": "PARABURDOO AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.8425,
+          -28.1156
+        ]
+      },
+      "properties": {
+        "name": "MOUNT MAGNET AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8857,
+          -29.6883
+        ]
+      },
+      "properties": {
+        "name": "CARNAMAH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.5142,
+          -28.5367
+        ]
+      },
+      "properties": {
+        "name": "MULLEWA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.7186,
+          -30.8917
+        ]
+      },
+      "properties": {
+        "name": "WONGAN HILLS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.1650,
+          -27.7119
+        ]
+      },
+      "properties": {
+        "name": "KALBARRI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.5937,
+          -28.3009
+        ]
+      },
+      "properties": {
+        "name": "NORTH ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0247,
+          -29.2039
+        ]
+      },
+      "properties": {
+        "name": "MORAWA AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.6714,
+          -30.2761
+        ]
+      },
+      "properties": {
+        "name": "DALWALLINU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.6989,
+          -28.8047
+        ]
+      },
+      "properties": {
+        "name": "GERALDTON AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.9764,
+          -31.9275
+        ]
+      },
+      "properties": {
+        "name": "PERTH AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.5394,
+          -30.3381
+        ]
+      },
+      "properties": {
+        "name": "BADGINGARRA RESEARCH STN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0189,
+          -31.6669
+        ]
+      },
+      "properties": {
+        "name": "PEARCE RAAF"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8311,
+          -31.9889
+        ]
+      },
+      "properties": {
+        "name": "INNER DOLPHIN PYLON"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.9844,
+          -32.0481
+        ]
+      },
+      "properties": {
+        "name": "GOSNELLS CITY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0789,
+          -32.4389
+        ]
+      },
+      "properties": {
+        "name": "KARNET"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.0311,
+          -30.3081
+        ]
+      },
+      "properties": {
+        "name": "JURIEN BAY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8794,
+          -32.1011
+        ]
+      },
+      "properties": {
+        "name": "JANDAKOT AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8642,
+          -31.4628
+        ]
+      },
+      "properties": {
+        "name": "GINGIN AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.5022,
+          -32.0069
+        ]
+      },
+      "properties": {
+        "name": "ROTTNEST ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.7278,
+          -31.7594
+        ]
+      },
+      "properties": {
+        "name": "OCEAN REEF"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.7619,
+          -31.9560
+        ]
+      },
+      "properties": {
+        "name": "SWANBOURNE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8728,
+          -31.9192
+        ]
+      },
+      "properties": {
+        "name": "PERTH METRO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1369,
+          -32.0072
+        ]
+      },
+      "properties": {
+        "name": "BICKLEY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.6839,
+          -32.2433
+        ]
+      },
+      "properties": {
+        "name": "GARDEN ISLAND HSF"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.2283,
+          -30.8392
+        ]
+      },
+      "properties": {
+        "name": "LANCELIN (DEFENCE)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0227,
+          -31.8112
+        ]
+      },
+      "properties": {
+        "name": "MILLENDON (SWAN VALLEY)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.8808,
+          -35.0289
+        ]
+      },
+      "properties": {
+        "name": "ALBANY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.1358,
+          -34.3728
+        ]
+      },
+      "properties": {
+        "name": "CAPE LEEUWIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.0189,
+          -33.5372
+        ]
+      },
+      "properties": {
+        "name": "CAPE NATURALISTE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.8247,
+          -33.5719
+        ]
+      },
+      "properties": {
+        "name": "DONNYBROOK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0594,
+          -32.7103
+        ]
+      },
+      "properties": {
+        "name": "DWELLINGUP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.8275,
+          -33.6825
+        ]
+      },
+      "properties": {
+        "name": "ESPERANCE AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1450,
+          -34.2508
+        ]
+      },
+      "properties": {
+        "name": "MANJIMUP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.6361,
+          -34.6250
+        ]
+      },
+      "properties": {
+        "name": "MOUNT BARKER"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0433,
+          -34.4478
+        ]
+      },
+      "properties": {
+        "name": "PEMBERTON"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.4026,
+          -33.6818
+        ]
+      },
+      "properties": {
+        "name": "BUSSELTON AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1311,
+          -33.9486
+        ]
+      },
+      "properties": {
+        "name": "BRIDGETOWN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.8925,
+          -33.8300
+        ]
+      },
+      "properties": {
+        "name": "ESPERANCE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.6658,
+          -33.7964
+        ]
+      },
+      "properties": {
+        "name": "JARRAHWOOD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.0260,
+          -34.8373
+        ]
+      },
+      "properties": {
+        "name": "WINDY HARBOUR"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.3383,
+          -33.6294
+        ]
+      },
+      "properties": {
+        "name": "BUSSELTON JETTY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.1283,
+          -33.9306
+        ]
+      },
+      "properties": {
+        "name": "HOPETOUN NORTH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.0106,
+          -34.5714
+        ]
+      },
+      "properties": {
+        "name": "ROCKY GULLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.6447,
+          -33.3567
+        ]
+      },
+      "properties": {
+        "name": "BUNBURY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.3367,
+          -34.5683
+        ]
+      },
+      "properties": {
+        "name": "SHANNON"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.7119,
+          -32.5219
+        ]
+      },
+      "properties": {
+        "name": "MANDURAH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.1717,
+          -33.3608
+        ]
+      },
+      "properties": {
+        "name": "COLLIE EAST"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.7222,
+          -34.9469
+        ]
+      },
+      "properties": {
+        "name": "NORTH WALPOLE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.8158,
+          -34.9411
+        ]
+      },
+      "properties": {
+        "name": "ALBANY AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.8603,
+          -30.8081
+        ]
+      },
+      "properties": {
+        "name": "BENCUBBIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.8269,
+          -31.2994
+        ]
+      },
+      "properties": {
+        "name": "GOOMALLING"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.7217,
+          -31.6183
+        ]
+      },
+      "properties": {
+        "name": "KELLERBERRIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.2789,
+          -31.4756
+        ]
+      },
+      "properties": {
+        "name": "MERREDIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.6586,
+          -31.6508
+        ]
+      },
+      "properties": {
+        "name": "NORTHAM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.2217,
+          -31.6219
+        ]
+      },
+      "properties": {
+        "name": "CUNDERDIN AIRFIELD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.7650,
+          -31.8997
+        ]
+      },
+      "properties": {
+        "name": "YORK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.9247,
+          -32.1083
+        ]
+      },
+      "properties": {
+        "name": "BEVERLEY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.0086,
+          -32.3728
+        ]
+      },
+      "properties": {
+        "name": "BROOKTON"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.8733,
+          -32.3292
+        ]
+      },
+      "properties": {
+        "name": "CORRIGIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.8983,
+          -32.4419
+        ]
+      },
+      "properties": {
+        "name": "HYDEN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.1797,
+          -32.9342
+        ]
+      },
+      "properties": {
+        "name": "NARROGIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.4788,
+          -33.9634
+        ]
+      },
+      "properties": {
+        "name": "ONGERUP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.0831,
+          -32.5336
+        ]
+      },
+      "properties": {
+        "name": "PINGELLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.0458,
+          -33.5803
+        ]
+      },
+      "properties": {
+        "name": "RAVENSTHORPE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.3403,
+          -33.3075
+        ]
+      },
+      "properties": {
+        "name": "WAGIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.8400,
+          -33.1129
+        ]
+      },
+      "properties": {
+        "name": "NEWDEGATE RESEARCH STATION"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.1092,
+          -33.8878
+        ]
+      },
+      "properties": {
+        "name": "JACUP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.4647,
+          -33.1006
+        ]
+      },
+      "properties": {
+        "name": "LAKE GRACE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          117.6064,
+          -33.6856
+        ]
+      },
+      "properties": {
+        "name": "KATANNING"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.6706,
+          -32.6722
+        ]
+      },
+      "properties": {
+        "name": "WANDERING"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.8958,
+          -31.6797
+        ]
+      },
+      "properties": {
+        "name": "EUCLA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.3008,
+          -32.2464
+        ]
+      },
+      "properties": {
+        "name": "EYRE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.1092,
+          -30.8453
+        ]
+      },
+      "properties": {
+        "name": "FORREST"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5297,
+          -32.2028
+        ]
+      },
+      "properties": {
+        "name": "RED ROCKS POINT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.7547,
+          -32.2147
+        ]
+      },
+      "properties": {
+        "name": "NORSEMAN AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4533,
+          -30.7847
+        ]
+      },
+      "properties": {
+        "name": "KALGOORLIE-BOULDER AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6997,
+          -33.5547
+        ]
+      },
+      "properties": {
+        "name": "MUNGLINUP WEST"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6239,
+          -32.9869
+        ]
+      },
+      "properties": {
+        "name": "SALMON GUMS RES.STN."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.7436,
+          -28.4967
+        ]
+      },
+      "properties": {
+        "name": "BULGA DOWNS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.3186,
+          -28.8789
+        ]
+      },
+      "properties": {
+        "name": "LEONORA AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.4236,
+          -28.6133
+        ]
+      },
+      "properties": {
+        "name": "LAVERTON AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.7031,
+          -27.8386
+        ]
+      },
+      "properties": {
+        "name": "LEINSTER AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.3564,
+          -31.2353
+        ]
+      },
+      "properties": {
+        "name": "SOUTHERN CROSS AIRFIELD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.5839,
+          -26.1317
+        ]
+      },
+      "properties": {
+        "name": "WARBURTON AIRFIELD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.9753,
+          -25.7964
+        ]
+      },
+      "properties": {
+        "name": "CARNEGIE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.3010,
+          -25.0341
+        ]
+      },
+      "properties": {
+        "name": "GILES METEOROLOGICAL OFFICE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.2281,
+          -21.7125
+        ]
+      },
+      "properties": {
+        "name": "TELFER AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.2195,
+          -26.6273
+        ]
+      },
+      "properties": {
+        "name": "WILUNA AERO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.0637,
+          -34.0258
+        ]
+      },
+      "properties": {
+        "name": "WITCHCLIFFE WEST"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.5769,
+          -20.6550
+        ]
+      },
+      "properties": {
+        "name": "VARANUS ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.8344,
+          -12.1892
+        ]
+      },
+      "properties": {
+        "name": "COCOS ISLAND AIRPORT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.9531,
+          -17.5217
+        ]
+      },
+      "properties": {
+        "name": "ROWLEY SHOALS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.1556,
+          -15.5114
+        ]
+      },
+      "properties": {
+        "name": "ADELE ISLAND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.6890,
+          -10.4515
+        ]
+      },
+      "properties": {
+        "name": "CHRISTMAS ISLAND AERO"
+      }
+    }
+  ]
+}
+```

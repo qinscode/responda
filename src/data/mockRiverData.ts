@@ -274,3 +274,81 @@ export const getRiverDataForStation = async (stationId: string): Promise<RiverDa
 
 // Legacy export for backward compatibility (will be empty initially)
 export let mockRiverStations: RiverStation[] = []; 
+
+// Interface for chart data from individual station files
+interface RiverStageDataPoint {
+  datetime: string;
+  stage: number;
+  discharge: number;
+  siteId: string;
+  varFrom: number;
+  varTo: number;
+}
+
+// Cache for individual station chart data
+let stationChartDataCache: Map<string, RiverStageDataPoint[]> = new Map();
+
+// Get chart data for a specific river station
+export const getRiverStationChartData = async (siteNumber: string): Promise<RiverStageDataPoint[]> => {
+  // Check cache first
+  if (stationChartDataCache.has(siteNumber)) {
+    return stationChartDataCache.get(siteNumber) || [];
+  }
+
+  try {
+    const response = await fetch(`/river_station_water_level/${siteNumber}_stage_last6days.csv`);
+    if (!response.ok) {
+      console.warn(`No chart data found for station ${siteNumber}`);
+      return [];
+    }
+    
+    const csvText = await response.text();
+    const lines = csvText.trim().split('\n');
+    
+    if (lines.length < 2) {
+      console.warn(`Invalid chart data for station ${siteNumber}`);
+      return [];
+    }
+    
+    const dataPoints: RiverStageDataPoint[] = [];
+    
+    // Skip header line
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i]?.trim();
+      if (!line) continue;
+      
+      const values = line.split(',');
+      if (values.length < 6) continue;
+      
+      const datetime = values[0]?.trim() || '';
+      const stage = parseFloat(values[1]?.trim() || '0');
+      const discharge = parseFloat(values[2]?.trim() || '0');
+      const siteId = values[3]?.trim() || '';
+      const varFrom = parseFloat(values[4]?.trim() || '0');
+      const varTo = parseFloat(values[5]?.trim() || '0');
+      
+      if (!datetime || !siteId || isNaN(stage) || isNaN(discharge)) {
+        continue;
+      }
+      
+      dataPoints.push({
+        datetime,
+        stage,
+        discharge,
+        siteId,
+        varFrom,
+        varTo
+      });
+    }
+    
+    // Cache the data
+    stationChartDataCache.set(siteNumber, dataPoints);
+    console.log(`Loaded ${dataPoints.length} data points for station ${siteNumber}`);
+    
+    return dataPoints;
+    
+  } catch (error) {
+    console.error(`Error loading chart data for station ${siteNumber}:`, error);
+    return [];
+  }
+}; 
