@@ -46,24 +46,24 @@ export const Analytics = () => {
 
   return (
     <AppShell onSearchChange={setSearchQuery}>
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         {/* Page Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-slide-in-right">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
+            <div className="p-2 bg-purple-100 rounded-lg animate-float">
               <BarChart3 className="h-6 w-6 text-purple-600" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl font-bold text-gray-900 animate-fade-in-up animate-delay-100">Analytics Dashboard</h1>
+              <p className="text-gray-600 animate-fade-in-up animate-delay-200">
                 Advanced analytics and predictive insights for emergency management
               </p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 animate-fade-in-up animate-delay-300">
             <Button
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 btn-spring"
               disabled={isRefreshing}
               size="sm"
               variant="outline"
@@ -72,11 +72,11 @@ export const Analytics = () => {
               <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               Refresh
             </Button>
-            <Button className="flex items-center gap-2" size="sm" variant="outline">
+            <Button className="flex items-center gap-2 btn-spring" size="sm" variant="outline">
               <Download className="h-4 w-4" />
               Export
             </Button>
-            <Button className="flex items-center gap-2" size="sm" variant="outline">
+            <Button className="flex items-center gap-2 btn-spring" size="sm" variant="outline">
               <Settings className="h-4 w-4" />
               Settings
             </Button>
@@ -85,10 +85,10 @@ export const Analytics = () => {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="bg-white border-gray-200">
+          <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-100">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-50 rounded-lg">
+                <div className="p-2 bg-blue-50 rounded-lg animate-pulse-gentle">
                   <Activity className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
@@ -99,10 +99,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-gray-200">
+          <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-200">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-50 rounded-lg">
+                <div className="p-2 bg-red-50 rounded-lg animate-pulse-gentle">
                   <AlertTriangle className="h-5 w-5 text-red-600" />
                 </div>
                 <div>
@@ -113,10 +113,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-gray-200">
+          <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-300">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-50 rounded-lg">
+                <div className="p-2 bg-orange-50 rounded-lg animate-pulse-gentle">
                   <Shield className="h-5 w-5 text-orange-600" />
                 </div>
                 <div>
@@ -127,10 +127,10 @@ export const Analytics = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-gray-200">
+          <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-500">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-50 rounded-lg">
+                <div className="p-2 bg-green-50 rounded-lg animate-pulse-gentle">
                   <Brain className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
@@ -144,21 +144,21 @@ export const Analytics = () => {
           </Card>
         </div>
 
-        <Tabs className="space-y-6" defaultValue="trends">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-100">
-            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="trends">
+        <Tabs className="space-y-6 animate-fade-in-up animate-delay-300" defaultValue="trends">
+          <TabsList className="grid w-full grid-cols-4 bg-gray-50 p-1 rounded-xl border border-gray-200 h-12">
+            <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="trends">
               <TrendingUp className="h-4 w-4" />
               Trends
             </TabsTrigger>
-            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="predictions">
+            <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="predictions">
               <Brain className="h-4 w-4" />
               Predictions
             </TabsTrigger>
-            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="risk-analysis">
+            <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="risk-analysis">
               <Shield className="h-4 w-4" />
               Risk Analysis
             </TabsTrigger>
-            <TabsTrigger className="flex items-center gap-2 data-[state=active]:bg-white" value="insights">
+            <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="insights">
               <BarChart3 className="h-4 w-4" />
               Insights
             </TabsTrigger>
@@ -167,24 +167,28 @@ export const Analytics = () => {
           <TabsContent className="space-y-6" value="trends">
             {/* Trend Analysis Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <TrendChart
-                showAnomalies
-                showForecast
-                data={mockBushfireTimeSeriesAnalysis}
-                title="Bushfire Risk Trends"
-                type="bushfire"
-              />
-              <TrendChart
-                showAnomalies
-                showForecast
-                data={mockFloodTimeSeriesAnalysis}
-                title="Flood Risk Trends"
-                type="flood"
-              />
+              <div className="animate-slide-in-right animate-delay-100">
+                <TrendChart
+                  showAnomalies
+                  showForecast
+                  data={mockBushfireTimeSeriesAnalysis}
+                  title="Bushfire Risk Trends"
+                  type="bushfire"
+                />
+              </div>
+              <div className="animate-slide-in-right animate-delay-200">
+                <TrendChart
+                  showAnomalies
+                  showForecast
+                  data={mockFloodTimeSeriesAnalysis}
+                  title="Flood Risk Trends"
+                  type="flood"
+                />
+              </div>
             </div>
 
             {/* Trend Summary */}
-            <Card className="bg-white border-gray-200">
+            <Card className="card-modern-v2 animate-card-hover animate-fade-in-up animate-delay-300">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-blue-500" />
@@ -252,35 +256,39 @@ export const Analytics = () => {
           </TabsContent>
 
           <TabsContent className="space-y-6" value="predictions">
-            <PredictionPanel
-              alerts={mockPredictiveAlerts}
-              forecasts={mockAdvancedForecasts}
-              models={mockPredictionModels}
-            />
+            <div className="animate-fade-in-up animate-delay-100">
+              <PredictionPanel
+                alerts={mockPredictiveAlerts}
+                forecasts={mockAdvancedForecasts}
+                models={mockPredictionModels}
+              />
+            </div>
           </TabsContent>
 
           <TabsContent className="space-y-6" value="risk-analysis">
-            <RiskAnalysisPanel
-              correlationData={mockCorrelationAnalysis}
-              regionalProfiles={mockRegionalRiskProfiles}
-            />
+            <div className="animate-fade-in-up animate-delay-100">
+              <RiskAnalysisPanel
+                correlationData={mockCorrelationAnalysis}
+                regionalProfiles={mockRegionalRiskProfiles}
+              />
+            </div>
           </TabsContent>
 
           <TabsContent className="space-y-6" value="insights">
             {/* Model Performance */}
-            <Card className="bg-white border-gray-200">
+            <Card className="card-modern-v2 animate-card-hover animate-fade-in-up animate-delay-100">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Brain className="h-5 w-5 text-purple-500" />
+                  <Brain className="h-5 w-5 text-purple-500 animate-pulse-gentle" />
                   Model Performance Overview
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {dashboardData.modelPerformance.map((performance) => {
+                  {dashboardData.modelPerformance.map((performance, index) => {
                     const model = mockPredictionModels.find(m => m.id === performance.modelId);
                     return (
-                      <div key={performance.modelId} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                      <div key={performance.modelId} className={`flex items-center justify-between p-4 border border-gray-200 rounded-lg animate-card-hover animate-stagger-fade-in ${index < 3 ? `animate-delay-${(index + 1) * 100}` : ''}`}>
                         <div className="flex-1">
                           <div className="font-medium text-gray-900">{model?.name}</div>
                           <div className="text-sm text-gray-600 capitalize">{model?.type}</div>
@@ -311,18 +319,18 @@ export const Analytics = () => {
             </Card>
 
             {/* Key Insights */}
-            <Card className="bg-white border-gray-200">
+            <Card className="card-modern-v2 animate-card-hover animate-fade-in-up animate-delay-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-green-500" />
+                  <Activity className="h-5 w-5 text-green-500 animate-pulse-gentle" />
                   Key Insights & Recommendations
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {mockCorrelationAnalysis.insights.map((insight, index) => (
-                    <div key={index} className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                      <Activity className="h-5 w-5 text-blue-600 mt-0.5" />
+                    <div key={index} className={`flex items-start gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg animate-card-hover animate-stagger-fade-in ${index < 3 ? `animate-delay-${(index + 1) * 100}` : ''}`}>
+                      <Activity className="h-5 w-5 text-blue-600 mt-0.5 animate-bounce-gentle" />
                       <div>
                         <div className="font-medium text-blue-800 mb-1">
                           Statistical Insight #{index + 1}
@@ -333,8 +341,8 @@ export const Analytics = () => {
                   ))}
                   
                   {/* Additional recommendations */}
-                  <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <Brain className="h-5 w-5 text-green-600 mt-0.5" />
+                  <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg animate-card-hover animate-stagger-fade-in animate-delay-300">
+                    <Brain className="h-5 w-5 text-green-600 mt-0.5 animate-pulse-gentle" />
                     <div>
                       <div className="font-medium text-green-800 mb-1">
                         Model Optimization Recommendation
@@ -345,8 +353,8 @@ export const Analytics = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                    <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5" />
+                  <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg animate-card-hover animate-stagger-fade-in animate-delay-500">
+                    <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 animate-bounce-gentle" />
                     <div>
                       <div className="font-medium text-amber-800 mb-1">
                         Data Quality Alert

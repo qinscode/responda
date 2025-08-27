@@ -290,7 +290,7 @@ export const MapContainer = ({ selectedStation, onStationSelect }: MapContainerP
   return (
     <div className="relative w-full h-full">
       {tokenMissing ? (
-        <div className="flex items-center justify-center h-[600px] bg-muted/50">
+        <div className="flex items-center justify-center h-full bg-muted/50">
           <div className="text-center">
             <p className="font-medium mb-1">Mapbox token not configured</p>
             <p className="text-sm text-muted-foreground">Set VITE_MAPBOX_TOKEN in your environment to enable the interactive map.</p>

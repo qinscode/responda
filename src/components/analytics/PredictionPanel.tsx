@@ -93,7 +93,7 @@ export const PredictionPanel = ({
             {(['24h', '3d', '7d', '14d'] as const).map((timeframe) => (
               <Button
                 key={timeframe}
-                className="h-6 px-2 text-xs"
+                className="h-6 px-2 text-xs btn-spring"
                 size="sm"
                 variant={selectedTimeframe === timeframe ? 'default' : 'ghost'}
                 onClick={() => { setSelectedTimeframe(timeframe); }}
@@ -165,17 +165,26 @@ export const PredictionPanel = ({
         </Card>
       )}
 
-      <Tabs className="space-y-4" defaultValue="forecasts">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="forecasts">Forecasts</TabsTrigger>
-          <TabsTrigger value="models">Models</TabsTrigger>
-          <TabsTrigger value="insights">Insights</TabsTrigger>
+      <Tabs className="space-y-4 animate-fade-in-up animate-delay-200" defaultValue="forecasts">
+        <TabsList className="grid w-full grid-cols-3 bg-gray-50 p-1 rounded-xl border border-gray-200 h-12">
+          <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="forecasts">
+            <Target className="h-4 w-4" />
+            Forecasts
+          </TabsTrigger>
+          <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="models">
+            <Brain className="h-4 w-4" />
+            Models
+          </TabsTrigger>
+          <TabsTrigger className="flex items-center justify-center gap-2 h-full data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-blue-600 data-[state=active]:font-semibold text-gray-600 hover:text-gray-900 btn-spring transition-all duration-200 rounded-lg" value="insights">
+            <Zap className="h-4 w-4" />
+            Insights
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent className="space-y-4" value="forecasts">
+        <TabsContent className="space-y-4 animate-fade-in-up animate-delay-100" value="forecasts">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {filteredForecasts.map((forecast) => (
-              <Card key={`${forecast.regionId}-${forecast.date}`} className="card-modern">
+            {filteredForecasts.map((forecast, index) => (
+              <Card key={`${forecast.regionId}-${forecast.date}`} className={`card-modern-v2 animate-card-hover animate-scale-in ${index < 4 ? `animate-delay-${(index + 1) * 100}` : ''}`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm font-medium">
@@ -263,10 +272,10 @@ export const PredictionPanel = ({
           </div>
         </TabsContent>
 
-        <TabsContent className="space-y-4" value="models">
+        <TabsContent className="space-y-4 animate-fade-in-up animate-delay-100" value="models">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {models.map((model) => (
-              <Card key={model.id} className="card-modern">
+            {models.map((model, index) => (
+              <Card key={model.id} className={`card-modern-v2 animate-card-hover animate-scale-in ${index < 4 ? `animate-delay-${(index + 1) * 100}` : ''}`}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm font-medium">{model.name}</CardTitle>
@@ -322,12 +331,12 @@ export const PredictionPanel = ({
           </div>
         </TabsContent>
 
-        <TabsContent className="space-y-4" value="insights">
+        <TabsContent className="space-y-4 animate-fade-in-up animate-delay-100" value="insights">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card className="card-modern">
+            <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-100">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <TrendingUp className="h-5 w-5 text-green-500" />
+                  <TrendingUp className="h-5 w-5 text-green-500 animate-pulse-gentle" />
                   Key Insights
                 </CardTitle>
               </CardHeader>
@@ -372,10 +381,10 @@ export const PredictionPanel = ({
               </CardContent>
             </Card>
 
-            <Card className="card-modern">
+            <Card className="card-modern-v2 animate-card-hover animate-scale-in animate-delay-200">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Target className="h-5 w-5 text-purple-500" />
+                  <Target className="h-5 w-5 text-purple-500 animate-pulse-gentle" />
                   Model Performance
                 </CardTitle>
               </CardHeader>

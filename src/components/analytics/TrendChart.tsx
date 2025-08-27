@@ -166,11 +166,11 @@ export const TrendChart = ({
   })) : [];
 
   return (
-    <Card className={`card-modern ${className}`}>
+    <Card className={`card-modern-v2 animate-card-hover ${className}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Activity className={`h-5 w-5 ${type === 'bushfire' ? 'text-orange-500' : 'text-blue-500'}`} />
+            <Activity className={`h-5 w-5 animate-pulse-gentle ${type === 'bushfire' ? 'text-orange-500' : 'text-blue-500'}`} />
             {title}
           </CardTitle>
           
@@ -180,7 +180,7 @@ export const TrendChart = ({
               {(['7d', '30d', '90d', 'all'] as const).map((range) => (
                 <Button
                   key={range}
-                  className="h-6 px-2 text-xs"
+                  className="h-6 px-2 text-xs btn-spring"
                   size="sm"
                   variant={selectedTimeRange === range ? 'default' : 'ghost'}
                   onClick={() => { setSelectedTimeRange(range); }}
@@ -193,7 +193,7 @@ export const TrendChart = ({
             {/* View controls */}
             <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
               <Button
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 btn-spring"
                 size="sm"
                 variant={viewMode === 'line' ? 'default' : 'ghost'}
                 onClick={() => { setViewMode('line'); }}
@@ -201,7 +201,7 @@ export const TrendChart = ({
                 <Activity className="h-3 w-3" />
               </Button>
               <Button
-                className="h-6 w-6 p-0"
+                className="h-6 w-6 p-0 btn-spring"
                 size="sm"
                 variant={viewMode === 'area' ? 'default' : 'ghost'}
                 onClick={() => { setViewMode('area'); }}
@@ -212,7 +212,7 @@ export const TrendChart = ({
             
             {/* Toggle confidence bands */}
             <Button
-              className="h-6 w-6 p-0"
+              className="h-6 w-6 p-0 btn-spring"
               size="sm"
               variant={showConfidence ? 'default' : 'ghost'}
               onClick={() => { setShowConfidence(!showConfidence); }}

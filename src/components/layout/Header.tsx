@@ -1,21 +1,13 @@
 import { useState } from 'react';
 import { 
   Search, 
-  Phone, 
-  Menu, 
   Shield, 
-  Bell, 
-  Settings,
-  Globe,
-  User,
   X,
   BarChart3,
   Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
 import { Link } from '@tanstack/react-router';
 
 interface HeaderProps {
@@ -25,16 +17,11 @@ interface HeaderProps {
 export const Header = ({ onSearchChange }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     setSearchQuery(value);
     onSearchChange?.(value);
-  };
-
-  const handleEmergencyCall = (): void => {
-    window.open('tel:000', '_self');
   };
 
   const handleKeyDown = (event: React.KeyboardEvent): void => {
@@ -62,7 +49,7 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
       </div>
 
       {/* Main Header */}
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 max-w-7xl">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-3">
@@ -88,10 +75,10 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
               />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-gray-900">
+              <h1 className="text-lg font-bold text-gray-900 tracking-tight">
                 The Guardians
               </h1>
-              <p className="text-xs text-gray-600 -mt-1">
+              <p className="text-xs text-gray-600 -mt-1 font-medium">
                 Emergency monitoring system
               </p>
             </div>
@@ -137,9 +124,9 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
               placeholder="Search regions, alerts..."
               type="search"
               value={searchQuery}
-              className={`pl-10 bg-white/80 backdrop-blur border-gray-200 transition-all duration-300 ${
+              className={`input-modern pl-10 transition-all duration-300 ${
                 isSearchFocused 
-                  ? 'ring-2 ring-blue-500/20 shadow-lg border-blue-300' 
+                  ? 'ring-2 ring-blue-500/20 shadow-lg border-blue-300 scale-105' 
                   : 'border-gray-200'
               }`}
               onBlur={() => { setIsSearchFocused(false); }}
@@ -169,176 +156,7 @@ export const Header = ({ onSearchChange }: HeaderProps) => {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          {/* Notifications */}
-          <Button
-            aria-label="Notifications - 3 unread"
-            className="relative hidden sm:flex bg-white/80 backdrop-blur border-gray-200 hover:bg-gray-50"
-            size="sm"
-            variant="outline"
-          >
-            <Bell className="h-4 w-4" />
-            <Badge 
-              aria-hidden="true" 
-              className="absolute -top-1 -right-1 h-4 w-4 p-0 text-xs bg-red-500"
-              variant="destructive"
-            >
-              3
-            </Badge>
-          </Button>
-
-          {/* Settings */}
-          <Button
-            aria-label="Settings"
-            className="hidden sm:flex bg-white/80 backdrop-blur border-gray-200 hover:bg-gray-50"
-            size="sm"
-            variant="outline"
-          >
-            <Settings className="h-4 w-4" />
-          </Button>
-
-          {/* Language Toggle */}
-          <Button
-            aria-label="Change language"
-            className="hidden sm:flex bg-white/80 backdrop-blur border-gray-200 hover:bg-gray-50"
-            size="sm"
-            variant="outline"
-          >
-            <Globe className="h-4 w-4" />
-          </Button>
-
-          {/* Emergency Call Button */}
-          <Button
-            aria-label="Call emergency services - 000"
-            className="bg-red-500 hover:bg-red-600 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-            size="sm"
-            onClick={handleEmergencyCall}
-          >
-            <Phone aria-hidden="true" className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Emergency</span>
-            <span className="sm:hidden">000</span>
-          </Button>
-
-          {/* User Profile */}
-          <Button
-            aria-label="User profile"
-            className="hidden sm:flex bg-white/80 backdrop-blur border-gray-200 hover:bg-gray-50"
-            size="sm"
-            variant="outline"
-          >
-            <User className="h-4 w-4" />
-          </Button>
-
-          {/* Mobile Menu */}
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button
-                aria-controls="mobile-menu"
-                aria-expanded={mobileMenuOpen}
-                aria-label="Open mobile menu"
-                className="lg:hidden bg-white/80 backdrop-blur border-gray-200 hover:bg-gray-50"
-                size="sm"
-                variant="outline"
-              >
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="w-80 bg-white/95 backdrop-blur" id="mobile-menu" side="right">
-              <div className="flex flex-col gap-6 pt-6">
-                {/* Mobile Brand */}
-                <div className="flex items-center gap-3 pb-4 border-b border-gray-200">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg overflow-hidden bg-transparent">
-                    <img 
-                      alt="The Guardians Logo" 
-                      className="h-8 w-8 object-contain" 
-                      src="/logo.png"
-                      onError={(e) => {
-                        // Fallback to Shield icon if logo fails to load
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent) {
-                          parent.className = "flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-red-600 text-white";
-                          parent.innerHTML = '<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>';
-                        }
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <h2 className="font-bold text-gray-900">The Guardians</h2>
-                    <p className="text-xs text-gray-600">Emergency monitoring</p>
-                  </div>
-                </div>
-
-                {/* Mobile Search */}
-                <div className="md:hidden">
-                  <label className="sr-only" htmlFor="mobile-search-input">
-                    Search regions and alerts
-                  </label>
-                  <div className="relative">
-                    <Search aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      className="pl-10 bg-white border-gray-200"
-                      id="mobile-search-input"
-                      placeholder="Search regions, alerts..."
-                      type="search"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                      onKeyDown={handleKeyDown}
-                    />
-                  </div>
-                </div>
-
-                {/* Mobile Navigation */}
-                <nav aria-label="Mobile navigation" role="navigation">
-                  <div className="flex flex-col gap-2">
-                    <Link 
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
-                      to="/"
-                      activeProps={{ 
-                        className: "flex items-center gap-3 px-4 py-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
-                      }}
-                      onClick={() => { setMobileMenuOpen(false); }}
-                    >
-                      <Home className="h-4 w-4" />
-                      Dashboard
-                    </Link>
-                    <Link 
-                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors" 
-                      to="/analytics"
-                      activeProps={{ 
-                        className: "flex items-center gap-3 px-4 py-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg" 
-                      }}
-                      onClick={() => { setMobileMenuOpen(false); }}
-                    >
-                      <BarChart3 className="h-4 w-4" />
-                      Analytics
-                    </Link>
-                  </div>
-                </nav>
-
-                {/* Mobile Actions */}
-                <div className="flex flex-col gap-2 pt-4 border-t border-gray-200">
-                  <Button aria-label="Notifications - 3 unread" className="justify-start hover:bg-gray-100" variant="ghost">
-                    <Bell className="h-4 w-4 mr-3" />
-                    Notifications
-                    <Badge aria-hidden="true" className="ml-auto bg-red-500" variant="destructive">3</Badge>
-                  </Button>
-                  <Button aria-label="Settings" className="justify-start hover:bg-gray-100" variant="ghost">
-                    <Settings className="h-4 w-4 mr-3" />
-                    Settings
-                  </Button>
-                  <Button aria-label="Change language" className="justify-start hover:bg-gray-100" variant="ghost">
-                    <Globe className="h-4 w-4 mr-3" />
-                    Language
-                  </Button>
-                  <Button aria-label="User profile" className="justify-start hover:bg-gray-100" variant="ghost">
-                    <User className="h-4 w-4 mr-3" />
-                    Profile
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          {/* No additional action buttons */}
         </div>
       </div>
     </header>

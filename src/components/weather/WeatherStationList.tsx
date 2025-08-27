@@ -13,7 +13,7 @@ interface WeatherStationListProps {
   searchQuery?: string;
 }
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 30;
 
 export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQuery = '' }: WeatherStationListProps) => {
   const [stations, setStations] = useState<Array<WeatherStation>>([]);
@@ -112,7 +112,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
 
   if (loading) {
     return (
-      <Card className="h-full max-h-[calc(100vh-12rem)]">
+      <Card className="h-full max-h-[calc(100vh-200px)]">
         <CardContent className="p-6 flex items-center justify-center">
           <div className="text-center">
             <div className="text-sm text-muted-foreground">Loading weather station data...</div>
@@ -123,35 +123,35 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   }
 
   return (
-    <Card className="h-full max-h-[calc(100vh-12rem)] flex flex-col">
+    <Card className="card-modern-v2 h-full max-h-[calc(100vh-200px)] flex flex-col">
       <CardHeader className="pb-4 flex-shrink-0">
-        <CardTitle className="text-lg font-semibold">Weather Stations (WA)</CardTitle>
-        <div className="space-y-3">
+        <CardTitle className="text-xl font-semibold text-gray-900 mb-4">Weather Stations (WA)</CardTitle>
+        <div className="space-y-4">
           <Input
-            className="text-sm"
+            className="input-modern text-sm placeholder:text-gray-400"
             placeholder="Search station name or number..."
             value={localSearchQuery}
             onChange={(e) => { setLocalSearchQuery(e.target.value); }}
           />
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <Select value={sortBy} onValueChange={(value: 'name' | 'number' | 'height') => { setSortBy(value); }}>
-              <SelectTrigger className="text-xs">
+              <SelectTrigger className="input-modern text-xs font-medium">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">Sort by Name</SelectItem>
-                <SelectItem value="number">Sort by Number</SelectItem>
-                <SelectItem value="height">Sort by Height</SelectItem>
+              <SelectContent className="card-modern-v2 border-0">
+                <SelectItem value="name" className="hover:bg-blue-50">Sort by Name</SelectItem>
+                <SelectItem value="number" className="hover:bg-blue-50">Sort by Number</SelectItem>
+                <SelectItem value="height" className="hover:bg-blue-50">Sort by Height</SelectItem>
               </SelectContent>
             </Select>
             <Select value={filterStatus} onValueChange={(value: 'all' | 'active' | 'closed') => { setFilterStatus(value); }}>
-              <SelectTrigger className="text-xs">
+              <SelectTrigger className="input-modern text-xs font-medium">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="closed">Closed</SelectItem>
+              <SelectContent className="card-modern-v2 border-0">
+                <SelectItem value="all" className="hover:bg-blue-50">All Status</SelectItem>
+                <SelectItem value="active" className="hover:bg-blue-50">Active</SelectItem>
+                <SelectItem value="closed" className="hover:bg-blue-50">Closed</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -166,51 +166,66 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                 No matching weather stations found
               </div>
             ) : (
-              paginatedStations.map((station) => (
+              paginatedStations.map((station, index) => (
                 <div
                   key={station.id}
-                  className={`p-3 rounded-lg border cursor-pointer transition-all duration-200 hover:bg-muted/50 ${
+                  className={`p-3 rounded-lg border cursor-pointer animate-card-hover backdrop-blur-sm card-entry ${
                     selectedStationId === station.id
-                      ? 'border-primary bg-primary/5 shadow-sm'
-                      : 'border-border hover:border-muted-foreground/20'
-                  }`}
+                      ? 'border-blue-200 bg-blue-50/80 shadow-md'
+                      : 'border-gray-200 bg-white/60 hover:border-gray-300'
+                  } ${index < 4 ? `animate-delay-${index * 100 + 100}` : ''}`}
                   onClick={() => { handleStationClick(station); }}
                 >
+                  {/* Header row with name and status */}
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-sm leading-none">{station.name}</h4>
+                    <h4 className="font-semibold text-sm text-gray-900 truncate flex-1 mr-2">{station.name}</h4>
                     <Badge 
-                      className="text-xs"
-                      variant={(!station.closeDate || station.closeDate === 'Active') ? 'default' : 'destructive'}
+                      className={`text-xs font-medium shrink-0 ${
+                        (!station.closeDate || station.closeDate === 'Active') 
+                          ? 'bg-green-50 border-green-200 text-green-700' 
+                          : 'bg-red-50 border-red-200 text-red-700'
+                      }`}
+                      variant="outline"
                     >
                       {(!station.closeDate || station.closeDate === 'Active') ? 'Active' : 'Closed'}
                     </Badge>
                   </div>
                   
-                  <div className="space-y-1 text-xs text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Station: {station.stationNumber}</span>
-                      <span>Height: {station.height}m</span>
+                  {/* Compact info grid */}
+                  <div className="grid grid-cols-2 gap-1 text-xs mb-2">
+                    <div>
+                      <span className="text-gray-500">Station:</span>
+                      <span className="font-medium text-gray-700 ml-1">#{station.stationNumber}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Coordinates: {station.latitude.toFixed(2)}°, {station.longitude.toFixed(2)}°</span>
+                    <div>
+                      <span className="text-gray-500">Height:</span>
+                      <span className="font-medium text-gray-700 ml-1">{station.height}m</span>
                     </div>
-                    {station.openDate && (
-                      <div className="text-xs">
-                        Opened: {station.openDate}
-                      </div>
-                    )}
-                    {weatherData.has(station.id) && (
-                      <div className="mt-2 p-2 bg-muted/30 rounded text-xs">
-                        <div className="flex justify-between">
-                          <span>{weatherData.get(station.id)!.temperature}°C</span>
-                          <span>{weatherData.get(station.id)!.humidity}% RH</span>
-                        </div>
-                        <div className="text-center mt-1 text-muted-foreground">
-                          {weatherData.get(station.id)!.conditions}
-                        </div>
-                      </div>
-                    )}
                   </div>
+                  
+                  {/* Coordinates */}
+                  <div className="text-xs text-gray-500 mb-1">
+                    {station.latitude.toFixed(2)}°, {station.longitude.toFixed(2)}°
+                  </div>
+                  
+                  {/* Weather data - only if available */}
+                  {weatherData.has(station.id) && (
+                    <div className="mt-2 p-2 bg-gradient-to-r from-blue-50 to-cyan-50 rounded border border-blue-100">
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="text-center">
+                          <div className="font-bold text-blue-600">{weatherData.get(station.id)!.temperature}°C</div>
+                          <div className="text-blue-500">Temp</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="font-bold text-cyan-600">{weatherData.get(station.id)!.humidity}%</div>
+                          <div className="text-cyan-500">Humidity</div>
+                        </div>
+                        <div className="text-center flex-1 ml-2">
+                          <div className="text-gray-600 text-xs truncate">{weatherData.get(station.id)!.conditions}</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             )}
@@ -219,14 +234,14 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex-shrink-0 p-4 border-t bg-muted/20">
+          <div className="flex-shrink-0 p-4 border-t border-gray-100 bg-gray-50/50 backdrop-blur-sm">
             <div className="flex items-center justify-between">
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs font-medium text-gray-600">
                 Page {currentPage} of {totalPages}
               </div>
               <div className="flex gap-1">
                 <Button
-                  className="h-7 px-2 text-xs"
+                  className="h-8 px-3 text-xs rounded-lg btn-spring"
                   disabled={currentPage <= 1}
                   size="sm"
                   variant="outline"
@@ -239,7 +254,11 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                   return (
                     <Button
                       key={page}
-                      className="h-7 px-2 text-xs min-w-7"
+                      className={`h-8 px-3 text-xs min-w-8 rounded-lg btn-spring ${
+                        page === currentPage 
+                          ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-md' 
+                          : 'hover:bg-blue-50'
+                      }`}
                       size="sm"
                       variant={page === currentPage ? "default" : "outline"}
                       onClick={() => { handlePageChange(page); }}
@@ -249,7 +268,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
                   );
                 })}
                 <Button
-                  className="h-7 px-2 text-xs"
+                  className="h-8 px-3 text-xs rounded-lg btn-spring"
                   disabled={currentPage >= totalPages}
                   size="sm"
                   variant="outline"
@@ -263,7 +282,7 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
         )}
       </CardContent>
       
-      <div className="px-4 py-3 border-t bg-muted/20 text-xs text-muted-foreground flex-shrink-0">
+      <div className="px-4 py-3 border-t border-gray-100 bg-gray-50/40 text-xs font-medium text-gray-600 flex-shrink-0 backdrop-blur-sm">
         Showing {Math.min(filteredStations.length, ITEMS_PER_PAGE)} of {filteredStations.length} weather stations
       </div>
     </Card>
