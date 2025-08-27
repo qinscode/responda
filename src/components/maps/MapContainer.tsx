@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import type { GeoJSONSource } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
-import { parseWeatherStationsFromCSV, getWeatherDataForStation } from '@/data/weatherStationParser';
+import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from '@/data/weatherStationParser';
 import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
@@ -44,7 +44,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
   // Load stations on component mount
   useEffect(() => {
     const loadData = async () => {
-      const weatherData = await parseWeatherStationsFromCSV();
+      const weatherData = await parseWeatherStationsFromJSON();
       setWeatherStations(weatherData);
       
       const riverData = await getRiverStations();
@@ -62,9 +62,9 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
       if (station.type === 'river') {
         color = '#10b981'; // Green for river stations
       } else if (station.type === 'weather') {
-        if (station.height > 300) {
+        if ((station.height || 0) > 300) {
           color = '#8b5cf6'; // Purple for high elevation
-        } else if (station.height > 100) {
+        } else if ((station.height || 0) > 100) {
           color = '#3b82f6'; // Blue for medium elevation
         } else if (station.latitude < -30) {
           color = '#f59e0b'; // Orange for southern stations
@@ -505,7 +505,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilt
 
         // Fetch data based on station type and update popup
         if (props.type === 'weather') {
-          void getWeatherDataForStation(props.id).then(weatherData => {
+          void getWeatherDataForStationWithCoords(props.id, props.latitude, props.longitude).then(weatherData => {
             if (popupRef.current && weatherData) {
               popupRef.current.setHTML(createPopupContent(weatherData));
             }

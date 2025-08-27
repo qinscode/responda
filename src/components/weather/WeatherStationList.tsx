@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
-import { parseWeatherStationsFromCSV, getWeatherDataForStation } from '@/data/weatherStationParser';
+import { parseWeatherStationsFromJSON, getWeatherDataForStationWithCoords } from '@/data/weatherStationParser';
 import { getRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
 
 interface StationListProps {
@@ -40,19 +40,19 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Load weather stations
-        const weatherStationsData = await parseWeatherStationsFromCSV();
+        // Load weather stations from JSON
+        const weatherStationsData = await parseWeatherStationsFromJSON();
         setWeatherStations(weatherStationsData);
         
         // Load river stations from CSV
         const riverStationsData = await getRiverStations();
         setRiverStations(riverStationsData);
         
-        // Load weather data for first few weather stations
+        // Load weather data for first few weather stations (with API fallback)
         const weatherMap = new Map<string, WeatherData>();
         for (const station of weatherStationsData.slice(0, 5)) {
           try {
-            const data = await getWeatherDataForStation(station.id);
+            const data = await getWeatherDataForStationWithCoords(station.id, station.latitude, station.longitude);
             if (data) {
               weatherMap.set(station.id, data);
             }
@@ -100,10 +100,10 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
   // Filter and sort stations
   const filteredStations = useMemo(() => {
     const filtered = allStations.filter(station => {
-      if (!station.name || !station.stationNumber) return false;
+      if (!station.name) return false;
       
       const matchesSearch = station.name.toLowerCase().includes(localSearchQuery.toLowerCase()) ||
-                           station.stationNumber.includes(localSearchQuery);
+                           (station.stationNumber && station.stationNumber.includes(localSearchQuery));
       
       let matchesStatus = true;
       if (filterStatus === 'active') {
@@ -128,9 +128,9 @@ export const WeatherStationList = ({ selectedStationId, onStationSelect, searchQ
         case 'name':
           return a.name.localeCompare(b.name);
         case 'number':
-          return a.stationNumber.localeCompare(b.stationNumber);
+          return (a.stationNumber || '').localeCompare(b.stationNumber || '');
         case 'height':
-          return a.height - b.height;
+          return (a.height || 0) - (b.height || 0);
         default:
           return 0;
       }

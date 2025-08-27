@@ -1,14 +1,19 @@
 export interface WeatherStation {
   id: string;
-  stationNumber: string;
+  stationNumber?: string;
   name: string;
   latitude: number;
   longitude: number;
-  state: string;
-  height: number;
+  state?: string;
+  height?: number;
   openDate?: string;
   closeDate?: string;
-  district: string;
+  district?: string;
+  // New fields from weather_station_info.json
+  population?: number | null;
+  nearestFireStation?: string;
+  nearestHospital?: string;
+  highwayEscape?: string;
 }
 
 export interface WeatherData {
