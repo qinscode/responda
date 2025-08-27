@@ -5,13 +5,12 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
 import { parseWeatherStationsFromCSV, getWeatherDataForStation } from '@/data/weatherStationParser';
 import { mockRiverStations, getRiverDataForStation } from '@/data/mockRiverData';
-import type { WeatherStation, WeatherData } from '@/types/weather';
-import type { RiverStation, RiverData, StationType } from '@/types/river';
+import type { WeatherStation, WeatherData, RiverStation, RiverData, Station } from '@/types/weather';
 
 interface MapContainerProps {
-  selectedStation?: WeatherStation | RiverStation;
-  onStationSelect?: (station: WeatherStation | RiverStation) => void;
-  stationType: StationType;
+  selectedStation?: Station;
+  onStationSelect?: (station: Station) => void;
+  stationTypeFilter?: 'all' | 'weather' | 'river';
 }
 
 const MAPBOX_STYLES: Record<'streets' | 'satellite' | 'terrain', string> = {
@@ -20,7 +19,7 @@ const MAPBOX_STYLES: Record<'streets' | 'satellite' | 'terrain', string> = {
   terrain: 'mapbox://styles/mapbox/outdoors-v12',
 };
 
-export const MapContainer = ({ selectedStation, onStationSelect, stationType }: MapContainerProps) => {
+export const MapContainer = ({ selectedStation, onStationSelect, stationTypeFilter = 'all' }: MapContainerProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const popupRef = useRef<mapboxgl.Popup | null>(null);
@@ -29,46 +28,46 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
   const [weatherStations, setWeatherStations] = useState<Array<WeatherStation>>([]);
   const [riverStations, setRiverStations] = useState<Array<RiverStation>>([]);
 
-  // Load stations based on type
+  // Combine stations into unified format
+  const allStations = useMemo((): Station[] => {
+    const weatherWithType = weatherStations.map(station => ({ ...station, type: 'weather' as const }));
+    const riverWithType = riverStations.map(station => ({ ...station, type: 'river' as const }));
+    return [...weatherWithType, ...riverWithType];
+  }, [weatherStations, riverStations]);
+
+  // Filter stations based on type filter
+  const filteredStations = useMemo(() => {
+    if (stationTypeFilter === 'all') return allStations;
+    return allStations.filter(station => station.type === stationTypeFilter);
+  }, [allStations, stationTypeFilter]);
+
+  // Load stations on component mount
   useEffect(() => {
-    if (stationType === 'weather') {
-      void parseWeatherStationsFromCSV().then(setWeatherStations);
-    } else {
+    const loadData = async () => {
+      const weatherData = await parseWeatherStationsFromCSV();
+      setWeatherStations(weatherData);
       setRiverStations(mockRiverStations);
-    }
-  }, [stationType]);
+    };
+    void loadData();
+  }, []);
 
-  // Get current stations based on type
-  const currentStations = stationType === 'weather' ? weatherStations : riverStations;
-
-  // Prepare GeoJSON from stations
+  // Prepare GeoJSON from filtered stations
   const featureCollection = useMemo(() => {
-    const features = currentStations.map((station: WeatherStation | RiverStation) => {
-      // Color coding based on type and properties
+    const features = filteredStations.map((station) => {
+      // Color coding based on station type and other properties
       let color = '#3b82f6'; // Default blue
       
-      if (stationType === 'weather') {
-        const weatherStation = station as WeatherStation;
-        if (weatherStation.height > 300) {
+      if (station.type === 'river') {
+        color = '#10b981'; // Green for river stations
+      } else if (station.type === 'weather') {
+        if (station.height > 300) {
           color = '#8b5cf6'; // Purple for high elevation
-        } else if (weatherStation.height > 100) {
-          color = '#10b981'; // Green for medium elevation
+        } else if (station.height > 100) {
+          color = '#3b82f6'; // Blue for medium elevation
         } else if (station.latitude < -30) {
           color = '#f59e0b'; // Orange for southern stations
         } else if (station.latitude > -20) {
           color = '#ef4444'; // Red for northern stations
-        }
-      } else {
-        // River stations - use different color scheme
-        const riverStation = station as RiverStation;
-        if (riverStation.purpose.includes('Water Quality')) {
-          color = '#06b6d4'; // Cyan for water quality
-        } else if (riverStation.purpose.includes('Flood Warning')) {
-          color = '#f59e0b'; // Orange for flood warning
-        } else if (riverStation.purpose.includes('Flow Monitoring')) {
-          color = '#3b82f6'; // Blue for flow monitoring
-        } else {
-          color = '#6366f1'; // Indigo for other purposes
         }
       }
       
@@ -80,19 +79,19 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
           stationNumber: station.stationNumber,
           name: station.name,
           state: station.state,
-          height: stationType === 'weather' ? (station as WeatherStation).height : (station as RiverStation).height || 0,
+          height: station.height,
           openDate: station.openDate || 'Unknown',
           closeDate: station.closeDate || 'Active',
           district: station.district,
+          type: station.type,
           color,
           latitude: station.latitude,
           longitude: station.longitude,
-          stationType,
-          ...(stationType === 'river' && {
-            river: (station as RiverStation).river,
-            catchment: (station as RiverStation).catchment,
-            purpose: (station as RiverStation).purpose,
-          }),
+          // Add river-specific properties if applicable
+          ...(station.type === 'river' && {
+            riverName: (station as RiverStation).riverName,
+            catchmentArea: (station as RiverStation).catchmentArea,
+          })
         },
         geometry: {
           type: 'Point',
@@ -101,7 +100,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
       };
     });
     return { type: 'FeatureCollection' as const, features };
-  }, [currentStations, stationType]);
+  }, [filteredStations]);
 
   // Init map
   useEffect(() => {
@@ -136,11 +135,12 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
         data: featureCollection as any,
       });
 
-      // Add station markers
+      // Add weather station markers (circles)
       map.addLayer({
         id: 'weather-stations',
         type: 'circle',
         source: 'weather-stations',
+        filter: ['==', ['get', 'type'], 'weather'],
         paint: {
           'circle-radius': [
             'interpolate',
@@ -157,11 +157,62 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
         },
       });
 
-      // Add selected station layer (highlighted)
+      // Add river station markers (triangles using circle with custom styling)
+      map.addLayer({
+        id: 'river-stations',
+        type: 'circle',
+        source: 'weather-stations',
+        filter: ['==', ['get', 'type'], 'river'],
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 4,
+            8, 7,
+            12, 10
+          ],
+          'circle-color': ['get', 'color'],
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+          'circle-opacity': 0.9,
+        },
+      });
+
+      // Add triangle shape overlay for river stations
+      map.addLayer({
+        id: 'river-stations-triangles',
+        type: 'symbol',
+        source: 'weather-stations',
+        filter: ['==', ['get', 'type'], 'river'],
+        layout: {
+          'text-field': '▲',
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+          'text-size': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 10,
+            8, 16,
+            12, 22
+          ],
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+        },
+        paint: {
+          'text-color': ['get', 'color'],
+          'text-opacity': 0.9,
+          'text-halo-color': '#ffffff',
+          'text-halo-width': 1,
+        },
+      });
+
+      // Add selected weather station layer (highlighted circles)
       map.addLayer({
         id: 'weather-stations-selected',
         type: 'circle',
         source: 'weather-stations',
+        filter: ['all', ['==', ['get', 'type'], 'weather'], ['==', ['get', 'id'], '']],
         paint: {
           'circle-radius': [
             'interpolate',
@@ -176,7 +227,56 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
           'circle-stroke-color': '#ffffff',
           'circle-opacity': 1,
         },
-        filter: ['==', ['get', 'id'], '']
+      });
+
+      // Add selected river station layer (highlighted triangles)
+      map.addLayer({
+        id: 'river-stations-selected',
+        type: 'circle',
+        source: 'weather-stations',
+        filter: ['all', ['==', ['get', 'type'], 'river'], ['==', ['get', 'id'], '']],
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 7,
+            8, 11,
+            12, 15
+          ],
+          'circle-color': '#3b82f6',
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#ffffff',
+          'circle-opacity': 1,
+        },
+      });
+
+      // Add selected river station triangle overlay
+      map.addLayer({
+        id: 'river-stations-selected-triangles',
+        type: 'symbol',
+        source: 'weather-stations',
+        filter: ['all', ['==', ['get', 'type'], 'river'], ['==', ['get', 'id'], '']],
+        layout: {
+          'text-field': '▲',
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+          'text-size': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            4, 14,
+            8, 22,
+            12, 30
+          ],
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+        },
+        paint: {
+          'text-color': '#3b82f6',
+          'text-opacity': 1,
+          'text-halo-color': '#ffffff',
+          'text-halo-width': 2,
+        },
       });
 
       // Add station labels for higher zoom levels
@@ -201,12 +301,12 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
 
       // Click handler for stations
       const handleClick = (e: mapboxgl.MapMouseEvent) => {
-        const features = map.queryRenderedFeatures(e.point, { layers: ['weather-stations'] });
+        const features = map.queryRenderedFeatures(e.point, { layers: ['weather-stations', 'river-stations', 'river-stations-triangles'] });
         const f = features[0];
         if (!f) return;
         
         const props = f.properties as any;
-        const station = currentStations.find((s: WeatherStation | RiverStation) => s.id === props.id);
+        const station = filteredStations.find((s) => s.id === props.id);
         if (station && onStationSelect) onStationSelect(station);
 
         // Popup with weather data
@@ -275,6 +375,51 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
               </div>
             `;
           }
+
+          // River data display
+          let riverInfo = '';
+          if (riverData && props.type === 'river') {
+            riverInfo = `
+              <div style="margin-top: 4px; padding: 12px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 6px; border: 1px solid #d1fae5; border-top: 2px solid #a7f3d0;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #d1fae5;">
+                  <h4 style="font-weight: 600; font-size: 12px; color: #1e293b; margin: 0;">River Data</h4>
+                  <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 14px; line-height: 1; display: inline-block; width: 14px; text-align: center;">🌊</span>
+                    <span style="font-size: 10px; color: #064e3b; font-weight: 500;">${riverData.quality}</span>
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
+                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">📏</div>
+                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">LEVEL</div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.waterLevel.toFixed(1)}m</div>
+                  </div>
+                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌊</div>
+                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">FLOW</div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 10px; line-height: 1;">${riverData.flow.toFixed(1)} m³/s</div>
+                  </div>
+                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌡️</div>
+                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">TEMP</div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.temperature.toFixed(1)}°C</div>
+                  </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
+                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">🌫️</div>
+                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">TURBIDITY</div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 10px; line-height: 1;">${riverData.turbidity.toFixed(1)} NTU</div>
+                  </div>
+                  <div style="text-align: center; padding: 8px 4px; background: white; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 52px; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 12px; line-height: 1; margin-bottom: 3px; height: 12px; display: flex; align-items: center; justify-content: center;">⚗️</div>
+                    <div style="font-size: 8px; color: #064e3b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; line-height: 1;">PH</div>
+                    <div style="font-weight: 600; color: #1e293b; font-size: 11px; line-height: 1;">${riverData.ph.toFixed(1)}</div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
           
           const statusColor = props.closeDate === 'Active' ? '#10b981' : '#ef4444';
           const statusDot = props.closeDate === 'Active' ? '●' : '●';
@@ -308,6 +453,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
                 </div>
                 <div style="font-size: 11px; color: #64748b; font-weight: 500;">
                   Station #${props.stationNumber} • District ${props.district}
+                  ${props.type === 'river' && props.riverName ? `<br/>🌊 ${props.riverName} • Catchment: ${props.catchmentArea?.toLocaleString()} km²` : ''}
                 </div>
               </div>
               
@@ -340,6 +486,7 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
                 </div>
                 
                 ${weatherInfo}
+                ${riverInfo}
               </div>
             </div>
           `;
@@ -355,13 +502,13 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
           .addTo(map);
 
         // Fetch data based on station type and update popup
-        if (props.stationType === 'weather') {
+        if (props.type === 'weather') {
           void getWeatherDataForStation(props.id).then(weatherData => {
             if (popupRef.current && weatherData) {
               popupRef.current.setHTML(createPopupContent(weatherData));
             }
           });
-        } else {
+        } else if (props.type === 'river') {
           void getRiverDataForStation(props.id).then(riverData => {
             if (popupRef.current && riverData) {
               popupRef.current.setHTML(createPopupContent(undefined, riverData));
@@ -370,14 +517,29 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
         }
       };
 
+      // Add click handlers for all station layers
       map.on('click', 'weather-stations', handleClick);
+      map.on('click', 'river-stations', handleClick);
+      map.on('click', 'river-stations-triangles', handleClick);
 
-      // Hover effects
+      // Hover effects for all station layers
       map.on('mouseenter', 'weather-stations', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseenter', 'river-stations', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseenter', 'river-stations-triangles', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
 
       map.on('mouseleave', 'weather-stations', () => {
+        map.getCanvas().style.cursor = '';
+      });
+      map.on('mouseleave', 'river-stations', () => {
+        map.getCanvas().style.cursor = '';
+      });
+      map.on('mouseleave', 'river-stations-triangles', () => {
         map.getCanvas().style.cursor = '';
       });
 
@@ -407,9 +569,29 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
     const map = mapRef.current;
     if (!map || !isReady) return;
     
-    // Update the filter for the selected station layer
+    // Update the filter for the selected station layers
     const selectedId = selectedStation?.id || '';
-    map.setFilter('weather-stations-selected', ['==', ['get', 'id'], selectedId]);
+    
+    // Update weather station selected layer
+    map.setFilter('weather-stations-selected', [
+      'all', 
+      ['==', ['get', 'type'], 'weather'], 
+      ['==', ['get', 'id'], selectedId]
+    ]);
+    
+    // Update river station selected layer
+    map.setFilter('river-stations-selected', [
+      'all', 
+      ['==', ['get', 'type'], 'river'], 
+      ['==', ['get', 'id'], selectedId]
+    ]);
+    
+    // Update river station selected triangle overlay
+    map.setFilter('river-stations-selected-triangles', [
+      'all', 
+      ['==', ['get', 'type'], 'river'], 
+      ['==', ['get', 'id'], selectedId]
+    ]);
     
     // Fly to selected station if one is selected
     if (selectedStation) {
@@ -460,9 +642,9 @@ export const MapContainer = ({ selectedStation, onStationSelect, stationType }: 
       </div>
 
       {/* Station count display */}
-      {currentStations.length > 0 && (
+      {filteredStations.length > 0 && (
         <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-md shadow-sm text-sm">
-          <span className="font-medium">{currentStations.length}</span> {stationType === 'weather' ? 'weather' : 'river'} stations
+          <span className="font-medium">{filteredStations.length}</span> {stationTypeFilter === 'all' ? 'monitoring stations' : `${stationTypeFilter} stations`}
         </div>
       )}
     </div>

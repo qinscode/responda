@@ -1,222 +1,197 @@
-import type { RiverStation, RiverData } from '@/types/river';
+import type { RiverStation, RiverData } from '@/types/weather';
 
+// Mock river stations in Western Australia
 export const mockRiverStations: RiverStation[] = [
   {
-    id: 'R001',
+    id: 'river-001',
     stationNumber: '610001',
-    name: 'Swan River at Maylands',
+    name: 'Swan River at Perth',
+    latitude: -31.9505,
+    longitude: 115.8605,
     state: 'WA',
-    latitude: -31.9285,
-    longitude: 115.8879,
-    river: 'Swan River',
-    catchment: 'Swan Coastal',
-    openDate: '03/1985',
-    district: 1,
-    purpose: ['Water Quality', 'Flow Monitoring'],
+    height: 5,
+    openDate: '1/1990',
+    closeDate: 'Active',
+    district: 'Perth Metro',
+    riverName: 'Swan River',
+    catchmentArea: 121.2
   },
   {
-    id: 'R002',
-    stationNumber: '610015',
+    id: 'river-002',
+    stationNumber: '614001',
     name: 'Murray River at Pinjarra',
+    latitude: -32.6269,
+    longitude: 115.8692,
     state: 'WA',
-    latitude: -32.6284,
-    longitude: 115.8693,
-    river: 'Murray River',
-    catchment: 'Peel-Harvey',
-    openDate: '07/1990',
-    district: 2,
-    purpose: ['Flow Monitoring', 'Flood Warning'],
+    height: 15,
+    openDate: '3/1985',
+    closeDate: 'Active',
+    district: 'Peel',
+    riverName: 'Murray River',
+    catchmentArea: 6062.0
   },
   {
-    id: 'R003',
-    stationNumber: '610032',
-    name: 'Canning River at Kent Street Weir',
-    state: 'WA',
-    latitude: -32.0178,
-    longitude: 115.8569,
-    river: 'Canning River',
-    catchment: 'Swan Coastal',
-    openDate: '11/1988',
-    district: 1,
-    purpose: ['Water Quality', 'Flow Monitoring', 'Recreation'],
-  },
-  {
-    id: 'R004',
-    stationNumber: '610045',
-    name: 'Helena River at Ellis Brook',
-    state: 'WA',
-    latitude: -32.0845,
-    longitude: 116.0234,
-    river: 'Helena River',
-    catchment: 'Swan Coastal',
-    openDate: '01/1992',
-    district: 1,
-    purpose: ['Flow Monitoring'],
-  },
-  {
-    id: 'R005',
-    stationNumber: '615002',
-    name: 'Avon River at Northam',
-    state: 'WA',
-    latitude: -31.6489,
-    longitude: 116.6693,
-    river: 'Avon River',
-    catchment: 'Avon',
-    openDate: '05/1975',
-    district: 3,
-    purpose: ['Flow Monitoring', 'Water Quality'],
-  },
-  {
-    id: 'R006',
-    stationNumber: '615018',
-    name: 'Mortlock River at Wundowie',
-    state: 'WA',
-    latitude: -31.7567,
-    longitude: 116.3789,
-    river: 'Mortlock River',
-    catchment: 'Avon',
-    openDate: '09/1982',
-    district: 3,
-    purpose: ['Flow Monitoring'],
-  },
-  {
-    id: 'R007',
+    id: 'river-003',
     stationNumber: '616005',
-    name: 'Collie River at Collie',
+    name: 'Collie River at Allanson',
+    latitude: -33.3456,
+    longitude: 116.1234,
     state: 'WA',
-    latitude: -33.3604,
-    longitude: 116.1538,
-    river: 'Collie River',
-    catchment: 'Collie',
-    openDate: '02/1978',
-    district: 4,
-    purpose: ['Flow Monitoring', 'Water Quality', 'Mining Impact'],
+    height: 45,
+    openDate: '7/1992',
+    closeDate: 'Active',
+    district: 'South West',
+    riverName: 'Collie River',
+    catchmentArea: 2456.8
   },
   {
-    id: 'R008',
-    stationNumber: '616021',
-    name: 'Brunswick River at Roelands',
+    id: 'river-004',
+    stationNumber: '609101',
+    name: 'Avon River at Northam',
+    latitude: -31.6539,
+    longitude: 116.6681,
     state: 'WA',
-    latitude: -33.4812,
-    longitude: 115.7234,
-    river: 'Brunswick River',
-    catchment: 'Leschenault',
-    openDate: '08/1986',
-    district: 4,
-    purpose: ['Flow Monitoring', 'Flood Warning'],
+    height: 165,
+    openDate: '5/1988',
+    closeDate: 'Active',
+    district: 'Wheatbelt',
+    riverName: 'Avon River',
+    catchmentArea: 3892.5
   },
   {
-    id: 'R009',
-    stationNumber: '612003',
-    name: 'Moore River at Gingin Brook',
-    state: 'WA',
-    latitude: -31.3456,
-    longitude: 115.9123,
-    river: 'Moore River',
-    catchment: 'Moore',
-    openDate: '06/1981',
-    district: 2,
-    purpose: ['Flow Monitoring', 'Water Supply'],
-  },
-  {
-    id: 'R010',
-    stationNumber: '617012',
-    name: 'Blackwood River at Bridgetown',
-    state: 'WA',
-    latitude: -33.9567,
-    longitude: 116.1345,
-    river: 'Blackwood River',
-    catchment: 'Blackwood',
-    openDate: '04/1989',
-    district: 5,
-    purpose: ['Flow Monitoring', 'Water Quality'],
-  },
-  {
-    id: 'R011',
-    stationNumber: '617028',
-    name: 'Donnelly River at Pump Hill',
-    state: 'WA',
-    latitude: -34.2134,
-    longitude: 115.8967,
-    river: 'Donnelly River',
-    catchment: 'Blackwood',
-    openDate: '12/1984',
-    district: 5,
-    purpose: ['Flow Monitoring', 'Forest Impact'],
-  },
-  {
-    id: 'R012',
-    stationNumber: '618004',
-    name: 'Margaret River at Margaret River',
-    state: 'WA',
-    latitude: -33.9544,
-    longitude: 115.0713,
-    river: 'Margaret River',
-    catchment: 'Busselton Coast',
-    openDate: '03/1987',
-    district: 5,
-    purpose: ['Flow Monitoring', 'Tourism Impact'],
-  },
-  {
-    id: 'R013',
-    stationNumber: '620007',
+    id: 'river-005',
+    stationNumber: '703002',
     name: 'Murchison River at Kalbarri',
-    state: 'WA',
     latitude: -27.7089,
-    longitude: 114.1672,
-    river: 'Murchison River',
-    catchment: 'Murchison',
-    openDate: '10/1979',
-    district: 6,
-    purpose: ['Flow Monitoring', 'Coastal Impact'],
+    longitude: 114.1661,
+    state: 'WA',
+    height: 8,
+    openDate: '9/1995',
+    closeDate: 'Active',
+    district: 'Mid West',
+    riverName: 'Murchison River',
+    catchmentArea: 82000.0
   },
   {
-    id: 'R014',
-    stationNumber: '621015',
-    name: 'Gascoyne River at Fishy Pool',
+    id: 'river-006',
+    stationNumber: '610015',
+    name: 'Canning River at Kent Street',
+    latitude: -31.9833,
+    longitude: 115.8833,
     state: 'WA',
-    latitude: -24.8789,
-    longitude: 113.6234,
-    river: 'Gascoyne River',
-    catchment: 'Gascoyne',
-    openDate: '01/1983',
-    district: 7,
-    purpose: ['Flow Monitoring', 'Water Supply'],
+    height: 3,
+    openDate: '12/1991',
+    closeDate: 'Active',
+    district: 'Perth Metro',
+    riverName: 'Canning River',
+    catchmentArea: 1829.4
   },
   {
-    id: 'R015',
-    stationNumber: '622009',
-    name: 'Fortescue River at Millstream',
+    id: 'river-007',
+    stationNumber: '617201',
+    name: 'Blackwood River at Bridgetown',
+    latitude: -33.9556,
+    longitude: 116.1347,
     state: 'WA',
-    latitude: -21.5789,
-    longitude: 117.0634,
-    river: 'Fortescue River',
-    catchment: 'Pilbara',
-    openDate: '05/1991',
-    district: 8,
-    purpose: ['Flow Monitoring', 'Mining Impact', 'Indigenous Values'],
+    height: 195,
+    openDate: '2/1987',
+    closeDate: 'Active',
+    district: 'South West',
+    riverName: 'Blackwood River',
+    catchmentArea: 1540.2
+  },
+  {
+    id: 'river-008',
+    stationNumber: '801005',
+    name: 'Fitzroy River at Fitzroy Crossing',
+    latitude: -18.1833,
+    longitude: 125.5667,
+    state: 'WA',
+    height: 114,
+    openDate: '6/1983',
+    closeDate: 'Active',
+    district: 'Kimberley',
+    riverName: 'Fitzroy River',
+    catchmentArea: 93829.0
+  },
+  {
+    id: 'river-009',
+    stationNumber: '802107',
+    name: 'Ord River at Kununurra',
+    latitude: -15.7781,
+    longitude: 128.7422,
+    state: 'WA',
+    height: 48,
+    openDate: '11/1986',
+    closeDate: 'Active',
+    district: 'Kimberley',
+    riverName: 'Ord River',
+    catchmentArea: 46130.0
+  },
+  {
+    id: 'river-010',
+    stationNumber: '604003',
+    name: 'Gascoyne River at Carnarvon',
+    latitude: -24.8833,
+    longitude: 113.6667,
+    state: 'WA',
+    height: 6,
+    openDate: '4/1994',
+    closeDate: 'Active',
+    district: 'Gascoyne',
+    riverName: 'Gascoyne River',
+    catchmentArea: 68000.0
   }
 ];
 
+// Generate mock river data
 export const generateMockRiverData = (stationId: string): RiverData => {
-  // Generate consistent mock data based on station ID
-  const seed = stationId.charCodeAt(stationId.length - 1);
+  const now = new Date();
+  const baseValues = {
+    'river-001': { waterLevel: 2.1, flow: 15.5, temp: 18.5 },
+    'river-002': { waterLevel: 1.8, flow: 42.3, temp: 19.2 },
+    'river-003': { waterLevel: 1.2, flow: 8.7, temp: 16.8 },
+    'river-004': { waterLevel: 0.9, flow: 3.2, temp: 20.1 },
+    'river-005': { waterLevel: 0.6, flow: 1.8, temp: 22.5 },
+    'river-006': { waterLevel: 1.5, flow: 12.1, temp: 18.9 },
+    'river-007': { waterLevel: 2.3, flow: 25.6, temp: 17.4 },
+    'river-008': { waterLevel: 3.8, flow: 156.2, temp: 24.8 },
+    'river-009': { waterLevel: 4.2, flow: 89.7, temp: 26.3 },
+    'river-010': { waterLevel: 0.4, flow: 0.8, temp: 23.7 }
+  };
+
+  const base = baseValues[stationId as keyof typeof baseValues] || { waterLevel: 1.5, flow: 10.0, temp: 20.0 };
+  
+  // Add some random variation
+  const variation = 0.1;
+  const waterLevel = base.waterLevel + (Math.random() - 0.5) * variation;
+  const flow = base.flow + (Math.random() - 0.5) * base.flow * 0.2;
+  const temperature = base.temp + (Math.random() - 0.5) * 3;
+
+  const qualities: Array<'Excellent' | 'Good' | 'Fair' | 'Poor'> = ['Excellent', 'Good', 'Fair', 'Poor'];
+  const qualityIndex = Math.floor(Math.random() * 4);
   
   return {
-    waterLevel: Math.round((Math.sin(seed) * 0.5 + 1.5) * 100) / 100, // 1.0 - 2.0m
-    flow: Math.round((Math.sin(seed * 2) * 20 + 30) * 10) / 10, // 10 - 50 cumecs
-    temperature: Math.round((Math.sin(seed * 3) * 5 + 18) * 10) / 10, // 13 - 23°C
-    turbidity: Math.round(Math.abs(Math.sin(seed * 4)) * 15 + 2), // 2 - 17 NTU
-    ph: Math.round((Math.sin(seed * 5) * 1 + 7.2) * 10) / 10, // 6.2 - 8.2
-    conductivity: Math.round(Math.abs(Math.sin(seed * 6)) * 400 + 200), // 200 - 600 µS/cm
-    lastUpdated: new Date(Date.now() - Math.random() * 3600000).toISOString(), // Within last hour
-    qualityGrade: (['Excellent', 'Good', 'Fair', 'Poor'] as const)[seed % 4] as 'Excellent' | 'Good' | 'Fair' | 'Poor'
+    stationId,
+    date: now.toISOString().split('T')[0] || '',
+    time: now.toLocaleTimeString('en-AU', { hour12: false }),
+    waterLevel: Math.max(0, waterLevel),
+    flow: Math.max(0, flow),
+    temperature: temperature,
+    quality: qualities[qualityIndex] || 'Good',
+    turbidity: Math.random() * 20 + 5, // 5-25 NTU
+    ph: Math.random() * 2 + 6.5 // 6.5-8.5
   };
 };
 
 export const getRiverDataForStation = async (stationId: string): Promise<RiverData | null> => {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 200));
+  // Simulate API call delay
+  await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200));
   
-  return generateMockRiverData(stationId);
+  // Return mock data for river stations
+  if (stationId.startsWith('river-')) {
+    return generateMockRiverData(stationId);
+  }
+  
+  return null;
 }; 
