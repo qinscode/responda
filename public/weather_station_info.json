@@ -1,677 +1,677 @@
 [
   {
     "station name": "WYNDHAM AERO",
-    "lat": -15.5100,
-    "long": 128.1503
+    "Latitude": -15.51,
+    "Longitude": 128.1503
   },
   {
     "station name": "TROUGHTON ISLAND",
-    "lat": -13.7542,
-    "long": 126.1485
+    "Latitude": -13.7542,
+    "Longitude": 126.1485
   },
   {
     "station name": "MOUNT ELIZABETH",
-    "lat": -16.4181,
-    "long": 126.1025
+    "Latitude": -16.4181,
+    "Longitude": 126.1025
   },
   {
     "station name": "KALUMBURU",
-    "lat": -14.2964,
-    "long": 126.6453
+    "Latitude": -14.2964,
+    "Longitude": 126.6453
   },
   {
     "station name": "TRUSCOTT",
-    "lat": -14.0900,
-    "long": 126.3867
+    "Latitude": -14.09,
+    "Longitude": 126.3867
   },
   {
     "station name": "DOONGAN",
-    "lat": -15.3797,
-    "long": 126.3114
+    "Latitude": -15.3797,
+    "Longitude": 126.3114
   },
   {
     "station name": "WARMUN",
-    "lat": -17.0154,
-    "long": 128.2174
+    "Latitude": -17.0154,
+    "Longitude": 128.2174
   },
   {
     "station name": "KUNUNURRA AERO",
-    "lat": -15.7814,
-    "long": 128.7100
+    "Latitude": -15.7814,
+    "Longitude": 128.71
   },
   {
     "station name": "ARGYLE AERODROME",
-    "lat": -16.6380,
-    "long": 128.4516
+    "Latitude": -16.638,
+    "Longitude": 128.4516
   },
   {
     "station name": "HALLS CREEK AIRPORT",
-    "lat": -18.2337,
-    "long": 127.6666
+    "Latitude": -18.2337,
+    "Longitude": 127.6666
   },
   {
     "station name": "BROOME AIRPORT",
-    "lat": -17.9475,
-    "long": 122.2352
+    "Latitude": -17.9475,
+    "Longitude": 122.2352
   },
   {
     "station name": "BIDYADANGA",
-    "lat": -18.6844,
-    "long": 121.7803
+    "Latitude": -18.6844,
+    "Longitude": 121.7803
   },
   {
     "station name": "DERBY AERO",
-    "lat": -17.3706,
-    "long": 123.6611
+    "Latitude": -17.3706,
+    "Longitude": 123.6611
   },
   {
     "station name": "CYGNET BAY",
-    "lat": -16.4513,
-    "long": 123.0087
+    "Latitude": -16.4513,
+    "Longitude": 123.0087
   },
   {
     "station name": "CURTIN AERO",
-    "lat": -17.5768,
-    "long": 123.8297
+    "Latitude": -17.5768,
+    "Longitude": 123.8297
   },
   {
     "station name": "FITZROY CROSSING AERO",
-    "lat": -18.1814,
-    "long": 125.5619
+    "Latitude": -18.1814,
+    "Longitude": 125.5619
   },
   {
     "station name": "YAMPI SOUND (DEFENCE)",
-    "lat": -16.7671,
-    "long": 123.9810
+    "Latitude": -16.7671,
+    "Longitude": 123.981
   },
   {
     "station name": "MANDORA",
-    "lat": -19.7419,
-    "long": 120.8433
+    "Latitude": -19.7419,
+    "Longitude": 120.8433
   },
   {
     "station name": "PARDOO STATION",
-    "lat": -20.1078,
-    "long": 119.5811
+    "Latitude": -20.1078,
+    "Longitude": 119.5811
   },
   {
     "station name": "PORT HEDLAND AIRPORT",
-    "lat": -20.3725,
-    "long": 118.6317
+    "Latitude": -20.3725,
+    "Longitude": 118.6317
   },
   {
     "station name": "KARRATHA AERO",
-    "lat": -20.7097,
-    "long": 116.7742
+    "Latitude": -20.7097,
+    "Longitude": 116.7742
   },
   {
     "station name": "ROEBOURNE AERO",
-    "lat": -20.7594,
-    "long": 117.1583
+    "Latitude": -20.7594,
+    "Longitude": 117.1583
   },
   {
     "station name": "LEGENDRE ISLAND",
-    "lat": -20.3583,
-    "long": 116.8431
+    "Latitude": -20.3583,
+    "Longitude": 116.8431
   },
   {
     "station name": "BEDOUT ISLAND",
-    "lat": -19.5894,
-    "long": 119.1000
+    "Latitude": -19.5894,
+    "Longitude": 119.1
   },
   {
     "station name": "MARBLE BAR",
-    "lat": -21.1756,
-    "long": 119.7497
+    "Latitude": -21.1756,
+    "Longitude": 119.7497
   },
   {
     "station name": "LEARMONTH AIRPORT",
-    "lat": -22.2406,
-    "long": 114.0967
+    "Latitude": -22.2406,
+    "Longitude": 114.0967
   },
   {
     "station name": "MARDIE",
-    "lat": -21.1906,
-    "long": 115.9797
+    "Latitude": -21.1906,
+    "Longitude": 115.9797
   },
   {
     "station name": "ONSLOW AIRPORT",
-    "lat": -21.6689,
-    "long": 115.1092
+    "Latitude": -21.6689,
+    "Longitude": 115.1092
   },
   {
     "station name": "THEVENARD ISLAND",
-    "lat": -21.4609,
-    "long": 115.0188
+    "Latitude": -21.4609,
+    "Longitude": 115.0188
   },
   {
     "station name": "BARROW ISLAND AIRPORT",
-    "lat": -20.8740,
-    "long": 115.4066
+    "Latitude": -20.874,
+    "Longitude": 115.4066
   },
   {
     "station name": "KARIJINI NORTH",
-    "lat": -22.2999,
-    "long": 118.4498
+    "Latitude": -22.2999,
+    "Longitude": 118.4498
   },
   {
     "station name": "CARNARVON AIRPORT",
-    "lat": -24.8878,
-    "long": 113.6700
+    "Latitude": -24.8878,
+    "Longitude": 113.67
   },
   {
     "station name": "GASCOYNE JUNCTION",
-    "lat": -25.0544,
-    "long": 115.2100
+    "Latitude": -25.0544,
+    "Longitude": 115.21
   },
   {
     "station name": "DENHAM",
-    "lat": -25.9265,
-    "long": 113.5325
+    "Latitude": -25.9265,
+    "Longitude": 113.5325
   },
   {
     "station name": "EMU CREEK STATION",
-    "lat": -23.0314,
-    "long": 115.0414
+    "Latitude": -23.0314,
+    "Longitude": 115.0414
   },
   {
     "station name": "MURCHISON",
-    "lat": -26.8956,
-    "long": 115.9567
+    "Latitude": -26.8956,
+    "Longitude": 115.9567
   },
   {
     "station name": "SHARK BAY AIRPORT",
-    "lat": -25.8925,
-    "long": 113.5772
+    "Latitude": -25.8925,
+    "Longitude": 113.5772
   },
   {
     "station name": "MEEKATHARRA AIRPORT",
-    "lat": -26.6136,
-    "long": 118.5372
+    "Latitude": -26.6136,
+    "Longitude": 118.5372
   },
   {
     "station name": "PAYNES FIND",
-    "lat": -29.2708,
-    "long": 117.6836
+    "Latitude": -29.2708,
+    "Longitude": 117.6836
   },
   {
     "station name": "NEWMAN AERO",
-    "lat": -23.4212,
-    "long": 119.8015
+    "Latitude": -23.4212,
+    "Longitude": 119.8015
   },
   {
     "station name": "PARABURDOO AERO",
-    "lat": -23.1726,
-    "long": 117.7493
+    "Latitude": -23.1726,
+    "Longitude": 117.7493
   },
   {
     "station name": "MOUNT MAGNET AERO",
-    "lat": -28.1156,
-    "long": 117.8425
+    "Latitude": -28.1156,
+    "Longitude": 117.8425
   },
   {
     "station name": "CARNAMAH",
-    "lat": -29.6883,
-    "long": 115.8857
+    "Latitude": -29.6883,
+    "Longitude": 115.8857
   },
   {
     "station name": "MULLEWA",
-    "lat": -28.5367,
-    "long": 115.5142
+    "Latitude": -28.5367,
+    "Longitude": 115.5142
   },
   {
     "station name": "WONGAN HILLS",
-    "lat": -30.8917,
-    "long": 116.7186
+    "Latitude": -30.8917,
+    "Longitude": 116.7186
   },
   {
     "station name": "KALBARRI",
-    "lat": -27.7119,
-    "long": 114.1650
+    "Latitude": -27.7119,
+    "Longitude": 114.165
   },
   {
     "station name": "NORTH ISLAND",
-    "lat": -28.3009,
-    "long": 113.5937
+    "Latitude": -28.3009,
+    "Longitude": 113.5937
   },
   {
     "station name": "MORAWA AIRPORT",
-    "lat": -29.2039,
-    "long": 116.0247
+    "Latitude": -29.2039,
+    "Longitude": 116.0247
   },
   {
     "station name": "DALWALLINU",
-    "lat": -30.2761,
-    "long": 116.6714
+    "Latitude": -30.2761,
+    "Longitude": 116.6714
   },
   {
     "station name": "GERALDTON AIRPORT",
-    "lat": -28.8047,
-    "long": 114.6989
+    "Latitude": -28.8047,
+    "Longitude": 114.6989
   },
   {
     "station name": "PERTH AIRPORT",
-    "lat": -31.9275,
-    "long": 115.9764
+    "Latitude": -31.9275,
+    "Longitude": 115.9764
   },
   {
     "station name": "BADGINGARRA RESEARCH STN",
-    "lat": -30.3381,
-    "long": 115.5394
+    "Latitude": -30.3381,
+    "Longitude": 115.5394
   },
   {
     "station name": "PEARCE RAAF",
-    "lat": -31.6669,
-    "long": 116.0189
+    "Latitude": -31.6669,
+    "Longitude": 116.0189
   },
   {
     "station name": "INNER DOLPHIN PYLON",
-    "lat": -31.9889,
-    "long": 115.8311
+    "Latitude": -31.9889,
+    "Longitude": 115.8311
   },
   {
     "station name": "GOSNELLS CITY",
-    "lat": -32.0481,
-    "long": 115.9844
+    "Latitude": -32.0481,
+    "Longitude": 115.9844
   },
   {
     "station name": "KARNET",
-    "lat": -32.4389,
-    "long": 116.0789
+    "Latitude": -32.4389,
+    "Longitude": 116.0789
   },
   {
     "station name": "JURIEN BAY",
-    "lat": -30.3081,
-    "long": 115.0311
+    "Latitude": -30.3081,
+    "Longitude": 115.0311
   },
   {
     "station name": "JANDAKOT AERO",
-    "lat": -32.1011,
-    "long": 115.8794
+    "Latitude": -32.1011,
+    "Longitude": 115.8794
   },
   {
     "station name": "GINGIN AERO",
-    "lat": -31.4628,
-    "long": 115.8642
+    "Latitude": -31.4628,
+    "Longitude": 115.8642
   },
   {
     "station name": "ROTTNEST ISLAND",
-    "lat": -32.0069,
-    "long": 115.5022
+    "Latitude": -32.0069,
+    "Longitude": 115.5022
   },
   {
     "station name": "OCEAN REEF",
-    "lat": -31.7594,
-    "long": 115.7278
+    "Latitude": -31.7594,
+    "Longitude": 115.7278
   },
   {
     "station name": "SWANBOURNE",
-    "lat": -31.9560,
-    "long": 115.7619
+    "Latitude": -31.956,
+    "Longitude": 115.7619
   },
   {
     "station name": "PERTH METRO",
-    "lat": -31.9192,
-    "long": 115.8728
+    "Latitude": -31.9192,
+    "Longitude": 115.8728
   },
   {
     "station name": "BICKLEY",
-    "lat": -32.0072,
-    "long": 116.1369
+    "Latitude": -32.0072,
+    "Longitude": 116.1369
   },
   {
     "station name": "GARDEN ISLAND HSF",
-    "lat": -32.2433,
-    "long": 115.6839
+    "Latitude": -32.2433,
+    "Longitude": 115.6839
   },
   {
     "station name": "LANCELIN (DEFENCE)",
-    "lat": -30.8392,
-    "long": 115.2283
+    "Latitude": -30.8392,
+    "Longitude": 115.2283
   },
   {
     "station name": "MILLENDON (SWAN VALLEY)",
-    "lat": -31.8112,
-    "long": 116.0227
+    "Latitude": -31.8112,
+    "Longitude": 116.0227
   },
   {
     "station name": "ALBANY",
-    "lat": -35.0289,
-    "long": 117.8808
+    "Latitude": -35.0289,
+    "Longitude": 117.8808
   },
   {
     "station name": "CAPE LEEUWIN",
-    "lat": -34.3728,
-    "long": 115.1358
+    "Latitude": -34.3728,
+    "Longitude": 115.1358
   },
   {
     "station name": "CAPE NATURALISTE",
-    "lat": -33.5372,
-    "long": 115.0189
+    "Latitude": -33.5372,
+    "Longitude": 115.0189
   },
   {
     "station name": "DONNYBROOK",
-    "lat": -33.5719,
-    "long": 115.8247
+    "Latitude": -33.5719,
+    "Longitude": 115.8247
   },
   {
     "station name": "DWELLINGUP",
-    "lat": -32.7103,
-    "long": 116.0594
+    "Latitude": -32.7103,
+    "Longitude": 116.0594
   },
   {
     "station name": "ESPERANCE AERO",
-    "lat": -33.6825,
-    "long": 121.8275
+    "Latitude": -33.6825,
+    "Longitude": 121.8275
   },
   {
     "station name": "MANJIMUP",
-    "lat": -34.2508,
-    "long": 116.1450
+    "Latitude": -34.2508,
+    "Longitude": 116.145
   },
   {
     "station name": "MOUNT BARKER",
-    "lat": -34.6250,
-    "long": 117.6361
+    "Latitude": -34.625,
+    "Longitude": 117.6361
   },
   {
     "station name": "PEMBERTON",
-    "lat": -34.4478,
-    "long": 116.0433
+    "Latitude": -34.4478,
+    "Longitude": 116.0433
   },
   {
     "station name": "BUSSELTON AERO",
-    "lat": -33.6818,
-    "long": 115.4026
+    "Latitude": -33.6818,
+    "Longitude": 115.4026
   },
   {
     "station name": "BRIDGETOWN",
-    "lat": -33.9486,
-    "long": 116.1311
+    "Latitude": -33.9486,
+    "Longitude": 116.1311
   },
   {
     "station name": "ESPERANCE",
-    "lat": -33.8300,
-    "long": 121.8925
+    "Latitude": -33.83,
+    "Longitude": 121.8925
   },
   {
     "station name": "JARRAHWOOD",
-    "lat": -33.7964,
-    "long": 115.6658
+    "Latitude": -33.7964,
+    "Longitude": 115.6658
   },
   {
     "station name": "WINDY HARBOUR",
-    "lat": -34.8373,
-    "long": 116.0260
+    "Latitude": -34.8373,
+    "Longitude": 116.026
   },
   {
     "station name": "BUSSELTON JETTY",
-    "lat": -33.6294,
-    "long": 115.3383
+    "Latitude": -33.6294,
+    "Longitude": 115.3383
   },
   {
     "station name": "HOPETOUN NORTH",
-    "lat": -33.9306,
-    "long": 120.1283
+    "Latitude": -33.9306,
+    "Longitude": 120.1283
   },
   {
     "station name": "ROCKY GULLY",
-    "lat": -34.5714,
-    "long": 117.0106
+    "Latitude": -34.5714,
+    "Longitude": 117.0106
   },
   {
     "station name": "BUNBURY",
-    "lat": -33.3567,
-    "long": 115.6447
+    "Latitude": -33.3567,
+    "Longitude": 115.6447
   },
   {
     "station name": "SHANNON",
-    "lat": -34.5683,
-    "long": 116.3367
+    "Latitude": -34.5683,
+    "Longitude": 116.3367
   },
   {
     "station name": "MANDURAH",
-    "lat": -32.5219,
-    "long": 115.7119
+    "Latitude": -32.5219,
+    "Longitude": 115.7119
   },
   {
     "station name": "COLLIE EAST",
-    "lat": -33.3608,
-    "long": 116.1717
+    "Latitude": -33.3608,
+    "Longitude": 116.1717
   },
   {
     "station name": "NORTH WALPOLE",
-    "lat": -34.9469,
-    "long": 116.7222
+    "Latitude": -34.9469,
+    "Longitude": 116.7222
   },
   {
     "station name": "ALBANY AIRPORT",
-    "lat": -34.9411,
-    "long": 117.8158
+    "Latitude": -34.9411,
+    "Longitude": 117.8158
   },
   {
     "station name": "BENCUBBIN",
-    "lat": -30.8081,
-    "long": 117.8603
+    "Latitude": -30.8081,
+    "Longitude": 117.8603
   },
   {
     "station name": "GOOMALLING",
-    "lat": -31.2994,
-    "long": 116.8269
+    "Latitude": -31.2994,
+    "Longitude": 116.8269
   },
   {
     "station name": "KELLERBERRIN",
-    "lat": -31.6183,
-    "long": 117.7217
+    "Latitude": -31.6183,
+    "Longitude": 117.7217
   },
   {
     "station name": "MERREDIN",
-    "lat": -31.4756,
-    "long": 118.2789
+    "Latitude": -31.4756,
+    "Longitude": 118.2789
   },
   {
     "station name": "NORTHAM",
-    "lat": -31.6508,
-    "long": 116.6586
+    "Latitude": -31.6508,
+    "Longitude": 116.6586
   },
   {
     "station name": "CUNDERDIN AIRFIELD",
-    "lat": -31.6219,
-    "long": 117.2217
+    "Latitude": -31.6219,
+    "Longitude": 117.2217
   },
   {
     "station name": "YORK",
-    "lat": -31.8997,
-    "long": 116.7650
+    "Latitude": -31.8997,
+    "Longitude": 116.765
   },
   {
     "station name": "BEVERLEY",
-    "lat": -32.1083,
-    "long": 116.9247
+    "Latitude": -32.1083,
+    "Longitude": 116.9247
   },
   {
     "station name": "BROOKTON",
-    "lat": -32.3728,
-    "long": 117.0086
+    "Latitude": -32.3728,
+    "Longitude": 117.0086
   },
   {
     "station name": "CORRIGIN",
-    "lat": -32.3292,
-    "long": 117.8733
+    "Latitude": -32.3292,
+    "Longitude": 117.8733
   },
   {
     "station name": "HYDEN",
-    "lat": -32.4419,
-    "long": 118.8983
+    "Latitude": -32.4419,
+    "Longitude": 118.8983
   },
   {
     "station name": "NARROGIN",
-    "lat": -32.9342,
-    "long": 117.1797
+    "Latitude": -32.9342,
+    "Longitude": 117.1797
   },
   {
     "station name": "ONGERUP",
-    "lat": -33.9634,
-    "long": 118.4788
+    "Latitude": -33.9634,
+    "Longitude": 118.4788
   },
   {
     "station name": "PINGELLY",
-    "lat": -32.5336,
-    "long": 117.0831
+    "Latitude": -32.5336,
+    "Longitude": 117.0831
   },
   {
     "station name": "RAVENSTHORPE",
-    "lat": -33.5803,
-    "long": 120.0458
+    "Latitude": -33.5803,
+    "Longitude": 120.0458
   },
   {
     "station name": "WAGIN",
-    "lat": -33.3075,
-    "long": 117.3403
+    "Latitude": -33.3075,
+    "Longitude": 117.3403
   },
   {
     "station name": "NEWDEGATE RESEARCH STATION",
-    "lat": -33.1129,
-    "long": 118.8400
+    "Latitude": -33.1129,
+    "Longitude": 118.84
   },
   {
     "station name": "JACUP",
-    "lat": -33.8878,
-    "long": 119.1092
+    "Latitude": -33.8878,
+    "Longitude": 119.1092
   },
   {
     "station name": "LAKE GRACE",
-    "lat": -33.1006,
-    "long": 118.4647
+    "Latitude": -33.1006,
+    "Longitude": 118.4647
   },
   {
     "station name": "KATANNING",
-    "lat": -33.6856,
-    "long": 117.6064
+    "Latitude": -33.6856,
+    "Longitude": 117.6064
   },
   {
     "station name": "WANDERING",
-    "lat": -32.6722,
-    "long": 116.6706
+    "Latitude": -32.6722,
+    "Longitude": 116.6706
   },
   {
     "station name": "EUCLA",
-    "lat": -31.6797,
-    "long": 128.8958
+    "Latitude": -31.6797,
+    "Longitude": 128.8958
   },
   {
     "station name": "EYRE",
-    "lat": -32.2464,
-    "long": 126.3008
+    "Latitude": -32.2464,
+    "Longitude": 126.3008
   },
   {
     "station name": "FORREST",
-    "lat": -30.8453,
-    "long": 128.1092
+    "Latitude": -30.8453,
+    "Longitude": 128.1092
   },
   {
     "station name": "RED ROCKS POINT",
-    "lat": -32.2028,
-    "long": 127.5297
+    "Latitude": -32.2028,
+    "Longitude": 127.5297
   },
   {
     "station name": "NORSEMAN AERO",
-    "lat": -32.2147,
-    "long": 121.7547
+    "Latitude": -32.2147,
+    "Longitude": 121.7547
   },
   {
     "station name": "KALGOORLIE-BOULDER AIRPORT",
-    "lat": -30.7847,
-    "long": 121.4533
+    "Latitude": -30.7847,
+    "Longitude": 121.4533
   },
   {
     "station name": "MUNGLINUP WEST",
-    "lat": -33.5547,
-    "long": 120.6997
+    "Latitude": -33.5547,
+    "Longitude": 120.6997
   },
   {
     "station name": "SALMON GUMS RES.STN.",
-    "lat": -32.9869,
-    "long": 121.6239
+    "Latitude": -32.9869,
+    "Longitude": 121.6239
   },
   {
     "station name": "BULGA DOWNS",
-    "lat": -28.4967,
-    "long": 119.7436
+    "Latitude": -28.4967,
+    "Longitude": 119.7436
   },
   {
     "station name": "LEONORA AERO",
-    "lat": -28.8789,
-    "long": 121.3186
+    "Latitude": -28.8789,
+    "Longitude": 121.3186
   },
   {
     "station name": "LAVERTON AERO",
-    "lat": -28.6133,
-    "long": 122.4236
+    "Latitude": -28.6133,
+    "Longitude": 122.4236
   },
   {
     "station name": "LEINSTER AERO",
-    "lat": -27.8386,
-    "long": 120.7031
+    "Latitude": -27.8386,
+    "Longitude": 120.7031
   },
   {
     "station name": "SOUTHERN CROSS AIRFIELD",
-    "lat": -31.2353,
-    "long": 119.3564
+    "Latitude": -31.2353,
+    "Longitude": 119.3564
   },
   {
     "station name": "WARBURTON AIRFIELD",
-    "lat": -26.1317,
-    "long": 126.5839
+    "Latitude": -26.1317,
+    "Longitude": 126.5839
   },
   {
     "station name": "CARNEGIE",
-    "lat": -25.7964,
-    "long": 122.9753
+    "Latitude": -25.7964,
+    "Longitude": 122.9753
   },
   {
     "station name": "GILES METEOROLOGICAL OFFICE",
-    "lat": -25.0341,
-    "long": 128.3010
+    "Latitude": -25.0341,
+    "Longitude": 128.301
   },
   {
     "station name": "TELFER AERO",
-    "lat": -21.7125,
-    "long": 122.2281
+    "Latitude": -21.7125,
+    "Longitude": 122.2281
   },
   {
     "station name": "WILUNA AERO",
-    "lat": -26.6273,
-    "long": 120.2195
+    "Latitude": -26.6273,
+    "Longitude": 120.2195
   },
   {
     "station name": "WITCHCLIFFE WEST",
-    "lat": -34.0258,
-    "long": 115.0637
+    "Latitude": -34.0258,
+    "Longitude": 115.0637
   },
   {
     "station name": "VARANUS ISLAND",
-    "lat": -20.6550,
-    "long": 115.5769
+    "Latitude": -20.655,
+    "Longitude": 115.5769
   },
   {
     "station name": "COCOS ISLAND AIRPORT",
-    "lat": -12.1892,
-    "long": 96.8344
+    "Latitude": -12.1892,
+    "Longitude": 96.8344
   },
   {
     "station name": "ROWLEY SHOALS",
-    "lat": -17.5217,
-    "long": 118.9531
+    "Latitude": -17.5217,
+    "Longitude": 118.9531
   },
   {
     "station name": "ADELE ISLAND",
-    "lat": -15.5114,
-    "long": 123.1556
+    "Latitude": -15.5114,
+    "Longitude": 123.1556
   },
   {
     "station name": "CHRISTMAS ISLAND AERO",
-    "lat": -10.4515,
-    "long": 105.6890
+    "Latitude": -10.4515,
+    "Longitude": 105.689
   }
 ]
