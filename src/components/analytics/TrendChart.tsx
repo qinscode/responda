@@ -23,7 +23,8 @@ import {
   Activity,
   AlertTriangle,
   Eye,
-  EyeOff
+  EyeOff,
+  Flame
 } from 'lucide-react';
 import type { TimeSeriesAnalysis, TrendAnalysis } from '@/types/analytics';
 import type { EmergencyType } from '@/types/emergency';
@@ -170,7 +171,11 @@ export const TrendChart = ({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Activity className={`h-5 w-5 animate-pulse-gentle ${type === 'bushfire' ? 'text-orange-500' : 'text-blue-500'}`} />
+            {type === 'bushfire' ? (
+              <Flame className="h-5 w-5 animate-pulse-gentle text-orange-500" />
+            ) : (
+              <Activity className="h-5 w-5 animate-pulse-gentle text-blue-500" />
+            )}
             {title}
           </CardTitle>
           
@@ -366,8 +371,8 @@ export const TrendChart = ({
               <AlertTriangle className="h-4 w-4 text-amber-500" />
               <span className="text-sm font-medium">Detected Anomalies</span>
             </div>
-            <div className="space-y-1 max-h-24 overflow-y-auto">
-              {data.anomalies.slice(0, 3).map((anomaly, index) => (
+            <div className="space-y-1 max-h-32 overflow-y-auto">
+              {data.anomalies.slice(0, 5).map((anomaly, index) => (
                 <div key={index} className="flex items-center justify-between text-xs bg-amber-50 border border-amber-200 rounded p-2">
                   <span>{new Date(anomaly.timestamp).toLocaleDateString()}</span>
                   <Badge className="text-xs" variant="outline">
@@ -375,20 +380,6 @@ export const TrendChart = ({
                   </Badge>
                 </div>
               ))}
-            </div>
-          </div>
-        )}
-        
-        {/* Seasonality info */}
-        {data.seasonality.detected && (
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Activity className="h-4 w-4 text-blue-500" />
-              <span className="text-sm font-medium">Seasonal Pattern Detected</span>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              Period: {data.seasonality.period} days, 
-              Strength: {(data.seasonality.strength * 100).toFixed(0)}%
             </div>
           </div>
         )}
