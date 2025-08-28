@@ -21,6 +21,7 @@ import {
 	Settings,
 	MapPin,
 	Droplets,
+	Waves,
 } from "lucide-react";
 import { generateSarimaFloodData } from "@/data/mockSarimaData";
 import { riverStations, type RiverStation } from "@/data/riverStations";
@@ -104,7 +105,7 @@ export const SarimaChart = ({
 			<CardHeader className="pb-3">
 						<div className="flex items-center justify-between">
 			<CardTitle className="flex items-center gap-2 text-base">
-				<Droplets className="h-5 w-5 animate-pulse-gentle text-blue-500" />
+				<Waves className="h-5 w-5 animate-pulse-gentle text-blue-500" />
 				{title}
 			</CardTitle>
 
